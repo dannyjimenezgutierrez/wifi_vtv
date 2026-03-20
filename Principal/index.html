@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>VTV Canal 8</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="img/favicon.ico" rel="icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+</head>
+
+
+
+
+
+<body class="admin-body">
+
+
+
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-logo">
+                <img src="img/logo-VTV.png" alt="VTV" onerror="this.style.display='none'">
+                <div class="brand-hex" style="display:none">⬡</div>
+            </div>
+            <div class="brand-info">
+                <span class="brand-name">
+                    <h6>SERVIDORES Y REDES</h6>
+                </span>
+                <span class="brand-sub">Versión : 2.0</span>
+            </div>
+        </div>
+
+        <div class="sidebar-status">
+            <span class="status-dot"></span>
+            <span>SISTEMA_ACTIVO</span>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-label">
+                <h4>[$ PRINCIPAL ]</h4>
+            </div>
+
+            <a href="#" class="nav-item active" data-section="dashboard">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M1 6v9h5V9h4v6h5V6L8 1z" />
+                </svg>
+                <span>Dashboard</span>
+                <div class="nav-indicator"></div>
+            </a>
+
+            <a href="#" class="nav-item" data-section="usuarios">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM14 14s1 0 1-1-1-4-7-4-7 3-7 4 1 1 1 1h12z" />
+                </svg>
+                <span>Usuarios</span>
+                <span class="nav-badge">24</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="servidores">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path
+                        d="M1 2a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H2a1 1 0 01-1-1V2zM1 7a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H2a1 1 0 01-1-1V7zM1 12a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H2a1 1 0 01-1-1v-2z" />
+                </svg>
+                <span>Servidores</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="reportes">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path
+                        d="M14 2H2a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2zM2 4h12v2H2V4zm0 4h4v4H2V8zm6 4v-4h4v4H8z" />
+                </svg>
+                <span>Reportes</span>
+            </a>
+
+            <div class="nav-section-label">
+                <h4>[$ SISTEMA ]</h4>
+            </div>
+
+            <a href="#" class="nav-item" data-section="seguridad">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 1L2 3v5c0 3.5 2.5 6.7 6 7.9C11.5 14.7 14 11.5 14 8V3L8 1z" />
+                </svg>
+                <span>Seguridad</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="config">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path
+                        d="M8 4.754a3.246 3.246 0 100 6.492 3.246 3.246 0 000-6.492zM5.754 8a2.246 2.246 0 114.492 0 2.246 2.246 0 01-4.492 0z" />
+                    <path
+                        d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 01-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 01-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 01.52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 011.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 011.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 01.52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 01-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 01-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 002.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 001.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 00-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 00-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 00-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 001.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 003.06 4.576l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 002.692-1.115l.094-.319z" />
+                </svg>
+                <span>Configuración</span>
+            </a>
+
+            <div class="nav-section-label">// SESIÓN</div>
+
+            <a href="../Login/index.html" class="nav-item nav-logout">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path
+                        d="M10 12.5a.5.5 0 01-.5.5h-8a.5.5 0 01-.5-.5v-9a.5.5 0 01.5-.5h8a.5.5 0 01.5.5v2a.5.5 0 001 0v-2A1.5 1.5 0 009.5 2h-8A1.5 1.5 0 000 3.5v9A1.5 1.5 0 001.5 14h8a1.5 1.5 0 001.5-1.5v-2a.5.5 0 00-1 0v2z" />
+                    <path
+                        d="M15.854 8.354a.5.5 0 000-.708l-3-3a.5.5 0 10-.708.708L14.293 7.5H5.5a.5.5 0 000 1h8.793l-2.147 2.146a.5.5 0 00.708.708l3-3z" />
+                </svg>
+                <span>Cerrar Sesión</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sys-info">
+                <span class="sys-line">CPU: <span id="cpuVal" class="sys-val">38%</span></span>
+                <span class="sys-line">RAM: <span id="ramVal" class="sys-val">62%</span></span>
+                <span class="sys-line">TEMP: <span id="amVal" class="sys-val">62%</span></span>
+
+            </div>
+        </div>
+    </aside>
+
+    <div class="main-wrap" id="mainWrap">
+
+        <!-- ── TOPBAR ── -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                    <span></span><span></span><span></span>
+                </button>
+                <div class="breadcrumb">
+                    <span class="bc-root">INTERFAZ</span>
+                    <span class="bc-sep">&gt;</span>
+                    <span class="bc-current" id="bcCurrent">PAGINA PRINCIPAL</span>
+                </div>
+            </div>
+
+            <div class="topbar-center">
+                <div class="topbar-search">
+                    <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 10-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 001.415-1.414l-3.85-3.85a1.007 1.007 0 00-.115-.099zm-5.242 1.656a5.5 5.5 0 110-11 5.5 5.5 0 010 11z" />
+                    </svg>
+                    <input type="text" id="globalSearch" placeholder="BUSCAR_COMANDO..." autocomplete="off">
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <button class="topbar-btn" id="btnNotif" aria-label="Notificaciones">
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor">
+                        <path
+                            d="M8 16a2 2 0 002-2H6a2 2 0 002 2zm.995-14.901a1 1 0 10-1.99 0A5.002 5.002 0 003 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+                    </svg>
+                    <span class="notif-dot"></span>
+                </button>
+
+                <button class="topbar-btn" aria-label="Tema">
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor">
+                        <path
+                            d="M8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.5.5 0 01.5.5v2a.5.5 0 01-1 0v-2A.5.5 0 018 0zm0 13a.5.5 0 01.5.5v2a.5.5 0 01-1 0v-2A.5.5 0 018 13zm8-5a.5.5 0 01-.5.5h-2a.5.5 0 010-1h2a.5.5 0 01.5.5zM3 8a.5.5 0 01-.5.5h-2a.5.5 0 010-1h2A.5.5 0 013 8z" />
+                    </svg>
+                </button>
+
+                <div class="topbar-user">
+                    <div class="user-avatar">AD</div>
+                    <div class="user-info">
+                        <span class="user-name">ADMIN</span>
+                        <span class="user-role">ROOT_ACCESS</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ── CONTENT ── -->
+        <main class="content">
+
+            <!-- ═══════ SECTION: DASHBOARD ═══════ -->
+            <section class="section active" id="sec-dashboard">
+
+                <div class="section-header">
+                    <div>
+                        <h1 class="section-title">[ PANEL_PRINCIPAL ]</h1>
+                        <p class="section-sub">Resumen del sistema en tiempo real</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="showModal('modalCreate')">
+                        <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                            <path
+                                d="M8 4a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3v3a.5.5 0 01-1 0v-3h-3a.5.5 0 010-1h3v-3A.5.5 0 018 4z" />
+                        </svg>
+                        NUEVO_REGISTRO
+                    </button>
+                </div>
+
+                <!-- STAT CARDS -->
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-green">
+                            <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM14 14s1 0 1-1-1-4-7-4-7 3-7 4 1 1 1 1h12z" />
+                            </svg>
+                        </div>
+                        <div class="stat-body">
+                            <span class="stat-label">USUARIOS_ACTIVOS</span>
+                            <span class="stat-value" data-target="1284">0</span>
+                            <span class="stat-delta up">▲ +12.4%</span>
+                        </div>
+                        <div class="stat-chart">
+                            <div class="mini-bar" style="--h:40%"></div>
+                            <div class="mini-bar" style="--h:60%"></div>
+                            <div class="mini-bar" style="--h:45%"></div>
+                            <div class="mini-bar" style="--h:75%"></div>
+                            <div class="mini-bar" style="--h:55%"></div>
+                            <div class="mini-bar" style="--h:90%"></div>
+                            <div class="mini-bar active" style="--h:100%"></div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-red">
+                            <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                                <path
+                                    d="M1 2a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H2a1 1 0 01-1-1V2zM1 7a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H2a1 1 0 01-1-1V7z" />
+                            </svg>
+                        </div>
+                        <div class="stat-body">
+                            <span class="stat-label">SERVIDORES_ON</span>
+                            <span class="stat-value" data-target="47">0</span>
+                            <span class="stat-delta up">▲ +3</span>
+                        </div>
+                        <div class="stat-chart">
+                            <div class="mini-bar" style="--h:50%"></div>
+                            <div class="mini-bar" style="--h:70%"></div>
+                            <div class="mini-bar" style="--h:65%"></div>
+                            <div class="mini-bar" style="--h:80%"></div>
+                            <div class="mini-bar" style="--h:60%"></div>
+                            <div class="mini-bar" style="--h:85%"></div>
+                            <div class="mini-bar active" style="--h:95%"></div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-cyan">
+                            <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M8 1L2 3v5c0 3.5 2.5 6.7 6 7.9C11.5 14.7 14 11.5 14 8V3L8 1z" />
+                            </svg>
+                        </div>
+                        <div class="stat-body">
+                            <span class="stat-label">AMENAZAS_BLOQUEADAS</span>
+                            <span class="stat-value" data-target="3921">0</span>
+                            <span class="stat-delta down">▼ -5.1%</span>
+                        </div>
+                        <div class="stat-chart">
+                            <div class="mini-bar" style="--h:80%"></div>
+                            <div class="mini-bar" style="--h:95%"></div>
+                            <div class="mini-bar" style="--h:70%"></div>
+                            <div class="mini-bar" style="--h:60%"></div>
+                            <div class="mini-bar" style="--h:55%"></div>
+                            <div class="mini-bar" style="--h:50%"></div>
+                            <div class="mini-bar active" style="--h:45%"></div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-yellow">
+                            <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                                <path
+                                    d="M6 .278a.768.768 0 01.08.858 7.208 7.208 0 00-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 01.81.316.733.733 0 01-.031.893A8.349 8.349 0 018.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 016 .278z" />
+                            </svg>
+                        </div>
+                        <div class="stat-body">
+                            <span class="stat-label">UPTIME</span>
+                            <span class="stat-value" data-target="99">0</span><span class="stat-unit">%</span>
+                            <span class="stat-delta up">▲ Óptimo</span>
+                        </div>
+                        <div class="stat-chart">
+                            <div class="mini-bar" style="--h:99%"></div>
+                            <div class="mini-bar" style="--h:99%"></div>
+                            <div class="mini-bar" style="--h:98%"></div>
+                            <div class="mini-bar" style="--h:99%"></div>
+                            <div class="mini-bar" style="--h:100%"></div>
+                            <div class="mini-bar" style="--h:99%"></div>
+                            <div class="mini-bar active" style="--h:99%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABLE CARD -->
+                <div class="table-card">
+                    <div class="table-header">
+                        <div class="table-title">
+                            <span>// REGISTRO_USUARIOS</span>
+                            <span class="table-count" id="tableCount">0 registros</span>
+                        </div>
+                        <div class="table-actions">
+                            <div class="search-wrap">
+                                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                                    <path
+                                        d="M11.742 10.344a6.5 6.5 0 10-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 001.415-1.414l-3.85-3.85a1.007 1.007 0 00-.115-.099zm-5.242 1.656a5.5 5.5 0 110-11 5.5 5.5 0 010 11z" />
+                                </svg>
+                                <input type="text" id="tableSearch" placeholder="FILTRAR..." autocomplete="off">
+                            </div>
+                            <button class="btn btn-outline btn-sm" onclick="exportData()">
+                                <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
+                                    <path
+                                        d="M.5 9.9a.5.5 0 01.5.5v2.5a1 1 0 001 1h12a1 1 0 001-1v-2.5a.5.5 0 011 0v2.5a2 2 0 01-2 2H2a2 2 0 01-2-2v-2.5a.5.5 0 01.5-.5z" />
+                                    <path
+                                        d="M7.646 11.854a.5.5 0 00.708 0l3-3a.5.5 0 00-.708-.708L8.5 10.293V1.5a.5.5 0 00-1 0v8.793L5.354 8.146a.5.5 0 10-.708.708l3 3z" />
+                                </svg>
+                                EXPORTAR
+                            </button>
+                            <button class="btn btn-primary btn-sm" onclick="showModal('modalCreate')">
+                                <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
+                                    <path
+                                        d="M8 4a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3v3a.5.5 0 01-1 0v-3h-3a.5.5 0 010-1h3v-3A.5.5 0 018 4z" />
+                                </svg>
+                                NUEVO
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table class="cyber-table" id="mainTable">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="checkAll" class="cyber-check"></th>
+                                    <th class="sortable" data-col="0">ID <span class="sort-icon">⇅</span></th>
+                                    <th class="sortable" data-col="1">USUARIO <span class="sort-icon">⇅</span></th>
+                                    <th class="sortable" data-col="2">EMAIL <span class="sort-icon">⇅</span></th>
+                                    <th class="sortable" data-col="3">ROL <span class="sort-icon">⇅</span></th>
+                                    <th class="sortable" data-col="4">ESTADO <span class="sort-icon">⇅</span></th>
+                                    <th class="sortable" data-col="5">ÚLTIMO_ACCESO <span class="sort-icon">⇅</span>
+                                    </th>
+                                    <th>ACCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <!-- JS populated by admin.js -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="table-footer">
+                        <span class="page-info" id="pageInfo">Mostrando 1–10 de 0</span>
+                        <div class="pagination" id="pagination"></div>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ═══════════════════════════════ MODAL: CREAR / EDITAR -->
+    <div class="modal-overlay" id="modalCreate" onclick="closeOnOverlay(event, 'modalCreate')">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-terminal-btns">
+                    <span class="mtb mtb-red" onclick="closeModal('modalCreate')"></span>
+                    <span class="mtb mtb-yellow"></span>
+                    <span class="mtb mtb-green"></span>
+                </div>
+                <span class="modal-title" id="modalCreateTitle">NUEVO_REGISTRO.exe</span>
+            </div>
+            <div class="modal-body">
+                <form id="formCreate" novalidate>
+                    <input type="hidden" id="editId">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">&gt; NOMBRE_USUARIO</label>
+                            <input type="text" id="fUsername" class="form-input" placeholder="usuario_01" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">&gt; EMAIL</label>
+                            <input type="email" id="fEmail" class="form-input" placeholder="user@system.net" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">&gt; ROL</label>
+                            <select id="fRol" class="form-input form-select">
+                                <option value="ADMIN">ADMIN</option>
+                                <option value="OPERADOR">OPERADOR</option>
+                                <option value="AUDITOR">AUDITOR</option>
+                                <option value="INVITADO">INVITADO</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">&gt; ESTADO</label>
+                            <select id="fEstado" class="form-input form-select">
+                                <option value="ACTIVO">ACTIVO</option>
+                                <option value="INACTIVO">INACTIVO</option>
+                                <option value="SUSPENDIDO">SUSPENDIDO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">&gt; CONTRASEÑA</label>
+                        <input type="password" id="fPassword" class="form-input" placeholder="••••••••">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeModal('modalCreate')">[ CANCELAR ]</button>
+                <button class="btn btn-primary" onclick="saveRecord()">[ GUARDAR_REGISTRO ]</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════ MODAL: CONFIRMAR ELIMINAR -->
+    <div class="modal-overlay" id="modalDelete" onclick="closeOnOverlay(event, 'modalDelete')">
+        <div class="modal modal-sm">
+            <div class="modal-header">
+                <div class="modal-terminal-btns">
+                    <span class="mtb mtb-red" onclick="closeModal('modalDelete')"></span>
+                    <span class="mtb mtb-yellow"></span>
+                    <span class="mtb mtb-green"></span>
+                </div>
+                <span class="modal-title">CONFIRMAR_ELIMINACIÓN.exe</span>
+            </div>
+            <div class="modal-body">
+                <div class="delete-warn">
+                    <div class="warn-icon">⚠</div>
+                    <p class="warn-text">¿Confirma la eliminación del registro <strong id="deleteTarget"></strong>?</p>
+                    <p class="warn-sub">[ ESTA_ACCIÓN_ES_IRREVERSIBLE ]</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeModal('modalDelete')">[ CANCELAR ]</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">[ ELIMINAR_REGISTRO ]</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════ MODAL: VER DETALLE -->
+    <div class="modal-overlay" id="modalView" onclick="closeOnOverlay(event, 'modalView')">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-terminal-btns">
+                    <span class="mtb mtb-red" onclick="closeModal('modalView')"></span>
+                    <span class="mtb mtb-yellow"></span>
+                    <span class="mtb mtb-green"></span>
+                </div>
+                <span class="modal-title">DETALLE_REGISTRO.exe</span>
+            </div>
+            <div class="modal-body" id="modalViewBody">
+                <!-- JS populated -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeModal('modalView')">[ CERRAR ]</button>
+                <button class="btn btn-outline" onclick="editFromView()">[ EDITAR ]</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════ MODAL: TERMINAL -->
+    <div class="modal-overlay" id="modalTerminal" onclick="closeOnOverlay(event, 'modalTerminal')">
+        <div class="modal modal-lg terminal-window">
+            <div class="modal-header">
+                <div class="modal-terminal-btns">
+                    <span class="mtb mtb-red" onclick="closeModal('modalTerminal')"></span>
+                    <span class="mtb mtb-yellow"></span>
+                    <span class="mtb mtb-green"></span>
+                </div>
+                <span class="modal-title">SYSTEM_TERMINAL.sh</span>
+            </div>
+            <div class="modal-body terminal-body" id="terminalOutput">
+                <div class="terminal-line">[SYSTEM] Iniciando núcleo de comunicaciones...</div>
+                <div class="terminal-line">[SYSTEM] Enlazando con el nodo central...</div>
+                <div class="terminal-line">[SYSTEM] Sesión iniciada para el usuario: <span class="text-green"
+                        id="termUser">admin</span></div>
+                <div class="terminal-line">Página de ayuda: 'help' para comandos disponibles.</div>
+                <div class="terminal-input-line">
+                    <span class="terminal-prompt">root@cypher_net:~#</span>
+                    <input type="text" id="terminalInput" class="terminal-hidden-input" autofocus>
+                    <span class="terminal-input-display"></span>
+                    <span class="terminal-cursor"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════ TOAST CONTAINER -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Dependencies -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+
+</html>
