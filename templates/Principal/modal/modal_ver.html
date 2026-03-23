@@ -1,0 +1,23 @@
+<!-- ══════════════════════════════════════════ MODAL VER DETALLE ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalView" onclick="closeOnOverlay(event, 'modalView')">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalView')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="modal-title">DETALLE_REGISTRO.exe</span>
+        </div>
+        <div class="modal-body" id="modalViewBody">
+            <!-- JS populated -->
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal('modalView')">[ CERRAR ]</button>
+            <button class="btn btn-outline" onclick="editFromView()">[ EDITAR ]</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════ MODAL VER DETALLE ══════════════════════════════════════════════════ -->

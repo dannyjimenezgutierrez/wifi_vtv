@@ -1,0 +1,88 @@
+<!-- ══════════════════════════════════════════ SERVIDORES ══════════════════════════════════════════════════ -->
+
+<section class="section" id="sec-servidores">
+    <div class="section-header">
+        <div>
+            <h1 class="section-title">[ Servidores ]</h1>
+            <p class="section-sub">Nodos remotos y conectividad SSH</p>
+        </div>
+        <button class="btn btn-primary" onclick="alert('Funcionalidad de añadir servidor próximamente')">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                <path
+                    d="M8 4a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3v3a.5.5 0 01-1 0v-3h-3a.5.5 0 010-1h3v-3A.5.5 0 018 4z" />
+            </svg>
+            NUEVO_NODO
+        </button>
+    </div>
+
+    <div class="server-grid" id="serverListContainer">
+        <div class="server-card online">
+            <div class="server-header">
+                <span class="server-name">VTV_CORE_SRV_01</span>
+                <span class="server-status-tag">ONLINE</span>
+            </div>
+            <div class="server-info-row">
+                <span>DIRECCIÓN_IP:</span>
+                <span class="server-info-val">192.168.10.10</span>
+            </div>
+            <div class="server-info-row">
+                <span>LATENCIA:</span>
+                <span class="server-info-val">12ms</span>
+            </div>
+            <div class="server-info-row">
+                <span>SISTEMA:</span>
+                <span class="server-info-val">Ubuntu 22.04 LTS</span>
+            </div>
+            <div class="server-actions">
+                <button class="btn-server-ssh" onclick="quickSSH('192.168.10.10')">[ CONECTAR_SSH ]</button>
+            </div>
+        </div>
+
+        <div class="server-card online">
+            <div class="server-header">
+                <span class="server-name">NODE_TRANS_02</span>
+                <span class="server-status-tag">ONLINE</span>
+            </div>
+            <div class="server-info-row">
+                <span>DIRECCIÓN_IP:</span>
+                <span class="server-info-val">192.168.10.11</span>
+            </div>
+            <div class="server-info-row">
+                <span>LATENCIA:</span>
+                <span class="server-info-val">45ms</span>
+            </div>
+            <div class="server-info-row">
+                <span>SISTEMA:</span>
+                <span class="server-info-val">Debian 11</span>
+            </div>
+            <div class="server-actions">
+                <button class="btn-server-ssh" onclick="quickSSH('192.168.10.11')">[ CONECTAR_SSH ]</button>
+            </div>
+        </div>
+
+        <div class="server-card offline">
+            <div class="server-header">
+                <span class="server-name">BACKUP_STORAGE_05</span>
+                <span class="server-status-tag">OFFLINE</span>
+            </div>
+            <div class="server-info-row">
+                <span>DIRECCIÓN_IP:</span>
+                <span class="server-info-val">10.0.0.50</span>
+            </div>
+            <div class="server-info-row">
+                <span>ÚLTIMO_PULSO:</span>
+                <span class="server-info-val">2h 15m ago</span>
+            </div>
+            <div class="server-info-row">
+                <span>SISTEMA:</span>
+                <span class="server-info-val">FreeBSD 13</span>
+            </div>
+            <div class="server-actions">
+                <button class="btn-server-ssh" disabled style="opacity: 0.5; cursor: not-allowed;">[
+                    NODO_CAÍDO ]</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════ SERVIDORES ══════════════════════════════════════════════════ -->

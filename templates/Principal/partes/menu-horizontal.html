@@ -1,0 +1,106 @@
+<!-- ══════════════════════════════════════════ MENU HORIZONTAL ══════════════════════════════════════════════════ -->
+
+<header class="topbar">
+    <div class="topbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="breadcrumb">
+            <span class="bc-root">INTERFAZ</span>
+            <span class="bc-current" id="bcCurrent">PAGINA PRINCIPAL</span>
+        </div>
+    </div>
+
+    <div class="topbar-center">
+        <div class="topbar-search">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor">
+                <path
+                    d="M11.742 10.344a6.5 6.5 0 10-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 001.415-1.414l-3.85-3.85a1.007 1.007 0 00-.115-.099zm-5.242 1.656a5.5 5.5 0 110-11 5.5 5.5 0 010 11z" />
+            </svg>
+            <input type="text" id="globalSearch" placeholder="BUSCAR..." autocomplete="off">
+        </div>
+    </div>
+
+    <div class="topbar-right">
+        <!-- TERMINAL -->
+        <button class="topbar-btn" id="btnTerminalTop" aria-label="Terminal" title="Abrir Terminal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4 17 10 11 4 5" />
+                <line x1="12" y1="19" x2="20" y2="19" />
+            </svg>
+        </button>
+
+        <!-- CERRAR SESIÓN -->
+        <a href="{{ url_for('logout') }}" class="topbar-btn topbar-logout" aria-label="Cerrar Sesión"
+            title="Cerrar Sesión">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor">
+                <path
+                    d="M10 12.5a.5.5 0 01-.5.5h-8a.5.5 0 01-.5-.5v-9a.5.5 0 01.5-.5h8a.5.5 0 01.5.5v2a.5.5 0 001 0v-2A1.5 1.5 0 009.5 2h-8A1.5 1.5 0 000 3.5v9A1.5 1.5 0 001.5 14h8a1.5 1.5 0 001.5-1.5v-2a.5.5 0 00-1 0v2z" />
+                <path
+                    d="M15.854 8.354a.5.5 0 000-.708l-3-3a.5.5 0 10-.708.708L14.293 7.5H5.5a.5.5 0 000 1h8.793l-2.147 2.146a.5.5 0 00.708.708l3-3z" />
+            </svg>
+        </a>
+
+
+
+
+        <div class="topbar-user" id="userDropdownToggle">
+            <div class="user-avatar">
+                <img src="/static/Principal/img/hacker-avatar.png" alt="hacker" class="avatar-img">
+            </div>
+            <div class="user-info">
+                <span class="user-name">ADMIN</span>
+                <span class="user-role">ROOT_ACCESS</span>
+            </div>
+            <svg class="user-chevron" width="10" height="10" viewBox="0 0 16 16" fill="currentColor">
+                <path
+                    d="M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z" />
+            </svg>
+
+            <div class="user-dropdown" id="userDropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-avatar">
+                        <img src="/static/Principal/img/hacker-avatar.png" alt="hacker" class="avatar-img">
+                    </div>
+                    <div>
+                        <div class="dropdown-name">ADMINISTRADOR</div>
+                        <div class="dropdown-email">admin@vtv.gob.ve</div>
+                    </div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM14 14s1 0 1-1-1-4-7-4-7 3-7 4 1 1 1 1h12z" />
+                    </svg>
+                    <span>USUARIO: admin</span>
+                </div>
+                <div class="dropdown-item">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 1L2 3v5c0 3.5 2.5 6.7 6 7.9C11.5 14.7 14 11.5 14 8V3L8 1z" />
+                    </svg>
+                    <span>ROL: ROOT_ACCESS</span>
+                </div>
+                <div class="dropdown-item">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 3.5a.5.5 0 00-1 0V9a.5.5 0 00.252.434l3.5 2a.5.5 0 00.496-.868L8 8.71V3.5z" />
+                        <path d="M8 16A8 8 0 108 0a8 8 0 000 16zm7-8A7 7 0 111 8a7 7 0 0114 0z" />
+                    </svg>
+                    <span>IP: 192.168.1.100</span>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a href="{{ url_for('logout') }}" class="dropdown-item dropdown-logout">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                        <path
+                            d="M10 12.5a.5.5 0 01-.5.5h-8a.5.5 0 01-.5-.5v-9a.5.5 0 01.5-.5h8a.5.5 0 01.5.5v2a.5.5 0 001 0v-2A1.5 1.5 0 009.5 2h-8A1.5 1.5 0 000 3.5v9A1.5 1.5 0 001.5 14h8a1.5 1.5 0 001.5-1.5v-2a.5.5 0 00-1 0v2z" />
+                        <path
+                            d="M15.854 8.354a.5.5 0 000-.708l-3-3a.5.5 0 10-.708.708L14.293 7.5H5.5a.5.5 0 000 1h8.793l-2.147 2.146a.5.5 0 00.708.708l3-3z" />
+                    </svg>
+                    <span>[ CERRAR_SESIÓN ]</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ══════════════════════════════════════════ MENU HORIZONTAL ══════════════════════════════════════════════════ -->

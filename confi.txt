@@ -1,0 +1,72 @@
+
+--------------------------------------------------------------
+PASO 1 — Crear el archivo de servicio
+--------------------------------------------------------------
+
+bash sudo nano /etc/systemd/system/wifi_vtv.service
+
+Pega esto:
+
+
+[Unit]
+Description=VTV Canal 8 WiFi Admin Panel
+After=network.target
+
+[Service]
+User=danny
+WorkingDirectory=/opt/wifi_vtv
+Environment=PATH=/opt/wifi_vtv/venv/bin
+ExecStart=/opt/wifi_vtv/venv/bin/python /opt/wifi_vtv/app.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+
+Ctrl+O → Enter → Ctrl+X
+
+--------------------------------------------------------------
+PASO 2 — Activar e iniciar el servicio
+--------------------------------------------------------------
+
+bash# Recargar systemd para que reconozca el nuevo servicio
+sudo systemctl daemon-reload
+
+# Activar para que arranque solo al encender el servidor
+sudo systemctl enable wifi_vtv
+
+# Iniciar ahora mismo
+sudo systemctl start wifi_vtv
+
+# Verificar que está corriendo
+sudo systemctl status wifi_vtv
+```
+
+Debe mostrar:
+```
+● wifi_vtv.service - VTV Canal 8 - WiFi Admin Panel
+     Active: active (running) ✅
+
+--------------------------------------------------------------
+PASO 3 — Comandos para controlarlo (igual que Apache)
+--------------------------------------------------------------
+
+bash# Iniciar
+sudo systemctl start wifi_vtv
+
+# Detener
+sudo systemctl stop wifi_vtv
+
+# Reiniciar
+sudo systemctl restart wifi_vtv
+
+# Ver estado
+sudo systemctl status wifi_vtv
+
+# Ver errores si algo falla
+sudo journalctl -u wifi_vtv -f
+
+

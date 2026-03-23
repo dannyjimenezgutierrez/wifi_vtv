@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>VTV | Canal 8</title>
+    <link rel="shortcut icon" href="/static/Login/img/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/Login/css/estilo.css">
+</head>
+
+<body>
+
+    <canvas id="bgCanvas"></canvas>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+    <div class="hud-corner hud-tl"></div>
+    <div class="hud-corner hud-tr"></div>
+    <div class="hud-corner hud-bl"></div>
+    <div class="hud-corner hud-br"></div>
+
+    <div class="status-bar">
+        <div><span class="status-dot"></span> SISTEMA EN LÍNEA — GERENCIA DE TECNOLOGÍA VTV</div>
+        <div class="status-time" id="clock">00:00:00</div>
+        <div>[IPV4::VTV:C8:2026] — DIVISIÓN DE SERVIDORES Y REDES</div>
+    </div>
+    <div class="bottom-bar">
+        <span>VENEZOLANA DE TELEVISIÓN C.A</span>
+        <span>·</span>
+        <span>TODOS LOS DERECHOS RESERVADOS 2026</span>
+        <span>·</span>
+        <span>VTV CANAL 8</span>
+    </div>
+
+    <div class="glitch-overlay" id="glitchOverlay"></div>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="wrapper">
+        <div class="holo-panel">
+            <div class="panel-ring"></div>
+            <div class="panel-ring-2"></div>
+            <div class="panel-body">
+                <div class="t-header">
+                    <div class="t-dots">
+                        <div class="t-dot d-r"></div>
+                        <div class="t-dot d-y"></div>
+                        <div class="t-dot d-g"></div>
+                    </div>
+                    <div class="t-title">GERENCIA DE TECNOLOGÍA VTV</div>
+                    <div class="t-signal">
+                        <div class="t-signal-bar"></div>
+                        <div class="t-signal-bar"></div>
+                        <div class="t-signal-bar"></div>
+                        <div class="t-signal-bar"></div>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <div class="logo-zone">
+                        <div class="logo-hex">
+                            <div class="hex-ring"></div>
+                            <div class="hex-ring"></div>
+                            <div class="hex-ring"></div>
+                            <div class="logo-img-wrap">
+                                <img src="/static/Login/img/logo-VTV.png" alt="VTV"
+                                    onerror="this.style.display='none';this.parentNode.innerHTML='<span style=\'font-family:Orbitron,monospace;font-size:22px;font-weight:900;color:#00ff41;text-shadow:0 0 20px rgba(0,255,65,0.8)\'>VTV</span>'">
+                            </div>
+                            <div class="logo-scan"></div>
+                        </div>
+                        <div class="sys-title">WIFI VTV</div>
+                        <div class="sys-sub">CANAL 8 ASI SOMOS</div>
+                        <div class="sys-tag">[ ACCESO RESTRINGIDO ]</div>
+                    </div>
+
+                    <form class="form" id="loginForm" novalidate>
+                        <div class="f-group" id="g-user">
+                            <label class="f-label" for="username">
+                                <h3>[root@USUARIO: $]</h3>
+                            </label>
+                            <div class="f-box">
+                                <input class="f-input" type="text" id="username" placeholder="Ingrese su usuario"
+                                    autocomplete="username">
+                                <span class="f-icon">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.5">
+                                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <span class="f-error" id="userError"></span>
+                        </div>
+
+                        <div class="f-group" id="g-pass">
+                            <label class="f-label" for="password">
+                                <h3>[root@PASSWORD: $]</h3>
+                            </label>
+                            <div class="f-box">
+                                <input class="f-input" type="password" id="password" placeholder="••••••••••••"
+                                    autocomplete="current-password">
+                                <button type="button" class="f-icon" id="togglePass" aria-label="Ver contraseña">
+                                    <svg id="eyeOpen" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.5">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                    <svg id="eyeClosed" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.5" style="display:none">
+                                        <path
+                                            d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" />
+                                        <line x1="1" y1="1" x2="23" y2="23" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="f-error" id="passError"></span>
+                        </div>
+
+                        <div class="f-options">
+                            <label class="f-check">
+                                <input type="checkbox" id="remember">
+                                <div class="f-checkmark"></div>
+                                <span class="f-check-label">RECORDAR SESIÓN</span>
+                            </label>
+                            <a href="#" class="f-forgot">[ RECUPERAR ACCESO ]</a>
+                        </div>
+
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <div class="btn-inner">
+                                <span class="btn-text">INICIAR SESIÓN</span>
+                                <span class="btn-chevron">▶▶</span>
+                                <div class="btn-loader">
+                                    <div class="loader-bar"></div>
+                                    <div class="loader-bar"></div>
+                                    <div class="loader-bar"></div>
+                                    <div class="loader-bar"></div>
+                                    <div class="loader-bar"></div>
+                                </div>
+                            </div>
+                        </button>
+                    </form>
+
+                    <div class="divider">
+                        <div class="div-line"></div>
+                        <div class="sys-tag">[ VENEZOLANA DE TELEVISIÓN ]</div>
+
+                        <div class="div-line"></div>
+                    </div>
+
+                    <div class="panel-footer">
+                        <div class="footer-text">© 2026 — TODOS LOS DERECHOS RESERVADOS</div>
+                    </div>
+
+                    <div class="success-screen" id="successScreen">
+                        <div class="success-hex">
+                            <div class="s-ring"></div>
+                            <div class="s-ring"></div>
+                            <div class="s-ring"></div>
+                            <div class="s-icon">
+                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor"
+                                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="8 20 16 28 32 12" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="s-title">[ ACCESO CONCEDIDO ]</div>
+                        <div class="s-desc">CARGANDO INTERFAZ DE SISTEMA...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/Login/js/login.js"></script>
+</body>
+
+</html>

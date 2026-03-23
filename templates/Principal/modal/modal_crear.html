@@ -1,0 +1,57 @@
+<!-- ══════════════════════════════════════════ MODAL CREAR ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalCreate" onclick="closeOnOverlay(event, 'modalCreate')">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalCreate')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="modal-title" id="modalCreateTitle">NUEVO_REGISTRO.exe</span>
+        </div>
+        <div class="modal-body">
+            <form id="formCreate" novalidate>
+                <input type="hidden" id="editId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">&gt; NOMBRE_USUARIO</label>
+                        <input type="text" id="fUsername" class="form-input" placeholder="usuario_01" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">&gt; EMAIL</label>
+                        <input type="email" id="fEmail" class="form-input" placeholder="user@system.net" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">&gt; ROL</label>
+                        <select id="fRol" class="form-input form-select">
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="OPERADOR">OPERADOR</option>
+                            <option value="AUDITOR">AUDITOR</option>
+                            <option value="INVITADO">INVITADO</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">&gt; ESTADO</label>
+                        <select id="fEstado" class="form-input form-select">
+                            <option value="ACTIVO">ACTIVO</option>
+                            <option value="INACTIVO">INACTIVO</option>
+                            <option value="SUSPENDIDO">SUSPENDIDO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">&gt; CONTRASEÑA</label>
+                    <input type="password" id="fPassword" class="form-input" placeholder="••••••••">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal('modalCreate')">[ CANCELAR ]</button>
+            <button class="btn btn-primary" onclick="saveRecord()">[ GUARDAR_REGISTRO ]</button>
+        </div>
+    </div>
+</div>
+<!-- ══════════════════════════════════════════ MODAL CREAR ══════════════════════════════════════════════════ -->

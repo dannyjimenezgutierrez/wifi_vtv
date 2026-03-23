@@ -1,0 +1,27 @@
+<!-- ══════════════════════════════════════════ MODAL ELIMINAR ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalDelete" onclick="closeOnOverlay(event, 'modalDelete')">
+    <div class="modal modal-sm">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalDelete')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="modal-title">CONFIRMAR_ELIMINACIÓN.exe</span>
+        </div>
+        <div class="modal-body">
+            <div class="delete-warn">
+                <div class="warn-icon">⚠</div>
+                <p class="warn-text">¿Confirma la eliminación del registro <strong id="deleteTarget"></strong>?</p>
+                <p class="warn-sub">[ ESTA_ACCIÓN_ES_IRREVERSIBLE ]</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal('modalDelete')">[ CANCELAR ]</button>
+            <button class="btn btn-danger" onclick="confirmDelete()">[ ELIMINAR_REGISTRO ]</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════ MODAL ELIMINAR ══════════════════════════════════════════════════ -->

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% include 'Principal/partes/cabecera.html' %}
+</head>
+<body class="admin-body">
+
+    {% include 'Principal/partes/menu-vertical.html' %}
+
+    <div class="main-wrap" id="mainWrap">
+
+        {% include 'Principal/partes/menu-horizontal.html' %}
+
+        <main class="content">
+            {% include 'Principal/secciones/principal.html' %}
+            {% include 'Principal/secciones/usuarios.html' %}
+            {% include 'Principal/secciones/perfiles.html' %}
+            {% include 'Principal/secciones/gerencias.html' %}
+            {% include 'Principal/secciones/servidores.html' %}
+        </main>
+
+        {% include 'Principal/partes/footer.html' %}
+
+    </div>
+
+    {% include 'Principal/modal/modal_crear.html' %}
+    {% include 'Principal/modal/modal_eliminar.html' %}
+    {% include 'Principal/modal/modal_ver.html' %}
+    {% include 'Principal/modal/modal_terminal.html' %}
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    {% include 'Principal/partes/librerias.html' %}
+
+</body>
+</html>
