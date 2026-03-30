@@ -1,0 +1,132 @@
+<!-- ══════════════════════════════════════════ MODAL VER DETALLE ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalView" onclick="closeOnOverlay(event, 'modalView')">
+    <div class="modal modal-lg">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalView')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="btn btn-outline btn-sm" id="modalViewTitle" style="color: #00ffff; border-color: #00ffff;">VER
+                DETALLES USUARIO.exe</span>
+        </div>
+        <div class="modal-body">
+            <!-- Tabs Navigation -->
+            <div class="modal-tabs">
+                <div class="modal-tab active" onclick="switchTab('vtabPersonal', 'modalView')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg> INFORMACIÓN PERSONAL
+                </div>
+                <div class="modal-tab" onclick="switchTab('vtabAccount', 'modalView')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg> INFORMACIÓN DE CUENTA
+                </div>
+            </div>
+
+            <form id="formView" novalidate>
+                <div id="vtabPersonal" class="tab-panel active">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">&gt; PRIMER_NOMBRE</label>
+                            <input type="text" id="vFirstName" class="form-input" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">&gt; SEGUNDO_NOMBRE</label>
+                            <input type="text" id="vSecondName" class="form-input" disabled>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">&gt; PRIMER_APELLIDO</label>
+                            <input type="text" id="vLastName" class="form-input" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">&gt; SEGUNDO_APELLIDO</label>
+                            <input type="text" id="vSecondLastName" class="form-input" disabled>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">&gt; CÉDULA_IDENTIDAD</label>
+                            <input type="text" id="vCedula" class="form-input" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">&gt; TELÉFONO_CONTACTO</label>
+                            <input type="text" id="vPhone" class="form-input" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="vtabAccount" class="tab-panel">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">[ PERFIL SISTEMA ]</label>
+                            <select id="vProfile" class="form-input form-select" disabled>
+                                <option value=""> Seleccione un Perfil</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">[ ESTADO ]</label>
+                            <select id="vStatus" class="form-input form-select" disabled>
+                                <option value=""> Seleccione un Estado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">[ GERENCIAS ]</label>
+                            <select id="vGerencia" class="form-input form-select" disabled>
+                                <option value=""> Seleccione una Gerencia</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">[ DIVISIÓNES ]</label>
+                            <select id="vDivision" class="form-input form-select" disabled>
+                                <option value=""> Seleccione una División</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">[ NOMBRE DE USUARIO ]</label>
+                            <input type="text" id="vUsername" class="form-input" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">[ CLAVE DE ACCESO ]</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="vPassword" class="form-input" disabled>
+                                <button type="button" class="password-toggle" onclick="togglePassword('vPassword', 'vPassIcon')" id="vPassIcon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label class="form-label">[ CORREO ELECTRÓNICO ]</label>
+                            <input type="email" id="vEmail" class="form-input" disabled>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="modal-footer">
+            <button class="btn btn-outline btn-sm btn-outline-red" onclick="closeModal('modalView')">[ CANCELAR
+                ]</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════ MODAL VER DETALLE ══════════════════════════════════════════════════ -->

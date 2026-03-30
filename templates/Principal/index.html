@@ -1,8 +1,30 @@
+<!-----------------------------------------------------------------------------------------------------------|
+|                                             WIFI  VTV                                                      |
+|------------------------------------------------------------------------------------------------------------|
+| NOMBRE         :  DANNY JOSÉ JIMÉNEZ GUTIERREZ                                                             |
+| CÉDULA         :  16.029.567                                                                               |
+| TELÉFONO       :  0424-281-44-55                                                                           |
+| CORREO         :  dennaly88@gmail.com , djjimenez@vtv.gov.ve                                               |
+| TÍTULO         :  INGENIERO EN SISTEMAS                                                                    |
+|------------------------------------------------------------------------------------------------------------|
+| SISTEMA        :  WIFI VTV                                                                                 |
+| TECNOLOGÍAS    :  Python 3.10  , Flask 3.1.3, Microsoft SQL Server 2022 , JavaScript ES6 , Bootstrap 5     |
+| GERENCIA       :  TECNOLOGÍA                                                                               |
+| DIVISIÓN       :  DESARROLLO DE SISTEMAS                                                                   |
+| FECHA          :  MIRANDA, MUNICIPIO SUCRE • FEBRERO 2026                                                  |
+| VERSIÓN        :  2.1.0                                                                                    |
+| EMPRESA        :  VENEZOLANA DE TELEVISIÓN - CANAL 8 - VTV - ASÍ SOMOS                                     |
+| SISTEMA        :  Procesando                                                                               |
+-------------------------------------------------------------------------------------------------------------|
+------------------------------------------------------------------------------------------------------------->
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     {% include 'Principal/partes/cabecera.html' %}
 </head>
+
 <body class="admin-body">
 
     {% include 'Principal/partes/menu-vertical.html' %}
@@ -16,21 +38,48 @@
             {% include 'Principal/secciones/usuarios.html' %}
             {% include 'Principal/secciones/perfiles.html' %}
             {% include 'Principal/secciones/gerencias.html' %}
+            {% include 'Principal/secciones/divisiones.html' %}
+            {% include 'Principal/secciones/marcas.html' %}
+            {% include 'Principal/secciones/ubicacion.html' %}
+            {% include 'Principal/secciones/wifi.html' %}
             {% include 'Principal/secciones/servidores.html' %}
+            {% include 'Principal/secciones/auditoria_usuarios.html' %}
+            {% include 'Principal/secciones/auditoria_wifi.html' %}
         </main>
 
         {% include 'Principal/partes/footer.html' %}
 
     </div>
 
-    {% include 'Principal/modal/modal_crear.html' %}
-    {% include 'Principal/modal/modal_eliminar.html' %}
-    {% include 'Principal/modal/modal_ver.html' %}
-    {% include 'Principal/modal/modal_terminal.html' %}
+    {% include 'Principal/modal/modal_crear_usuarios.html' %}
+    {% include 'Principal/modal/modal_eliminar_usuarios.html' %}
+    {% include 'Principal/modal/modal_editar_usuarios.html' %}
+    {% include 'Principal/modal/modal_ver_usuarios.html' %}
+    {% include 'Principal/modal/modal_alerta.html' %}
 
     <div class="toast-container" id="toastContainer"></div>
 
     {% include 'Principal/partes/librerias.html' %}
 
 </body>
+
 </html>
+
+<!-----------------------------------------------------------------------------------------------------------|
+|------------------------------------------------------------------------------------------------------------|
+|                        AUTOR DEL SISTEMA                                                                   |
+|------------------------------------------------------------------------------------------------------------|
+|                                                                                                            |
+| NOMBRE         :  DANNY JOSE JIMENEZ GUTIERREZ                                                             |
+| CEDULA         :  16.029.567                                                                               |
+| TELEFONO       :  0424-281-44-55                                                                           |
+| CORREO         :  DENNALY88@GMAIL.COM ,DJJIMENEZ@VTV.GOV.VE                                                |
+| TITULO         :  INGENIERO EN SISTEMA                                                                     |
+|------------------------------------------------------------------------------------------------------------|
+| SISTEMA        :   WIFI VTV                                                                                |
+| REALIZADO      :   Python 3.10  , Flask 3.1.3, Microsoft SQL Server 2022                                   |          
+| GERENCIA DE    :   TECNOLOGIA                                                                              |
+| DIVISION DE    :   DESARROLLO DE SISTEMAS                                                                  |
+| FECHA          :   MIRANDA , MUNICIPIO SUCRE   2026                                                        |                               
+-------------------------------------------------------------------------------------------------------------|
+------------------------------------------------------------------------------------------------------------->

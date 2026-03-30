@@ -1,10 +1,28 @@
+<!-----------------------------------------------------------------------------------------------------------|
+|                                             WIFI  VTV                                                      |
+|------------------------------------------------------------------------------------------------------------|
+| NOMBRE         :  DANNY JOSÉ JIMÉNEZ GUTIERREZ                                                             |
+| CÉDULA         :  16.029.567                                                                               |
+| TELÉFONO       :  0424-281-44-55                                                                           |
+| CORREO         :  dennaly88@gmail.com , djjimenez@vtv.gov.ve                                               |
+| TÍTULO         :  INGENIERO EN SISTEMAS                                                                    |
+|------------------------------------------------------------------------------------------------------------|
+| SISTEMA        :  WIFI VTV                                                                                 |
+| TECNOLOGÍAS    :  Python 3.10  , Flask 3.1.3, Microsoft SQL Server 2022 , JavaScript ES6 , Bootstrap 5     |
+| GERENCIA       :  TECNOLOGÍA                                                                               |
+| DIVISIÓN       :  DESARROLLO DE SISTEMAS                                                                   |
+| FECHA          :  MIRANDA, MUNICIPIO SUCRE • FEBRERO 2026                                                  |
+| VERSIÓN        :  2.1.0                                                                                    |
+| EMPRESA        :  VENEZOLANA DE TELEVISIÓN - CANAL 8 - VTV - ASÍ SOMOS                                     |
+| SISTEMA        :  Procesando                                                                               |
+-------------------------------------------------------------------------------------------------------------|
+------------------------------------------------------------------------------------------------------------->
+
+
 <!-- ══════════════════════════════════════════ PRINCIPAL ══════════════════════════════════════════════════ -->
 
 
 <section class="section" id="sec-usuarios">
-
-
-
 
     <div class="stat-grid">
         <div class="stat-card">
@@ -14,9 +32,9 @@
                 </svg>
             </div>
             <div class="stat-body">
-                <span class="stat-label">USUARIOS_ACTIVOS</span>
-                <span class="stat-value" data-target="1284">0</span>
-                <span class="stat-delta up">▲ +12.4%</span>
+                <span class="stat-label">USUARIOS ACTIVOS</span>
+                <span class="stat-value" id="statActivos" data-target="0">0</span>
+                <span class="stat-delta up">▲ +0%</span>
             </div>
             <div class="stat-chart">
                 <div class="mini-bar" style="--h:40%"></div>
@@ -37,9 +55,9 @@
                 </svg>
             </div>
             <div class="stat-body">
-                <span class="stat-label">SERVIDORES_ON</span>
-                <span class="stat-value" data-target="47">0</span>
-                <span class="stat-delta up">▲ +3</span>
+                <span class="stat-label" style="white-space: nowrap;">USUARIOS INACTIVOS</span>
+                <span class="stat-value" id="statInactivos" data-target="0">0</span>
+                <span class="stat-delta up">▲ +0</span>
             </div>
             <div class="stat-chart">
                 <div class="mini-bar" style="--h:50%"></div>
@@ -59,9 +77,9 @@
                 </svg>
             </div>
             <div class="stat-body">
-                <span class="stat-label">AMENAZAS_BLOQUEADAS</span>
-                <span class="stat-value" data-target="3921">0</span>
-                <span class="stat-delta down">▼ -5.1%</span>
+                <span class="stat-label">USUARIOS BLOQUEADOS</span>
+                <span class="stat-value" id="statBloqueados" data-target="0">0</span>
+                <span class="stat-delta down">▼ -0%</span>
             </div>
             <div class="stat-chart">
                 <div class="mini-bar" style="--h:80%"></div>
@@ -82,8 +100,8 @@
                 </svg>
             </div>
             <div class="stat-body">
-                <span class="stat-label">UPTIME</span>
-                <span class="stat-value" data-target="99">0</span><span class="stat-unit">%</span>
+                <span class="stat-label">TOTAL DE USUARIOS</span>
+                <span class="stat-value" id="statTotal" data-target="0">0</span>
                 <span class="stat-delta up">▲ Óptimo</span>
             </div>
             <div class="stat-chart">
@@ -98,13 +116,16 @@
         </div>
     </div>
 
-    <!-- TABLE CARD -->
     <div class="table-card">
         <div class="table-header">
-            <div class="table-title">
-                <span>// REGISTRO_USUARIOS</span>
-                <span class="table-count" id="tableCount">0 registros</span>
+
+            <div class="breadcrumb">
+                <span class="bc-root"> <svg width="12" height="10" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM14 14s1 0 1-1-1-4-7-4-7 3-7 4 1 1 1 1h12z" />
+                    </svg> INTERFAZ DE USUARIOS </span>
+                <span class="bc-current" id="bcCurrent">0 REGISTROS</span>
             </div>
+
             <div class="table-actions">
                 <div class="search-wrap">
                     <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
@@ -122,10 +143,14 @@
                     </svg>
                     EXPORTAR
                 </button>
-                <button class="btn btn-outline btn-sm" onclick="showModal('modalCreate')">
-                    <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
-                        <path
-                            d="M8 4a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3v3a.5.5 0 01-1 0v-3h-3a.5.5 0 010-1h3v-3A.5.5 0 018 4z" />
+                <button class="btn btn-outline btn-sm" onclick="showModal('modalCrearUsuarios')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-user-plus">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="8.5" cy="7" r="4"></circle>
+                        <line x1="20" y1="8" x2="20" y2="14"></line>
+                        <line x1="23" y1="11" x2="17" y2="11"></line>
                     </svg>
                     NUEVO
                 </button>
@@ -137,13 +162,11 @@
                 <thead>
                     <tr>
                         <th><input type="checkbox" id="checkAll" class="cyber-check"></th>
-                        <th class="sortable" data-col="0">ID <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-col="1">USUARIO <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-col="2">EMAIL <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-col="3">ROL <span class="sort-icon">⇅</span></th>
+                        <th class="sortable" data-col="0">USUARIO <span class="sort-icon">⇅</span></th>
+                        <th class="sortable" data-col="1">NOMBRE <span class="sort-icon">⇅</span></th>
+                        <th class="sortable" data-col="2">APELLIDO <span class="sort-icon">⇅</span></th>
+                        <th class="sortable" data-col="3">CORREO <span class="sort-icon">⇅</span></th>
                         <th class="sortable" data-col="4">ESTADO <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-col="5">ÚLTIMO_ACCESO <span class="sort-icon">⇅</span>
-                        </th>
                         <th>ACCIONES</th>
                     </tr>
                 </thead>
@@ -162,3 +185,22 @@
 </section>
 
 <!-- ══════════════════════════════════════════ PRINCIPAL ══════════════════════════════════════════════════ -->
+
+<!-----------------------------------------------------------------------------------------------------------|
+|------------------------------------------------------------------------------------------------------------|
+|                        AUTOR DEL SISTEMA                                                                   |
+|------------------------------------------------------------------------------------------------------------|
+|                                                                                                            |
+| NOMBRE         :  DANNY JOSE JIMENEZ GUTIERREZ                                                             |
+| CEDULA         :  16.029.567                                                                               |
+| TELEFONO       :  0424-281-44-55                                                                           |
+| CORREO         :  DENNALY88@GMAIL.COM ,DJJIMENEZ@VTV.GOV.VE                                                |
+| TITULO         :  INGENIERO EN SISTEMA                                                                     |
+|------------------------------------------------------------------------------------------------------------|
+| SISTEMA        :   WIFI VTV                                                                                |
+| REALIZADO      :   Python 3.10  , Flask 3.1.3, Microsoft SQL Server 2022                                   |          
+| GERENCIA DE    :   TECNOLOGIA                                                                              |
+| DIVISION DE    :   DESARROLLO DE SISTEMAS                                                                  |
+| FECHA          :   MIRANDA , MUNICIPIO SUCRE   2026                                                        |                               
+-------------------------------------------------------------------------------------------------------------|
+------------------------------------------------------------------------------------------------------------->

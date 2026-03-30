@@ -1,9 +1,30 @@
+#------------------------------------------------------------------------------------------------------------|
+#                                             WIFI  VTV                                                      |
+#------------------------------------------------------------------------------------------------------------|
+# NOMBRE         :  DANNY JOSÉ JIMÉNEZ GUTIERREZ                                                             |
+# CÉDULA         :  16.029.567                                                                               |
+# TELÉFONO       :  0424-281-44-55                                                                           |
+# CORREO         :  dennaly88@gmail.com , djjimenez@vtv.gov.ve                                               |
+# TÍTULO         :  INGENIERO EN SISTEMAS                                                                    |
+#------------------------------------------------------------------------------------------------------------|
+# SISTEMA        :  WIFI VTV                                                                                 |
+# TECNOLOGÍAS    :  Python 3.10  , Flask 3.1.3, Microsoft SQL Server 2022 , JavaScript ES6 , Bootstrap 5     |
+# GERENCIA       :  TECNOLOGÍA                                                                               |
+# DIVISIÓN       :  DESARROLLO DE SISTEMAS                                                                   |
+# FECHA          :  MIRANDA, MUNICIPIO SUCRE • FEBRERO 2026                                                  |
+# VERSIÓN        :  2.1.0                                                                                    |
+# EMPRESA        :  VENEZOLANA DE TELEVISIÓN - CANAL 8 - VTV - ASÍ SOMOS                                     |
+# SISTEMA        :  Procesando                                                                               |
+#------------------------------------------------------------------------------------------------------------|
+#------------------------------------------------------------------------------------------------------------/
+
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 
 app = Flask(__name__)
-
 app.secret_key = 'vtv_wifi_2026'
-
+# ── BLUEPRINTS ────────────────────────────────────────────────
+from modules.usuarios.routes import usuarios_bp
+app.register_blueprint(usuarios_bp)
 # ── LOGIN ──────────────────────────────────────────────────────
 @app.route('/')
 def login():
@@ -41,7 +62,6 @@ def principal():
     isp_name = "DESCONOCIDO"
     
     try:
-        # Se obtiene telemetría de red simulando lo que haría el script JS
         res = requests.get('http://ip-api.com/json/', timeout=2)
         if res.status_code == 200:
             data = res.json()
@@ -69,3 +89,24 @@ def logout():
 # ── INICIAR ───────────────────────────────────────────────────
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=1818)
+
+
+
+#------------------------------------------------------------------------------------------------------------|
+#------------------------------------------------------------------------------------------------------------|
+#                        AUTOR DEL SISTEMA                                                                   |
+#------------------------------------------------------------------------------------------------------------|
+#                                                                                                            |
+# NOMBRE         :  DANNY JOSE JIMENEZ GUTIERREZ                                                             |
+# CEDULA         :  16.029.567                                                                               |
+# TELEFONO       :  0424-281-44-55                                                                           |
+# CORREO         :  DENNALY88@GMAIL.COM ,DJJIMENEZ@VTV.GOV.VE                                                |
+# TITULO         :  INGENIERO EN SISTEMA                                                                     |
+#------------------------------------------------------------------------------------------------------------|
+# SISTEMA        :   WIFI VTV                                                                                |
+# REALIZADO      :   Python 3.10  , Flask 3.1.3, Microsoft SQL Server 2022                                   |          
+# GERENCIA DE    :   TECNOLOGIA                                                                              |
+# DIVISION DE    :   DESARROLLO DE SISTEMAS                                                                  |
+# FECHA          :   MIRANDA , MUNICIPIO SUCRE   2026                                                        |                               
+#------------------------------------------------------------------------------------------------------------|
+#------------------------------------------------------------------------------------------------------------->

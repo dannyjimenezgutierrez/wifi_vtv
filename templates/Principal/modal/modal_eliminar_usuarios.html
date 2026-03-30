@@ -1,0 +1,45 @@
+<!-- ══════════════════════════════════════════ MODAL ELIMINAR ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalEliminarUsuarios" onclick="closeOnOverlay(event, 'modalEliminarUsuarios')">
+    <div class="modal modal-md">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalEliminarUsuarios')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="btn btn-outline btn-sm btn-outline-blue" id="modalDeleteTitle">ELIMINAR USUARIO.exe</span>
+        </div>
+        <div class="modal-body">
+            <div class="delete-warn" style="text-align: center; padding: 20px 0;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ff3131" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"
+                    style="margin-bottom: 20px; filter: drop-shadow(0 0 5px #ff3131);">
+                    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <p class="warn-text"
+                    style="font-size: 1.25rem; margin-bottom: 12px; font-weight: bold; letter-spacing: 0.5px; color: #ffffff;">
+                    ¿Confirma la eliminación del registro ?</p>
+                <p class="warn-sub" style="font-size: 0.85rem; color: #888; letter-spacing: 2px; font-weight: 900;">[
+                    ESTA_ACCIÓN_ES_IRREVERSIBLE ]</p>
+
+                <div class="form-group" style="margin-top: 25px; text-align: center;">
+
+                    <div id="deleteTarget"
+                        style="font-size: 1.5rem; color: #ff3131; font-weight: bold; text-shadow: 0 0 10px rgba(255, 49, 49, 0.4); border: 1px solid rgba(255, 49, 49, 0.2); padding: 10px; background: rgba(255, 49, 49, 0.05); display: inline-block; min-width: 200px; border-radius: 4px;">
+                        USUARIO</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline btn-sm btn-outline-red" onclick="closeModal('modalEliminarUsuarios')">[
+                CANCELAR
+                ]</button>
+            <button class="btn btn-outline btn-sm" onclick="confirmDelete()">[ ELIMINAR USUARIOS ]</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════ MODAL ELIMINAR ══════════════════════════════════════════════════ -->

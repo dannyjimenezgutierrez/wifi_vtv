@@ -810,6 +810,7 @@ body::after {
     --neon-green: #00ff41;
     --neon-red: #ff3131;
     --neon-cyan: #00ffff;
+    --neon-blue: #00d1ff;
     --neon-yellow: #ffff55;
     --bg-dark: #050505;
     --card-bg: rgba(10, 10, 10, 0.75);
@@ -863,6 +864,14 @@ body.admin-body {
 
 .sidebar.collapsed {
     width: var(--sidebar-collapsed);
+}
+
+.sidebar hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+    margin: 15px 0;
+    opacity: 0.3;
 }
 
 .sidebar-brand {
@@ -1020,6 +1029,21 @@ body.admin-body {
     overflow: hidden;
 }
 
+.sidebar.collapsed .chevron {
+    display: none;
+}
+
+.sidebar.collapsed .nav-submenu {
+    display: none !important;
+}
+
+.sidebar.collapsed .nav-item-dropdown.open {
+    margin: 0;
+    background: transparent;
+    box-shadow: none;
+    border-left: none;
+}
+
 /* --- SUBMENU STYLES --- */
 .nav-submenu {
     display: none;
@@ -1100,26 +1124,33 @@ body.admin-body {
 
 .sidebar-footer {
     margin-top: auto;
-    padding: 20px 24px;
-    border-top: 2px solid var(--neon-green);
+    padding: 15px 24px;
+    border-top: none;
 }
 
 .sys-info {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    gap: 6px 12px;
+    flex-wrap: nowrap;
+    gap: 10px;
     align-items: center;
+    justify-content: flex-start;
+    white-space: nowrap;
 }
 
 .sys-line {
-    font-size: 0.7rem;
-    color: #666;
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: monospace;
 }
 
 .sys-val {
     color: var(--neon-green);
-    font-family: monospace;
+    font-weight: bold;
+    margin-left: 2px;
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
 }
 
 /* --- MAIN WRAP --- */
@@ -1511,7 +1542,7 @@ body.admin-body {
     width: 24px;
     height: 24px;
     object-fit: contain;
-    filter: invert(1) sepia(1) saturate(5) hue-rotate(90deg) brightness(1.2);
+    filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%) drop-shadow(0 0 2px var(--neon-green));
 }
 
 .user-info {
@@ -2080,6 +2111,134 @@ body.admin-body {
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* CUSTOM MODAL SIZES & TABS */
+.modal-lg {
+    max-width: 950px !important;
+}
+
+.modal-md {
+    max-width: 600px !important;
+}
+
+.modal-sm {
+    max-width: 400px !important;
+}
+
+/* Password Toggle Styles */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper .form-input {
+    width: 100% !important;
+    padding-right: 40px !important;
+    box-sizing: border-box !important;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--neon-blue);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    z-index: 10;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+.password-toggle:hover {
+    opacity: 1;
+    color: var(--neon-cyan);
+    filter: drop-shadow(0 0 5px var(--neon-cyan));
+}
+
+.modal-tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(0, 255, 65, 0.1);
+    padding-bottom: 0;
+}
+
+.modal-tab {
+    padding: 12px 24px;
+    cursor: pointer;
+    color: #555;
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+    border-bottom: none;
+    position: relative;
+    top: 1px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.modal-tab:hover {
+    color: var(--neon-green);
+    background: rgba(0, 255, 65, 0.05);
+}
+
+.modal-tab.active {
+    color: var(--neon-green);
+    border: 1px solid rgba(0, 255, 65, 0.2);
+    border-bottom: 1px solid #0a0a0a;
+    background: rgba(0, 255, 65, 0.08);
+    box-shadow: 0 -5px 15px rgba(0, 255, 65, 0.05);
+}
+
+.tab-icon {
+    margin-right: 8px;
+    font-size: 1rem;
+    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--neon-green);
+    filter: drop-shadow(0 0 2px var(--neon-green));
+    transition: all 0.3s ease;
+}
+
+.modal-tab:not(.active) .tab-icon {
+    color: #555;
+    filter: none;
+    opacity: 0.6;
+}
+
+.tab-panel {
+    display: none;
+    animation: tabFadeIn 0.4s ease-out;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+@keyframes tabFadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px);
+        filter: blur(5px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+
 /* BUTTONS */
 .btn {
     padding: 10px 20px;
@@ -2125,6 +2284,16 @@ body.admin-body {
 
 .btn-outline-red:hover {
     background: rgba(255, 49, 49, 0.1);
+}
+
+.btn-outline-blue {
+    border: 1px solid var(--neon-blue);
+    color: var(--neon-blue);
+}
+
+.btn-outline-blue:hover {
+    background: rgba(0, 209, 255, 0.1);
+    box-shadow: 0 0 10px rgba(0, 209, 255, 0.2);
 }
 
 .btn-danger {
@@ -2632,45 +2801,44 @@ body.admin-body {
     border: 1px solid #aaa;
 }
 
-.status-indicator {
-    display: flex;
+.status-badge {
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.8rem;
-    font-weight: bold;
+    justify-content: center;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    min-width: 100px;
+    transition: all 0.3s ease;
 }
 
-.status-indicator::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-}
-
-.status-activo {
+.status-badge.status-activo {
+    background: rgba(0, 255, 65, 0.1);
     color: var(--neon-green);
+    border: 1px solid rgba(0, 255, 65, 0.4);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
 }
 
-.status-activo::before {
-    background: var(--neon-green);
-    box-shadow: 0 0 8px var(--neon-green);
+.status-badge.status-inactivo {
+    background: rgba(128, 128, 128, 0.1);
+    color: #888;
+    border: 1px solid rgba(128, 128, 128, 0.3);
 }
 
-.status-inactivo {
-    color: #666;
-}
-
-.status-inactivo::before {
-    background: #666;
-}
-
-.status-suspendido {
+.status-badge.status-bloqueado,
+.status-badge.status-suspendido {
+    background: rgba(255, 49, 49, 0.1);
     color: var(--neon-red);
+    border: 1px solid rgba(255, 49, 49, 0.4);
+    box-shadow: 0 0 10px rgba(255, 49, 49, 0.1);
 }
 
-.status-suspendido::before {
-    background: var(--neon-red);
-    box-shadow: 0 0 8px var(--neon-red);
+.status-badge:hover {
+    filter: brightness(1.2);
+    transform: translateY(-1px);
 }
 
 /* Helpers */
@@ -2761,29 +2929,87 @@ table.dataTable.no-footer {
     border-bottom: 1px solid var(--neon-green) !important;
 }
 
+/* DataTables Controls Styling */
+.dataTables_length {
+    color: var(--neon-green) !important;
+    font-size: 0.7rem !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    margin-right: 20px !important;
+}
+
+.dataTables_length select {
+    background: #050505 !important;
+    border: 1px solid rgba(0, 255, 65, 0.4) !important;
+    color: var(--neon-green) !important;
+    border-radius: 4px !important;
+    padding: 3px 6px !important;
+    outline: none !important;
+    cursor: pointer !important;
+    font-family: inherit !important;
+    font-size: 0.7rem !important;
+    transition: all 0.3s !important;
+    margin: 0 5px !important;
+}
+
+.dataTables_length select:hover {
+    border-color: var(--neon-green) !important;
+    box-shadow: 0 0 8px rgba(0, 255, 65, 0.2);
+}
+
+.dataTables_length select option {
+    background: #0a0a0a !important;
+    color: var(--neon-green) !important;
+}
+
 /* Pagination */
 .dataTables_wrapper .dataTables_paginate .paginate_button {
-    color: var(--neon-green) !important;
-    border: 1px solid transparent !important;
+    padding: 6px 12px !important;
+    margin: 0 2px !important;
+    border-radius: 4px !important;
+    border: 1px solid rgba(0, 255, 65, 0.2) !important;
     background: transparent !important;
+    color: var(--neon-green) !important;
+    font-size: 0.65rem !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    transition: all 0.3s !important;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.current,
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-    background: var(--neon-green) !important;
-    color: #000 !important;
-    border: 1px solid var(--neon-green) !important;
-    box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    background: rgba(0, 255, 65, 0.2) !important;
+    background: rgba(0, 255, 65, 0.1) !important;
     color: var(--neon-green) !important;
     border: 1px solid var(--neon-green) !important;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover:not(.current):not(.disabled) {
+    background: rgba(0, 255, 65, 0.2) !important;
+    border-color: var(--neon-green) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.previous,
+.dataTables_wrapper .dataTables_paginate .paginate_button.next,
+.dataTables_wrapper .dataTables_paginate .paginate_button_previous,
+.dataTables_wrapper .dataTables_paginate .paginate_button_next {
+    color: var(--neon-red) !important;
+    border: 1px solid rgba(255, 49, 49, 0.4) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.previous:hover:not(.disabled),
+.dataTables_wrapper .dataTables_paginate .paginate_button.next:hover:not(.disabled),
+.dataTables_wrapper .dataTables_paginate .paginate_button_previous:hover:not(.disabled),
+.dataTables_wrapper .dataTables_paginate .paginate_button_next:hover:not(.disabled) {
+    background: rgba(255, 49, 49, 0.15) !important;
+    border-color: var(--neon-red) !important;
+    color: var(--neon-red) !important;
+    box-shadow: 0 0 10px rgba(255, 49, 49, 0.2);
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
     color: #444 !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
     cursor: default;
 }
 

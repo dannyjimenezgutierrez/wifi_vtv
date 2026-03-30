@@ -1,0 +1,9 @@
+[2026-03-26 14:24:54 -0400] [20292] [INFO] Starting gunicorn 25.1.0
+[2026-03-26 14:24:54 -0400] [20292] [INFO] Listening at: http://0.0.0.0:1819 (20292)
+[2026-03-26 14:24:54 -0400] [20292] [INFO] Using worker: sync
+[2026-03-26 14:24:54 -0400] [20292] [INFO] Control socket listening at /opt/wifi_vtv/gunicorn.ctl
+[2026-03-26 14:24:54 -0400] [20295] [INFO] Booting worker with pid: 20295
+[2026-03-26 14:24:55 -0400] [20292] [INFO] Handling signal: winch
+[2026-03-26 14:25:40 -0400] [20292] [INFO] Handling signal: int
+[2026-03-26 14:25:40 -0400] [20295] [INFO] Worker exiting (pid: 20295)
+[2026-03-26 14:25:41 -0400] [20292] [INFO] Shutting down: Master

@@ -35,11 +35,9 @@
         </a>
 
 
-
-
         <div class="nav-item-dropdown" id="usuariosDropdown">
 
-            <a href="#" class="nav-item" data-section="config">
+            <a href="#" class="nav-item">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                     <path
                         d="M8 4.754a3.246 3.246 0 100 6.492 3.246 3.246 0 000-6.492zM5.754 8a2.246 2.246 0 114.492 0 2.246 2.246 0 01-4.492 0z" />
@@ -57,15 +55,14 @@
 
             <ul class="nav-submenu">
                 <li>
-                    <a href="#" class="nav-item">
+                    <a href="#" class="nav-item" data-section="usuarios">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                             <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM14 14s1 0 1-1-1-4-7-4-7 3-7 4 1 1 1 1h12z" />
                         </svg>
                         <span>Usuarios</span>
-
                     </a>
-
                 </li>
+
                 <li>
                     <a href="#" class="nav-item" data-section="perfiles">
                         <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -74,8 +71,6 @@
                             <polyline points="9 11 12 14 22 4"></polyline>
                             <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
                         </svg>
-
-
                         <span>Perfiles</span>
                     </a>
 
@@ -99,7 +94,7 @@
                 </li>
                 <li>
 
-                    <a href="#" class="nav-item" data-section="marcas">
+                    <a href="#" class="nav-item" data-section="divisiones">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                             <path
                                 d="M14 2H2a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2zM2 4h12v2H2V4zm0 4h4v4H2V8zm6 4v-4h4v4H8z" />
@@ -124,17 +119,19 @@
 
         <div class="nav-item-dropdown" id="usuariosDropdown">
 
-            <a href="#" class="nav-item" data-section="config">
+            <a href="#" class="nav-item">
 
-                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" width="68" height="68"
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                    stroke-linejoin="round" class="feather feather-wifi">
-                    <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
-                    <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
-                    <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
-                    <line x1="12" y1="20" x2="12.01" y2="20"></line>
+
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-cast">
+                    <path
+                        d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6">
+                    </path>
+                    <line x1="2" y1="20" x2="2.01" y2="20"></line>
                 </svg>
-                <span>EQUIPOS</span>
+                <span>Periféricos WL</span>
                 <svg class="chevron" width="12" height="12" viewBox="0 0 16 16" fill="currentColor"
                     style="margin-left: auto;">
                     <path
@@ -146,9 +143,101 @@
             <ul class="nav-submenu">
 
                 <li>
-                    <a href="#" class="nav-item" data-section="usuarios">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM14 14s1 0 1-1-1-4-7-4-7 3-7 4 1 1 1 1h12z" />
+                    <a href="#" class="nav-item" data-section="marcas">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-codepen">
+                            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon>
+                            <line x1="12" y1="22" x2="12" y2="15.5"></line>
+                            <polyline points="22 8.5 12 15.5 2 8.5"></polyline>
+                            <polyline points="2 15.5 12 8.5 22 15.5"></polyline>
+                            <line x1="12" y1="2" x2="12" y2="8.5"></line>
+                        </svg>
+                        <span>Marcas</span>
+
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#" class="nav-item" data-section="ubicacion">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-map-pin">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+
+
+                        <span>Ubicación</span>
+                    </a>
+
+
+                </li>
+                <li>
+                    <a href="#" class="nav-item" data-section="wifi">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-wifi">
+                            <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                            <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                            <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                            <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                        </svg>
+                        <span>WIFI</span>
+                    </a>
+
+                </li>
+                <li>
+
+
+
+                </li>
+
+
+            </ul>
+
+        </div>
+
+
+
+        <div class="nav-section-label">
+            <h4>
+                [root@vtv:~$ SISTEMA]
+            </h4>
+        </div>
+        <div class="nav-item-dropdown" id="usuariosDropdown">
+
+
+
+            <a href="#" class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 1L2 3v5c0 3.5 2.5 6.7 6 7.9C11.5 14.7 14 11.5 14 8V3L8 1z" />
+                </svg>
+                <span>AUDITORIA</span>
+                <svg class="chevron" width="12" height="12" viewBox="0 0 16 16" fill="currentColor"
+                    style="margin-left: auto;">
+                    <path
+                        d="M4.646 5.646a.5.5 0 01.708 0L8 8.293l2.646-2.647a.5.5 0 01.708.708l-3 3a.5.5 0 01-.708 0l-3-3a.5.5 0 010-.708z" />
+                </svg>
+            </a>
+
+
+
+
+
+
+            <ul class="nav-submenu">
+
+                <li>
+                    <a href="#" class="nav-item" data-section="auditoria-usuarios">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-users">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                         </svg>
                         <span>Usuarios</span>
 
@@ -156,45 +245,26 @@
 
                 </li>
                 <li>
-                    <a href="#" class="nav-item" data-section="perfiles">
-                        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-check-square">
-                            <polyline points="9 11 12 14 22 4"></polyline>
-                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    <a href="#" class="nav-item" data-section="auditoria-wifi">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-wifi">
+                            <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                            <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                            <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                            <line x1="12" y1="20" x2="12.01" y2="20"></line>
                         </svg>
 
 
-                        <span>Perfiles</span>
+                        <span>Wifi</span>
                     </a>
 
 
                 </li>
-                <li>
-                    <a href="#" class="nav-item" data-section="divisiones">
-                        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-list">
-                            <line x1="8" y1="6" x2="21" y2="6"></line>
-                            <line x1="8" y1="12" x2="21" y2="12"></line>
-                            <line x1="8" y1="18" x2="21" y2="18"></line>
-                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                        </svg>
-                        <span>Gerencias</span>
-                    </a>
 
-                </li>
                 <li>
 
-                    <a href="#" class="nav-item" data-section="marcas">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                            <path
-                                d="M14 2H2a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2zM2 4h12v2H2V4zm0 4h4v4H2V8zm6 4v-4h4v4H8z" />
-                        </svg>
-                        <span>DIVISIÓNES</span>
-                    </a>
+
 
                 </li>
 
@@ -213,41 +283,42 @@
 
 
 
+
+
+
+
+
+
+
+
         <div class="nav-section-label">
             <h4>
-                [root@vtv:~$ SISTEMA]
+                [SERVIDORES Y REDES@:~$]
             </h4>
         </div>
 
-        <a href="#" class="nav-item" data-section="seguridad">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M8 1L2 3v5c0 3.5 2.5 6.7 6 7.9C11.5 14.7 14 11.5 14 8V3L8 1z" />
-            </svg>
-            <span>Seguridad</span>
-        </a>
 
 
-
-        <div class="nav-section-label">
-            <h4>[root@vtv:~$ SESIÓN]</h4>
-        </div>
-
-        <a href="{{ url_for('logout') }}" class="nav-item nav-logout">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                <path
-                    d="M10 12.5a.5.5 0 01-.5.5h-8a.5.5 0 01-.5-.5v-9a.5.5 0 01.5-.5h8a.5.5 0 01.5.5v2a.5.5 0 001 0v-2A1.5 1.5 0 009.5 2h-8A1.5 1.5 0 000 3.5v9A1.5 1.5 0 001.5 14h8a1.5 1.5 0 001.5-1.5v-2a.5.5 0 00-1 0v2z" />
-                <path
-                    d="M15.854 8.354a.5.5 0 000-.708l-3-3a.5.5 0 10-.708.708L14.293 7.5H5.5a.5.5 0 000 1h8.793l-2.147 2.146a.5.5 0 00.708.708l3-3z" />
-            </svg>
-            <span>Cerrar Sesión</span>
-        </a>
 
 
 
 
     </nav>
+    <hr>
 
+    <div class="nav-section-label">
+        <h4>[root@vtv:~$ SESIÓN]</h4>
+    </div> <a href="{{ url_for('logout') }}" class="nav-item nav-logout">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+                d="M10 12.5a.5.5 0 01-.5.5h-8a.5.5 0 01-.5-.5v-9a.5.5 0 01.5-.5h8a.5.5 0 01.5.5v2a.5.5 0 001 0v-2A1.5 1.5 0 009.5 2h-8A1.5 1.5 0 000 3.5v9A1.5 1.5 0 001.5 14h8a1.5 1.5 0 001.5-1.5v-2a.5.5 0 00-1 0v2z" />
+            <path
+                d="M15.854 8.354a.5.5 0 000-.708l-3-3a.5.5 0 10-.708.708L14.293 7.5H5.5a.5.5 0 000 1h8.793l-2.147 2.146a.5.5 0 00.708.708l3-3z" />
+        </svg>
+        <span>Cerrar Sesión</span>
+    </a>
 
+    <hr>
     <div class="sidebar-footer">
         <div class="sys-info">
             <span class="sys-line">CPU: <span id="cpuVal" class="sys-val">38%</span></span>

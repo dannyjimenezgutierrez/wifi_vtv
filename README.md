@@ -43,13 +43,13 @@
 ┌───────────────────────── Tecnologías Utilizadas ─────────────────────────┐
 │ Sistema:    WIFI VTV v2.0.1 🛠️                                           │
 │                                                                          │
-│ Backend:    Python3 • Flask 3.1.3 • Microsoft SQL Server 2022            │
+│ Backend:    Python3 • Microsoft SQL Server 2022                          │
 │                                                                          │
-│ Frontend:   HTML5 • CSS3 • JavaScript • Bootstrap 5                      │
+│ Frontend:   HTML5 • CSS3 •                                               │
 │                                                                          │
 │ Librerías:  SweetAlert2 v11 • Trello                                     │
 │                                                                          │
-│ Gestión :    Trello                                                      │
+│ Gestión :  Trello                                                        │
 └──────────────────────────────────────────────────────────────────────────┘
 
 ┌──────────────────────────── Ubicación y Año ─────────────────────────────┐

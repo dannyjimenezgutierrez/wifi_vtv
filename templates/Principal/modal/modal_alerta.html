@@ -1,0 +1,25 @@
+<!-- ══════════════════════════════════════════ MODAL ALERTA ══════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalAlert" onclick="closeOnOverlay(event, 'modalAlert')">
+    <div class="modal modal-sm">
+        <div class="modal-header">
+            <div class="modal-title">[ NOTIFICACIÓN DEL SISTEMA ]</div>
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalAlert')"></span>
+            </div>
+        </div>
+        <div class="modal-body" style="text-align: center; padding: 40px 20px;">
+            <div style="margin-bottom: 20px;">
+                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            </div>
+            <p id="alertMessage" style="color: #fff; font-size: 0.95rem; line-height: 1.6; font-family: 'Courier New', Courier, monospace;"></p>
+        </div>
+        <div class="modal-footer" style="justify-content: center; border-top: 1px solid rgba(0, 255, 65, 0.1);">
+            <button class="btn btn-outline btn-sm" onclick="closeModal('modalAlert')" style="min-width: 120px;">[ ENTENDIDO ]</button>
+        </div>
+    </div>
+</div>
+<!-- ══════════════════════════════════════════ MODAL ALERTA ══════════════════════════════════════════════════ -->

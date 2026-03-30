@@ -29,7 +29,6 @@
             background: var(--bg);
             font-family: 'Share Tech Mono', monospace;
             overflow: hidden;
-            zoom: 90%;
         }
 
         #bgCanvas {

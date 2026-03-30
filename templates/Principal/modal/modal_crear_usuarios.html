@@ -1,0 +1,148 @@
+<!-- ══════════════════════════════════════════ MODAL CREAR ══════════════════════════════════════════════════ -->
+
+<!-- ══════════════════════════════════════════ MODAL CREAR ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalCrearUsuarios" onclick="closeOnOverlay(event, 'modalCrearUsuarios')">
+    <div class="modal modal-lg">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalCrearUsuarios')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="btn btn-outline btn-sm btn-outline-blue" id="modalCreateTitle">CREAR USUARIOS.exe</span>
+        </div>
+        <div class="modal-body">
+            <!-- Tabs Navigation -->
+            <div class="modal-tabs">
+                <div class="modal-tab active" onclick="switchTab('tabPersonal', 'modalCrearUsuarios')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg> INFORMACIÓN PERSONAL
+                </div>
+                <div class="modal-tab" onclick="switchTab('tabAccount', 'modalCrearUsuarios')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg> INFORMACIÓN DE CUENTA
+                </div>
+            </div>
+
+            <form id="formCreate" novalidate>
+                <input type="hidden" id="editId">
+
+                <div id="tabPersonal" class="tab-panel active">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">[ PRIMER NOMBRE ]</label>
+                            <input type="text" id="fFirstName" class="form-input" placeholder="Ej. Juan" minlength="3"
+                                maxlength="16" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">[ SEGUNDO NOMBRE ]</label>
+                            <input type="text" id="fSecondName" class="form-input" placeholder="Ej. Antonio"
+                                minlength="3" maxlength="16" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">[ PRIMER APELLIDO ]</label>
+                            <input type="text" id="fLastName" class="form-input" placeholder="Ej. Pérez" minlength="3"
+                                maxlength="16" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">[ SEGUNDO APELLIDO ]</label>
+                            <input type="text" id="fSecondLastName" class="form-input" placeholder="Ej. Rodríguez"
+                                minlength="3" maxlength="16" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">[ CÉDULA DE IDENTIDAD ]</label>
+                            <input type="text" id="fCedula" class="form-input" placeholder="00000000" 
+                                pattern="^\d{6,8}$" title="Debe ser solo números (6 a 8 dígitos)" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">[ TELÉFONO DE CONTACTO ]</label>
+                            <input type="text" id="fPhone" class="form-input" placeholder="04XXXXXXXXX"
+                                pattern="^04(12|14|16|22|24|26)\d{7}$" title="Formato requerido: 04XXXXXXXXX"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label class="form-label">[ CORREO ELECTRÓNICO ]</label>
+                            <input type="email" id="fEmail" class="form-input" placeholder="usuario@vtv.gob.ve"
+                                pattern="^[a-zA-Z0-9._%+-]+@vtv\.gob\.ve$"
+                                title="Debe ser un correo institucional (@vtv.gob.ve)" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tabAccount" class="tab-panel">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">[ PERFIL SISTEMA ]</label>
+                            <select id="fProfile" class="form-input form-select" required>
+                                <option value=""> Seleccione un Perfil</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">[ ESTADO ]</label>
+                            <select id="fStatus" class="form-input form-select" required>
+                                <option value=""> Seleccione un Estado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">[ GERENCIAS ]</label>
+                            <select id="fGerencia" class="form-input form-select" required>
+                                <option value=""> Seleccione una Gerencia</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">[ DIVISIÓNES ]</label>
+                            <select id="fDivision" class="form-input form-select" required>
+                                <option value=""> Seleccione una División</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">[ NOMBRE DE USUARIO ]</label>
+                            <input type="text" id="fUsername" class="form-input" placeholder="Ej. jpererez" 
+                                minlength="3" maxlength="16" pattern="^[a-zA-Z]+$" title="Solo letras (3 a 16 caracteres)" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">[ CLAVE DE ACCESO ]</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="fPassword" class="form-input" placeholder="********"
+                                    minlength="8" maxlength="16" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$" 
+                                    title="Debe incluir Mayúscula, minúscula, número y símbolo (@$!%*?&)" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('fPassword', 'fPassIcon')" id="fPassIcon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline btn-sm btn-outline-red" onclick="closeModal('modalCrearUsuarios')">[ CANCELAR
+                ]</button>
+            <button class="btn btn-outline btn-sm" onclick="saveRecord()">[ CREAR USUARIOS ]</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════ MODAL CREAR ══════════════════════════════════════════════════ -->
+
+<!-- ══════════════════════════════════════════ MODAL CREAR ══════════════════════════════════════════════════ -->
