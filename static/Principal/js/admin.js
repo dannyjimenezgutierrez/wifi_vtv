@@ -3,12 +3,18 @@
  * Handles menu navigation, sidebar toggling, stats counters, and matrix background.
  */
 let mainTableInstance = null;
+const CYBER_TABLE_LANG = {
+    url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json',
+    emptyTable: "[ SISTEMA ] SIN REGISTROS DISPONIBLES EN ESTA SECCIÓN",
+    zeroRecords: "[ BÚSQUEDA ] NO SE ENCONTRARON COINCIDENCIAS"
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     initSidebar();
     initNavigation();
     initCatalogos();
     actualizarEstadisticas();
+    actualizarEstadisticasPerfiles();
     initTable();
     initOtherTables();
     initMatrixBackground();
@@ -191,7 +197,7 @@ function initNavigation() {
 
     const navItems = document.querySelectorAll('.nav-item[data-section]');
     const sections = document.querySelectorAll('.section');
-    const bcCurrent = document.getElementById('bcCurrent');
+    const mainBreadcrumb = document.getElementById('mainBreadcrumb');
 
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {
@@ -212,9 +218,12 @@ function initNavigation() {
             });
 
             // Update breadcrumb
-            if (bcCurrent) {
-                bcCurrent.textContent = targetSec.toUpperCase();
+            if (mainBreadcrumb) {
+                mainBreadcrumb.textContent = targetSec.toUpperCase();
             }
+
+            // [ REFRESH DATA ON NAVIGATION ]
+            refreshModuleData(targetSec);
 
             // Close mobile sidebar on navigation
             const sidebar = document.getElementById('sidebar');
@@ -223,6 +232,37 @@ function initNavigation() {
             }
         });
     });
+}
+
+function refreshModuleData(section) {
+    console.log(`[SYSTEM] Refrescando módulo: ${section}`);
+    
+    switch (section) {
+        case 'principal':
+            actualizarEstadisticas();
+            actualizarEstadisticasPerfiles();
+            break;
+        case 'usuarios':
+            recargarTabla();
+            actualizarEstadisticas();
+            // Refrescar catálogos por si se crearon nuevos perfiles/gerencias
+            initCatalogos(); 
+            break;
+        case 'perfiles':
+            actualizarTablaPerfiles();
+            break;
+        case 'gerencias':
+            actualizarTablaGerencias();
+            break;
+        case 'divisiones':
+            actualizarTablaDivisiones();
+            break;
+        // Agregaremos otros módulos según sea necesario
+        default:
+            // Por defecto, intentar actualizar estadísticas de sistema si existen
+            if (window.actualizarEstadisticas) actualizarEstadisticas();
+            break;
+    }
 }
 
 // --- STATS ANIMATION ---
@@ -290,7 +330,8 @@ function cargarTablaUsuarios(datos) {
         firstName:   u.primer_nombre,
         lastName:    u.primer_apellido,
         email:       u.correo || 'Sin correo',
-        status:      u.estado  || 'ACTIVO'
+        status:      u.estado  || 'ACTIVO',
+        foto_perfil: u.foto_perfil || '/static/Principal/img/default_avatar.png'
     }));
 
     mainTableInstance = $('#mainTable').DataTable({
@@ -302,6 +343,14 @@ function cargarTablaUsuarios(datos) {
                 orderable: false,
                 searchable: false,
                 width: '30px'
+            },
+            {
+                data: 'foto_perfil',
+                orderable: false,
+                searchable: false,
+                render: (data, type, row) => {
+                    return `<img src="${data}" width="50" height="50" style="border-radius: 50%; object-fit: cover; border: 1.5px solid #00ff41;" onerror="this.onerror=null;this.src='/static/Principal/img/default_avatar.png';">`;
+                }
             },
             {
                 data: 'username',
@@ -353,165 +402,37 @@ function cargarTablaUsuarios(datos) {
                 `
             }
         ],
-        language: {
-            url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
-        },
+        language: CYBER_TABLE_LANG,
         pageLength: 6,
         lengthMenu: [6, 10, 25, 100],
         autoWidth: false,
         responsive: true,
-        dom: '<"top"fl>rt<"bottom"ip><"clear">',
-        drawCallback: function () {
-            const info = mainTableInstance.page.info();
-            const bcCurrent = document.getElementById('bcCurrent');
-            if (bcCurrent) bcCurrent.textContent = `${info.recordsTotal} REGISTROS`;
-        }
+        dom: '<"top"fl>rt<"bottom"ip><"clear">'
     });
 }
 
 function initOtherTables() {
-    const PERFILES_MOCK = [
-        { id: 201, name: 'Default_WiFi', bandwidth: '50 Mbps', priority: 'BAJA', status: 'ACTIVO', lastAccess: '2024-03-02' },
-        { id: 202, name: 'VIP_Network', bandwidth: '150 Mbps', priority: 'ALTA', status: 'ACTIVO', lastAccess: '2024-03-02' },
-        { id: 203, name: 'Guest_Public', bandwidth: '10 Mbps', priority: 'BAJA', status: 'SUSPENDIDO', lastAccess: '2024-03-01' },
-    ];
-
     if ($('#perfilesTable').length) {
-        $('#perfilesTable').DataTable({
-            data: PERFILES_MOCK,
-            columns: [
-                {
-                    data: null,
-                    defaultContent: '<input type="checkbox" class="cyber-check">',
-                    orderable: false,
-                    searchable: false,
-                    width: '30px'
-                },
-                { data: 'id', render: (data) => `<span class="font-mono">#${data}</span>` },
-                { data: 'name', render: (data) => `<span class="font-bold text-green">${data}</span>` },
-                { data: 'bandwidth' },
-                { data: 'priority', render: (data) => `<span class="badge badge-${data.toLowerCase()}">${data}</span>` },
-                { data: 'status', render: (data) => `<span class="status-badge status-${data.toLowerCase()}">${data}</span>` },
-                { data: 'lastAccess', render: (data) => `<span class="font-mono text-small">${data}</span>` },
-                {
-                    data: null,
-                    orderable: false,
-                    searchable: false,
-                    render: (data, type, row) => `
-                        <div class="row-actions">
-                            <button class="btn btn-outline btn-sm" title="Editar"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M12.146.146a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-10 10a.5.5 0 01-.168.11l-5 2a.5.5 0 01-.65-.65l2-5a.5.5 0 01.11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5z"/></svg></button>
-                            <button class="btn btn-outline btn-sm btn-outline-red" title="Eliminar"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118z"/></svg></button>
-                        </div>
-                    `
+        fetch('/api/perfiles')
+            .then(res => res.json())
+            .then(response => {
+                if (response.ok) {
+                    cargarTablaPerfiles(response.data);
+                } else {
+                    console.error('Error cargando perfiles:', response.mensaje);
+                    cargarTablaPerfiles([]);
                 }
-            ],
-            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json' },
-            pageLength: 6,
-            lengthMenu: [6, 10, 25, 100],
-            autoWidth: false,
-            responsive: true,
-            dom: '<"top"fl>rt<"bottom"ip><"clear">',
-            drawCallback: function () {
-                const countEl = document.getElementById('perfilesTableCount');
-                if (countEl) countEl.textContent = `${this.api().page.info().recordsTotal} registros`;
-            }
-        });
+            })
+            .catch(err => {
+                console.error('Error de conexión:', err);
+                cargarTablaPerfiles([]);
+            });
     }
 
-    const GERENCIAS_MOCK = [
-        { id: 301, name: 'Gerencia General', level: 'Nivel 1', supervisor: 'Admin', status: 'ACTIVO', lastAccess: '2024-03-02' },
-        { id: 302, name: 'Recursos Humanos', level: 'Nivel 2', supervisor: 'RRHH_Lead', status: 'ACTIVO', lastAccess: '2024-03-02' },
-        { id: 303, name: 'Operaciones Técnicas', level: 'Nivel 2', supervisor: 'Tech_Lead', status: 'ACTIVO', lastAccess: '2024-03-01' },
-    ];
-
-    if ($('#gerenciasTable').length) {
-        $('#gerenciasTable').DataTable({
-            data: GERENCIAS_MOCK,
-            columns: [
-                {
-                    data: null,
-                    defaultContent: '<input type="checkbox" class="cyber-check">',
-                    orderable: false,
-                    searchable: false,
-                    width: '30px'
-                },
-                { data: 'id', render: (data) => `<span class="font-mono">#${data}</span>` },
-                { data: 'name', render: (data) => `<span class="font-bold text-green">${data}</span>` },
-                { data: 'level' },
-                { data: 'supervisor', render: (data) => `<span class="badge badge-${data.toLowerCase()}">${data}</span>` },
-                { data: 'status', render: (data) => `<span class="status-badge status-${data.toLowerCase()}">${data}</span>` },
-                { data: 'lastAccess', render: (data) => `<span class="font-mono text-small">${data}</span>` },
-                {
-                    data: null,
-                    orderable: false,
-                    searchable: false,
-                    render: (data, type, row) => `
-                        <div class="row-actions">
-                            <button class="btn btn-outline btn-sm" title="Editar"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M12.146.146a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-10 10a.5.5 0 01-.168.11l-5 2a.5.5 0 01-.65-.65l2-5a.5.5 0 01.11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5z"/></svg></button>
-                            <button class="btn btn-outline btn-sm btn-outline-red" title="Eliminar"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118z"/></svg></button>
-                        </div>
-                    `
-                }
-            ],
-            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json' },
-            pageLength: 6,
-            lengthMenu: [6, 10, 25, 100],
-            autoWidth: false,
-            responsive: true,
-            dom: '<"top"fl>rt<"bottom"ip><"clear">',
-            drawCallback: function () {
-                const countEl = document.getElementById('gerenciasTableCount');
-                if (countEl) countEl.textContent = `${this.api().page.info().recordsTotal} registros`;
-            }
-        });
-    }
-
-    const DIVISIONES_MOCK = [
-        { id: 401, name: 'División de Desarrollo', level: 'Nivel 3', supervisor: 'Dev_Lead', status: 'ACTIVO', lastAccess: '2024-03-02' },
-        { id: 402, name: 'División de Soporte', level: 'Nivel 3', supervisor: 'Support_Lead', status: 'ACTIVO', lastAccess: '2024-03-02' },
-        { id: 403, name: 'División de Redes', level: 'Nivel 3', supervisor: 'Net_Lead', status: 'ACTIVO', lastAccess: '2024-03-01' },
-    ];
+    // Gerencias Table Initialization removed - handled by cargarTablaGerencias()
 
     if ($('#divisionesTable').length) {
-        $('#divisionesTable').DataTable({
-            data: DIVISIONES_MOCK,
-            columns: [
-                {
-                    data: null,
-                    defaultContent: '<input type="checkbox" class="cyber-check">',
-                    orderable: false,
-                    searchable: false,
-                    width: '30px'
-                },
-                { data: 'id', render: (data) => `<span class="font-mono">#${data}</span>` },
-                { data: 'name', render: (data) => `<span class="font-bold text-green">${data}</span>` },
-                { data: 'level' },
-                { data: 'supervisor', render: (data) => `<span class="badge badge-${data.toLowerCase()}">${data}</span>` },
-                { data: 'status', render: (data) => `<span class="status-badge status-${data.toLowerCase()}">${data}</span>` },
-                { data: 'lastAccess', render: (data) => `<span class="font-mono text-small">${data}</span>` },
-                {
-                    data: null,
-                    orderable: false,
-                    searchable: false,
-                    render: (data, type, row) => `
-                        <div class="row-actions">
-                            <button class="btn btn-outline btn-sm" title="Editar"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M12.146.146a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-10 10a.5.5 0 01-.168.11l-5 2a.5.5 0 01-.65-.65l2-5a.5.5 0 01.11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5z"/></svg></button>
-                            <button class="btn btn-outline btn-sm btn-outline-red" title="Eliminar"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118z"/></svg></button>
-                        </div>
-                    `
-                }
-            ],
-            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json' },
-            pageLength: 6,
-            lengthMenu: [6, 10, 25, 100],
-            autoWidth: false,
-            responsive: true,
-            dom: '<"top"fl>rt<"bottom"ip><"clear">',
-            drawCallback: function () {
-                const countEl = document.getElementById('divisionesTableCount');
-                if (countEl) countEl.textContent = `${this.api().page.info().recordsTotal} registros`;
-            }
-        });
+        actualizarTablaDivisiones();
     }
 
     const MARCAS_MOCK = [
@@ -549,16 +470,12 @@ function initOtherTables() {
                     `
                 }
             ],
-            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json' },
+            language: CYBER_TABLE_LANG,
             pageLength: 6,
             lengthMenu: [6, 10, 25, 100],
             autoWidth: false,
             responsive: true,
-            dom: '<"top"fl>rt<"bottom"ip><"clear">',
-            drawCallback: function () {
-                const countEl = document.getElementById('marcasTableCount');
-                if (countEl) countEl.textContent = `${this.api().page.info().recordsTotal} registros`;
-            }
+            dom: '<"top"fl>rt<"bottom"ip><"clear">'
         });
     }
 
@@ -597,16 +514,12 @@ function initOtherTables() {
                     `
                 }
             ],
-            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json' },
+            language: CYBER_TABLE_LANG,
             pageLength: 6,
             lengthMenu: [6, 10, 25, 100],
             autoWidth: false,
             responsive: true,
-            dom: '<"top"fl>rt<"bottom"ip><"clear">',
-            drawCallback: function () {
-                const countEl = document.getElementById('ubicacionTableCount');
-                if (countEl) countEl.textContent = `${this.api().page.info().recordsTotal} registros`;
-            }
+            dom: '<"top"fl>rt<"bottom"ip><"clear">'
         });
     }
 
@@ -645,16 +558,12 @@ function initOtherTables() {
                     `
                 }
             ],
-            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json' },
+            language: CYBER_TABLE_LANG,
             pageLength: 6,
             lengthMenu: [6, 10, 25, 100],
             autoWidth: false,
             responsive: true,
-            dom: '<"top"fl>rt<"bottom"ip><"clear">',
-            drawCallback: function () {
-                const countEl = document.getElementById('wifiTableCount');
-                if (countEl) countEl.textContent = `${this.api().page.info().recordsTotal} registros`;
-            }
+            dom: '<"top"fl>rt<"bottom"ip><"clear">'
         });
     }
 
@@ -684,16 +593,12 @@ function initOtherTables() {
                 { data: 'datetime', render: (data) => `<span class="font-mono text-small">${data}</span>` },
                 { data: 'status', render: (data) => `<span class="status-indicator status-${data.toLowerCase()}">${data}</span>` }
             ],
-            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json' },
+            language: CYBER_TABLE_LANG,
             pageLength: 6,
             lengthMenu: [6, 10, 25, 100],
             autoWidth: false,
             responsive: true,
-            dom: '<"top"fl>rt<"bottom"ip><"clear">',
-            drawCallback: function () {
-                const countEl = document.getElementById('auditoriaTableCount');
-                if (countEl) countEl.textContent = `${this.api().page.info().recordsTotal} registros`;
-            }
+            dom: '<"top"fl>rt<"bottom"ip><"clear">'
         });
     }
 
@@ -723,16 +628,12 @@ function initOtherTables() {
                 { data: 'datetime', render: (data) => `<span class="font-mono text-small">${data}</span>` },
                 { data: 'status', render: (data) => `<span class="status-badge status-${data.toLowerCase()}">${data}</span>` }
             ],
-            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json' },
+            language: CYBER_TABLE_LANG,
             pageLength: 6,
             lengthMenu: [6, 10, 25, 100],
             autoWidth: false,
             responsive: true,
-            dom: '<"top"fl>rt<"bottom"ip><"clear">',
-            drawCallback: function () {
-                const countEl = document.getElementById('auditoriaWifiTableCount');
-                if (countEl) countEl.textContent = `${this.api().page.info().recordsTotal} registros`;
-            }
+            dom: '<"top"fl>rt<"bottom"ip><"clear">'
         });
     }
 }
@@ -793,34 +694,152 @@ function initMatrixBackground() {
 
 // --- GLOBAL SEARCH ---
 function initSearch() {
-    const globalSearch = document.getElementById('globalSearch');
-    const tableSearch = document.getElementById('tableSearch');
+    const globalSearches = document.querySelectorAll('#globalSearch');
+    const tableSearches = document.querySelectorAll('#tableSearch');
 
     function performSearch(val) {
-        if (globalSearch) globalSearch.value = val;
-        if (tableSearch) tableSearch.value = val;
-        if (mainTableInstance) {
-            mainTableInstance.search(val).draw();
+        globalSearches.forEach(s => s.value = val);
+        tableSearches.forEach(s => s.value = val);
+        
+        // Buscar en todas las instancias de DataTables activas
+        if ($.fn.DataTable.isDataTable('#mainTable')) {
+            $('#mainTable').DataTable().search(val).draw();
+        }
+        if ($.fn.DataTable.isDataTable('#perfilesTable')) {
+            $('#perfilesTable').DataTable().search(val).draw();
+        }
+        if ($.fn.DataTable.isDataTable('#gerenciasTable')) {
+            $('#gerenciasTable').DataTable().search(val).draw();
+        }
+        if ($.fn.DataTable.isDataTable('#divisionesTable')) {
+            $('#divisionesTable').DataTable().search(val).draw();
+        }
+        if ($.fn.DataTable.isDataTable('#marcasTable')) {
+            $('#marcasTable').DataTable().search(val).draw();
+        }
+        if ($.fn.DataTable.isDataTable('#ubicacionTable')) {
+            $('#ubicacionTable').DataTable().search(val).draw();
+        }
+        if ($.fn.DataTable.isDataTable('#wifiTable')) {
+            $('#wifiTable').DataTable().search(val).draw();
+        }
+        if ($.fn.DataTable.isDataTable('#auditoriaTable')) {
+            $('#auditoriaTable').DataTable().search(val).draw();
+        }
+        if ($.fn.DataTable.isDataTable('#auditoriaWifiTable')) {
+            $('#auditoriaWifiTable').DataTable().search(val).draw();
         }
     }
 
-    if (globalSearch) {
-        globalSearch.addEventListener('input', (e) => performSearch(e.target.value));
-    }
-    if (tableSearch) {
-        tableSearch.addEventListener('input', (e) => performSearch(e.target.value));
+    globalSearches.forEach(gs => {
+        gs.addEventListener('input', (e) => performSearch(e.target.value));
+    });
+    tableSearches.forEach(ts => {
+        ts.addEventListener('input', (e) => performSearch(e.target.value));
+    });
+}
+
+// --- SEGURIDAD Y ALERTAS ---
+function glitch() {
+    const gov = document.getElementById('glitchOverlay');
+    if (gov) {
+        gov.classList.remove('fire');
+        void gov.offsetWidth;
+        gov.classList.add('fire');
     }
 }
+
+window.showAlert = (msg) => {
+    const msgEl = document.getElementById('alertMessage');
+    const modal = document.getElementById('modalAlert');
+    if (msgEl) msgEl.textContent = msg;
+    
+    glitch(); // Efecto de interferencia antes de mostrar
+    
+    if (modal) {
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('show'), 10);
+    }
+};
+
+window.closeAlert = () => {
+    const modal = document.getElementById('modalAlert');
+    if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => modal.style.display = 'none', 400);
+    }
+};
+
+// Bloqueo de Inspector (F12 / Clic Derecho)
+document.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    window.showAlert('[ ACCESO RESTRINGIDO ] EL MENÚ CONTEXTUAL HA SIDO DESACTIVADO POR SEGURIDAD.');
+});
+
+document.addEventListener('keydown', e => {
+    if (
+        e.keyCode === 123 || 
+        (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) ||
+        (e.ctrlKey && e.keyCode === 85)
+    ) {
+        e.preventDefault();
+        window.showAlert('[ ALERTA DE SEGURIDAD ] EL ACCESO A LAS HERRAMIENTAS DE DESARROLLADOR ESTÁ RESTRINGIDO.');
+    }
+});
 
 // --- MODAL HELPERS ---
 window.showModal = (id) => {
     const modal = document.getElementById(id);
-    if (modal) modal.style.display = 'flex';
+    if (modal) {
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('active'), 10);
+        document.body.style.overflow = 'hidden';
+        
+        // Reset image if it's the create modal
+        if (id === 'modalCrearUsuarios') {
+            window.currentProfileImageBase64 = null;
+            const preview = document.getElementById('fFotoPreview');
+            if (preview) {
+                preview.src = '/static/Principal/img/default_avatar.png';
+                preview.classList.add('avatar-green-matrix');
+            }
+            const input = document.getElementById('fFoto');
+            if (input) input.value = '';
+        }
+    }
+};
+
+window.currentProfileImageBase64 = null;
+
+window.previewImage = (input, previewId) => {
+    if (input.files && input.files[0]) {
+        const file = input.files[0];
+        if (file.size > 2 * 1024 * 1024) {
+            showAlert("La imagen no debe superar los 2MB.");
+            input.value = "";
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById(previewId);
+            if (preview) {
+                preview.src = e.target.result;
+                preview.classList.remove('avatar-green-matrix');
+            }
+            window.currentProfileImageBase64 = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
 };
 
 window.closeModal = (id) => {
     const modal = document.getElementById(id);
-    if (modal) modal.style.display = 'none';
+    if (modal) {
+        modal.classList.remove('active');
+        modal.classList.remove('show');
+        setTimeout(() => modal.style.display = 'none', 400);
+        document.body.style.overflow = '';
+    }
 };
 
 window.closeOnOverlay = (e, id) => {
@@ -860,6 +879,14 @@ window.viewRecord = (id) => {
             if (!r.ok) return;
             const u = r.data;
             switchTab('vtabPersonal', 'modalView');
+            const fotoDest = document.getElementById('vFotoPreview');
+            if (fotoDest) {
+                const fotoSrc = u.foto_perfil || '/static/Principal/img/default_avatar.png';
+                fotoDest.src = fotoSrc;
+                const isDefault = fotoSrc.toLowerCase().includes('default_avatar');
+                fotoDest.classList.toggle('avatar-green-matrix', isDefault);
+            }
+            
             setValue('vFirstName',  u.primer_nombre);
             setValue('vLastName',   u.primer_apellido);
             setValue('vUsername',   u.usuario);
@@ -895,15 +922,29 @@ window.editRecord = (id) => {
         .then(r => {
             if (!r.ok) return;
             const u = r.data;
+            
+            window.currentProfileImageBase64 = null;
+            const fotoDest = document.getElementById('eFotoPreview');
+            if (fotoDest) {
+                const fotoSrc = u.foto_perfil || '/static/Principal/img/default_avatar.png';
+                fotoDest.src = fotoSrc;
+                const isDefault = fotoSrc.toLowerCase().includes('default_avatar');
+                fotoDest.classList.toggle('avatar-green-matrix', isDefault);
+            }
+            const fInput = document.getElementById('eFoto');
+            if (fInput) fInput.value = '';
+
             setValue('eEditId',     u.id);
-            setValue('eFirstName',  u.primer_nombre);
-            setValue('eLastName',   u.primer_apellido);
-            setValue('eUsername',   u.usuario);
-            setValue('eCedula',     u.cedula);
-            setValue('ePhone',      u.telefono);
-            setValue('eProfile',    u.id_perfil);
-            setValue('eStatus',     u.id_estado);
-            setValue('eGerencia',   u.id_gerencia);
+            setValue('eFirstName',      u.primer_nombre);
+            setValue('eSecondName',     u.segundo_nombre);
+            setValue('eLastName',       u.primer_apellido);
+            setValue('eSecondLastName', u.segundo_apellido);
+            setValue('eUsername',       u.usuario);
+            setValue('eCedula',         u.cedula);
+            setValue('ePhone',          u.telefono);
+            setValue('eProfile',        u.id_perfil);
+            setValue('eStatus',         u.id_estado);
+            setValue('eGerencia',       u.id_gerencia);
             
             const divUrl = u.id_gerencia ? `/api/divisiones?id_gerencia=${u.id_gerencia}` : '/api/divisiones';
             cargarSelectDesdeApi(divUrl, ['eDivision'], 'id', 'nombre').then(() => {
@@ -986,6 +1027,10 @@ window.saveRecord = () => {
         id_gerencia:      fGerencia,
         id_division:      fDivision,
     };
+
+    if (window.currentProfileImageBase64) {
+        datos.foto_perfil = window.currentProfileImageBase64;
+    }
 
     fetch('/api/usuarios', {
         method: 'POST',
@@ -1083,6 +1128,10 @@ window.updateRecord = () => {
         id_division:      eDivision,
     };
     
+    if (window.currentProfileImageBase64) {
+        datos.foto_perfil = window.currentProfileImageBase64;
+    }
+    
     if (ePassword && ePassword !== '') {
         datos.clave = ePassword;
     }
@@ -1110,6 +1159,23 @@ window.deleteRecord = (id, nombre) => {
     window.currentDeleteId = id;
     const target = document.getElementById('deleteTarget');
     if (target) target.textContent = nombre;
+    
+    // Configurar foto a eliminar buscando en tableData
+    let currentPhoto = '/static/Principal/img/default_avatar.png';
+    if (mainTableInstance) {
+        const rowData = mainTableInstance.rows().data().toArray();
+        const found = rowData.find(u => u.id === id);
+        if (found && found.foto_perfil) {
+            currentPhoto = found.foto_perfil;
+        }
+    }
+    const dPhoto = document.getElementById('dFotoPreview');
+    if (dPhoto) {
+        dPhoto.src = currentPhoto;
+        const isDefault = currentPhoto.toLowerCase().includes('default_avatar');
+        dPhoto.classList.toggle('avatar-green-matrix', isDefault);
+    }
+
     showModal('modalEliminarUsuarios');
 };
 
@@ -1140,11 +1206,7 @@ function setValue(id, val) {
     if (el) el.value = val || '';
 }
 
-window.showAlert = (msg) => {
-    const msgEl = document.getElementById('alertMessage');
-    if (msgEl) msgEl.textContent = msg;
-    showModal('modalAlert');
-};
+
 
 function validarNombre(val, label) {
     if (!val || val.trim() === '') return `${label} no puede estar vacío.`;
@@ -1222,7 +1284,7 @@ function validarPassword(val) {
 // ── CATALOGOS DINAMICOS ───────────────────────────────────────
 function initCatalogos() {
     cargarSelectDesdeApi('/api/perfiles',  ['fProfile', 'eProfile', 'vProfile'],  'id', 'nombre');
-    cargarSelectDesdeApi('/api/gerencias', ['fGerencia', 'eGerencia', 'vGerencia'], 'id', 'nombre');
+    cargarSelectDesdeApi('/api/gerencias', ['fGerencia', 'eGerencia', 'vGerencia', 'dGerencia', 'editDGerencia'], 'id', 'nombre');
     cargarSelectDesdeApi('/api/divisiones', ['fDivision', 'eDivision', 'vDivision'], 'id', 'nombre');
     
     cargarSelectDesdeApi('/api/estados',    ['fStatus', 'eStatus', 'vStatus'],    'id', 'nombre')
@@ -1295,13 +1357,52 @@ function actualizarEstadisticas() {
                 const el = document.getElementById(id);
                 if (el) {
                     el.textContent = val;
-                    // Opcional: podrías disparar aquí la animación de conteo si existe
                 }
             };
             animateValue('statActivos',    s.activos    || 0);
             animateValue('statInactivos',  s.inactivos  || 0);
             animateValue('statBloqueados', s.bloqueados || 0);
             animateValue('statTotal',      s.total      || 0);
+        }
+    });
+}
+
+function actualizarEstadisticasPerfiles() {
+    fetch('/api/perfiles/stats')
+    .then(res => res.json())
+    .then(r => {
+        if (r.ok && r.data) {
+            const s = r.data;
+            const animateValue = (id, val) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.textContent = val;
+                }
+            };
+            animateValue('statPerfilesActivos',   s.activos    || 0);
+            animateValue('statPerfilesInactivos', s.inactivos  || 0);
+            animateValue('statPerfilesSeguros',   s.seguros    || 0);
+            animateValue('statPerfilesTotal',     s.total      || 0);
+        }
+    });
+}
+
+function actualizarEstadisticasGerencias() {
+    fetch('/api/gerencias/stats')
+    .then(res => res.json())
+    .then(r => {
+        if (r.ok && r.data) {
+            const s = r.data;
+            const animateValue = (id, val) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.textContent = val;
+                }
+            };
+            animateValue('statGerenciasActivas',   s.activos   || 0);
+            animateValue('statGerenciasInactivas', s.inactivos || 0);
+            animateValue('statGerenciasSeguras',   s.seguros   || 0);
+            animateValue('statGerenciasTotal',     s.total     || 0);
         }
     });
 }
@@ -1327,6 +1428,8 @@ let terminal = null;
 let terminalFit = null;
 let currentLine = '';
 
+let terminalSocket = null;
+
 function initTerminal() {
     const container = document.getElementById('terminal-container');
     if (!container) return;
@@ -1335,13 +1438,14 @@ function initTerminal() {
     terminal = new Terminal({
         cursorBlink: true,
         theme: {
-            background: '#000000',
+            background: '#0a0a0a',
             foreground: '#00ff41',
             cursor: '#00ff41',
             selectionBackground: 'rgba(0, 255, 65, 0.3)'
         },
-        fontSize: 14,
-        fontFamily: 'Courier New, monospace'
+        fontSize: 13,
+        fontFamily: "'Fira Code', 'Courier New', monospace",
+        convertEol: true
     });
 
     terminalFit = new FitAddon.FitAddon();
@@ -1349,28 +1453,26 @@ function initTerminal() {
     terminal.open(container);
     terminalFit.fit();
 
-    // Initial greeting
-    terminal.writeln('\x1b[1;32m[SYSTEM]\x1b[0m Núcleo de comunicaciones activo.');
-    terminal.writeln('\x1b[1;32m[SYSTEM]\x1b[0m Sesión para: \x1b[1;37madmin\x1b[0m');
-    terminal.write('\r\nroot@vtv:~# ');
+    // Conectar vía Socket.IO
+    terminalSocket = io();
 
-    // Capture Keys
+    terminalSocket.on('connect', () => {
+        terminal.writeln('\x1b[1;36m[ SISTEMA ]\x1b[0m CONEXIÓN ESTABLECIDA CON EL NÚCLEO VTV.');
+        terminal.writeln('\x1b[1;36m[ SISTEMA ]\x1b[0m SESIÓN BASH INICIADA.');
+    });
+
+    terminalSocket.on('terminal_output', (data) => {
+        terminal.write(data.data);
+    });
+
+    terminalSocket.on('disconnect', () => {
+        terminal.writeln('\r\n\x1b[1;31m[ ERROR ]\x1b[0m CONEXIÓN PERDIDA CON EL NÚCLEO.');
+    });
+
+    // Enviar datos en tiempo real (teclas, secuencias de escape)
     terminal.onData(data => {
-        const charCode = data.charCodeAt(0);
-        if (charCode === 13) { // Enter
-            terminal.write('\r\n');
-            handleCommand(currentLine);
-            currentLine = '';
-        } else if (charCode === 127) { // Backspace
-            if (currentLine.length > 0) {
-                currentLine = currentLine.slice(0, -1);
-                terminal.write('\b \b');
-            }
-        } else if (charCode < 32 && charCode !== 27) {
-            // Unhandled control chars
-        } else {
-            currentLine += data;
-            terminal.write(data);
+        if (terminalSocket && terminalSocket.connected) {
+            terminalSocket.emit('terminal_input', { input: data });
         }
     });
 
@@ -1378,47 +1480,6 @@ function initTerminal() {
     window.addEventListener('resize', () => {
         if (terminalFit) terminalFit.fit();
     });
-}
-
-function handleCommand(cmd) {
-    const trimmed = cmd.trim();
-
-    if (trimmed.toLowerCase() === 'clear') {
-        terminal.clear();
-        terminal.write('root@vtv:~# ');
-        return;
-    }
-
-    if (trimmed.toLowerCase() === 'exit') {
-        window.closeModal('modalTerminal');
-        terminal.write('root@vtv:~# ');
-        return;
-    }
-
-    if (trimmed === '') {
-        terminal.write('root@vtv:~# ');
-        return;
-    }
-
-    // Call Real Terminal API
-    fetch('api/terminal.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ command: trimmed })
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.output) {
-                // Replace newlines with CRLF for Xterm
-                const formatted = data.output.replace(/\n/g, '\r\n');
-                terminal.writeln(formatted);
-            }
-            terminal.write('root@vtv:~# ');
-        })
-        .catch(err => {
-            terminal.writeln('\x1b[1;31mERROR_CONEXIÓN:\x1b[0m No se pudo contactar con el núcleo.');
-            terminal.write('root@vtv:~# ');
-        });
 }
 
 // Global hook to open terminal
@@ -1429,3 +1490,784 @@ window.openTerminal = (username) => {
         if (terminal) terminal.focus();
     }, 150);
 };
+
+// ══════════════════════════════════════════ CRUD PERFILES ══════════════════════════════════════════════════
+
+function cargarTablaPerfiles(datos) {
+    if ($.fn.DataTable.isDataTable('#perfilesTable')) {
+        $('#perfilesTable').DataTable().destroy();
+    }
+
+    $('#perfilesTable').DataTable({
+        data: datos,
+        columns: [
+            {
+                data: null,
+                defaultContent: '<input type="checkbox" class="cyber-check">',
+                orderable: false,
+                searchable: false,
+                width: '30px'
+            },
+            { 
+                data: 'id', 
+                render: (data, type) => {
+                    if (type === 'sort' || type === 'type') return parseInt(data);
+                    return `<span class="font-mono">#${data}</span>`;
+                }
+            },
+            { data: 'nombre', render: (data) => `<span class="font-bold text-green">${data}</span>` },
+            { data: 'sigla', render: (data) => `<span class="font-mono">${data}</span>` },
+            {
+                data: null,
+                orderable: false,
+                searchable: false,
+                render: (data, type, row) => {
+                    const isRoot = row.id === 1 || (row.nombre && row.nombre.toUpperCase() === 'PERFILES SEGURO');
+                    const opacity = isRoot ? 'opacity: 0.3; cursor: not-allowed;' : '';
+                    const titleEdit = isRoot ? 'Protegido' : 'Editar';
+                    const titleDelete = isRoot ? 'Protegido' : 'Eliminar';
+                    const onclickEdit = isRoot ? '' : `onclick="editPerfil(${row.id})"`;
+                    const onclickDelete = isRoot ? '' : `onclick="deletePerfil(${row.id}, '${row.nombre}')"`;
+
+                    return `
+                        <div class="row-actions">
+                            <button class="btn btn-outline btn-sm btn-outline-blue" title="${titleEdit}" style="${opacity}" ${onclickEdit}>
+                                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M12.146.146a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-10 10a.5.5 0 01-.168.11l-5 2a.5.5 0 01-.65-.65l2-5a.5.5 0 01.11-.168l10-10z"/>
+                                </svg>
+                            </button>
+                            <button class="btn btn-outline btn-sm btn-outline-red" title="${titleDelete}" style="${opacity}" ${onclickDelete}>
+                                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5z"/>
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+        ],
+        language: CYBER_TABLE_LANG,
+        pageLength: 6,
+        lengthMenu: [6, 10, 25, 100],
+        autoWidth: false,
+        responsive: true,
+        dom: '<"top"fl>rt<"bottom"ip><"clear">'
+    });
+}
+
+window.savePerfil = function() {
+    const nombre = document.getElementById('pNombre').value.trim();
+    const sigla = document.getElementById('pSigla').value.trim();
+
+    if (!nombre || !sigla) {
+        return showAlert('DEBE COMPLETAR TODOS LOS CAMPOS.');
+    }
+
+    fetch('/api/perfiles', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, sigla })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+            closeModal('modalCrearPerfil');
+            document.getElementById('formCrearPerfil').reset();
+            actualizarTablaPerfiles();
+            showAlert('PERFIL CREADO EXITOSAMENTE.', 'SUCCESS');
+        } else {
+            showAlert(data.mensaje || 'Error al crear perfil');
+        }
+    });
+};
+
+window.editPerfil = function(id) {
+    fetch(`/api/perfiles/${id}`)
+    .then(res => res.json())
+    .then(response => {
+        if (response.ok) {
+            const p = response.data;
+            document.getElementById('editPerfilId').value = p.id;
+            document.getElementById('editPNombre').value = p.nombre;
+            document.getElementById('editPSigla').value = p.sigla;
+            showModal('modalEditarPerfil');
+        } else {
+            showAlert(response.mensaje);
+        }
+    });
+};
+
+window.updatePerfil = function() {
+    const id = document.getElementById('editPerfilId').value;
+    const nombre = document.getElementById('editPNombre').value.trim();
+    const sigla = document.getElementById('editPSigla').value.trim();
+
+    if (!nombre || !sigla) {
+        return showAlert('DEBE COMPLETAR TODOS LOS CAMPOS.');
+    }
+
+    fetch(`/api/perfiles/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, sigla })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+            closeModal('modalEditarPerfil');
+            actualizarTablaPerfiles();
+            showAlert('PERFIL ACTUALIZADO EXITOSAMENTE.', 'SUCCESS');
+        } else {
+            showAlert(data.mensaje);
+        }
+    });
+};
+
+let profileToDelete = null;
+window.deletePerfil = function(id, nombre) {
+    profileToDelete = id;
+    document.getElementById('deletePerfilTarget').textContent = nombre;
+    showModal('modalEliminarPerfil');
+};
+
+window.confirmDeletePerfil = function() {
+    if (!profileToDelete) return;
+    
+    fetch(`/api/perfiles/${profileToDelete}`, { method: 'DELETE' })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+            closeModal('modalEliminarPerfil');
+            actualizarTablaPerfiles();
+            showAlert('PERFIL ELIMINADO EXITOSAMENTE.', 'SUCCESS');
+        } else {
+            showAlert(data.mensaje);
+        }
+        profileToDelete = null;
+    });
+};
+
+function actualizarTablaPerfiles() {
+    fetch('/api/perfiles')
+    .then(res => res.json())
+    .then(response => {
+        if (response.ok) {
+            cargarTablaPerfiles(response.data);
+            actualizarEstadisticasPerfiles();
+        }
+    });
+}
+
+
+// ══════════════════════════════════════════ CRUD GERENCIAS ══════════════════════════════════════════════════
+
+function cargarTablaGerencias(datos) {
+    if ($.fn.DataTable.isDataTable('#gerenciasTable')) {
+        $('#gerenciasTable').DataTable().destroy();
+    }
+
+    $('#gerenciasTable').DataTable({
+        data: datos,
+        columns: [
+            {
+                data: null,
+                defaultContent: '<input type="checkbox" class="cyber-check">',
+                orderable: false,
+                searchable: false,
+                width: '30px'
+            },
+            { 
+                data: 'id', 
+                render: (data, type) => {
+                    if (type === 'sort' || type === 'type') return parseInt(data);
+                    return `<span class="font-mono">#${data}</span>`;
+                }
+            },
+            { data: 'nombre', render: (data) => `<span class="font-bold text-green">${data}</span>` },
+            { data: 'sigla', defaultContent: '', render: (data, type, row) => {
+                const val = data || row.SIGLA || row.Sigla || '';
+                return `<span class="font-mono">${val}</span>`;
+            }},
+            {
+                data: null,
+                orderable: false,
+                searchable: false,
+                render: (data, type, row) => {
+                    const isRoot = row.id === 1;
+                    const opacity = isRoot ? 'opacity: 0.3; cursor: not-allowed;' : '';
+                    const titleEdit = isRoot ? 'Protegido' : 'Editar';
+                    const titleDelete = isRoot ? 'Protegido' : 'Eliminar';
+                    // Nota: Necesitas implementar editGerencia y deleteGerencia o adaptarlos
+                    const onclickEdit = isRoot ? '' : `onclick="editGerencia(${row.id})"`;
+                    const onclickDelete = isRoot ? '' : `onclick="deleteGerencia(${row.id}, '${row.nombre}')"`;
+
+                    return `
+                        <div class="row-actions">
+                            <button class="btn btn-outline btn-sm btn-outline-blue" title="${titleEdit}" style="${opacity}" ${onclickEdit}>
+                                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M12.146.146a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-10 10a.5.5 0 01-.168.11l-5 2a.5.5 0 01-.65-.65l2-5a.5.5 0 01.11-.168l10-10z"/>
+                                </svg>
+                            </button>
+                            <button class="btn btn-outline btn-sm btn-outline-red" title="${titleDelete}" style="${opacity}" ${onclickDelete}>
+                                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5z"/>
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+        ],
+        language: CYBER_TABLE_LANG,
+        pageLength: 6,
+        lengthMenu: [6, 10, 25, 100],
+        autoWidth: false,
+        responsive: true,
+        dom: '<"top"fl>rt<"bottom"ip><"clear">'
+    });
+}
+
+function actualizarTablaGerencias() {
+    fetch('/api/gerencias')
+    .then(res => res.json())
+    .then(response => {
+        if (response.ok) {
+            cargarTablaGerencias(response.data);
+            actualizarEstadisticasGerencias();
+        }
+    });
+}
+
+window.saveGerencia = function() {
+    const nombre = document.getElementById('gNombre').value.trim();
+    const sigla = document.getElementById('gSigla').value.trim();
+
+    if (!nombre || !sigla) {
+        return showAlert('DEBE COMPLETAR TODOS LOS CAMPOS.');
+    }
+
+    fetch('/api/gerencias', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, sigla })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+            closeModal('modalCrearGerencia');
+            document.getElementById('formCrearGerencia').reset();
+            actualizarTablaGerencias();
+            showAlert('GERENCIA CREADA EXITOSAMENTE.', 'SUCCESS');
+        } else {
+            showAlert(data.mensaje || 'Error al crear gerencia');
+        }
+    });
+};
+
+window.editGerencia = function(id) {
+    fetch(`/api/gerencias/${id}`)
+    .then(res => res.json())
+    .then(response => {
+        if (response.ok) {
+            const g = response.data;
+            document.getElementById('editGerenciaId').value = g.id;
+            document.getElementById('editGNombre').value = g.nombre;
+            document.getElementById('editGSigla').value = g.sigla;
+            showModal('modalEditarGerencia');
+        } else {
+            showAlert(response.mensaje);
+        }
+    });
+};
+
+window.updateGerencia = function() {
+    const id = document.getElementById('editGerenciaId').value;
+    const nombre = document.getElementById('editGNombre').value.trim();
+    const sigla = document.getElementById('editGSigla').value.trim();
+
+    if (!nombre || !sigla) {
+        return showAlert('DEBE COMPLETAR TODOS LOS CAMPOS.');
+    }
+
+    fetch(`/api/gerencias/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, sigla })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+            closeModal('modalEditarGerencia');
+            actualizarTablaGerencias();
+            showAlert('GERENCIA ACTUALIZADA EXITOSAMENTE.', 'SUCCESS');
+        } else {
+            showAlert(data.mensaje);
+        }
+    });
+};
+
+let gerenciaToDelete = null;
+window.deleteGerencia = function(id, nombre) {
+    gerenciaToDelete = id;
+    document.getElementById('deleteGerenciaTarget').textContent = nombre;
+    showModal('modalEliminarGerencia');
+};
+
+window.confirmDeleteGerencia = function() {
+    if (!gerenciaToDelete) return;
+    
+    fetch(`/api/gerencias/${gerenciaToDelete}`, { method: 'DELETE' })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+            closeModal('modalEliminarGerencia');
+            actualizarTablaGerencias();
+            showAlert('GERENCIA ELIMINADA EXITOSAMENTE.', 'SUCCESS');
+        } else {
+            showAlert(data.mensaje);
+        }
+        gerenciaToDelete = null;
+    });
+};
+
+// --- DIVISIONES ---
+
+window.actualizarTablaDivisiones = function () {
+    fetch('/api/divisiones')
+        .then(res => res.json())
+        .then(response => {
+            if (response.ok) {
+                cargarTablaDivisiones(response.data);
+            } else {
+                console.error('Error cargando divisiones:', response.mensaje);
+                cargarTablaDivisiones([]);
+            }
+        })
+        .catch(err => {
+            console.error('Error de conexión:', err);
+            cargarTablaDivisiones([]);
+        });
+}
+
+function cargarTablaDivisiones(datos) {
+    if ($.fn.DataTable.isDataTable('#divisionesTable')) {
+        $('#divisionesTable').DataTable().destroy();
+    }
+
+    $('#divisionesTable').DataTable({
+        data: datos,
+        order: [[1, 'asc']],
+        columns: [
+            {
+                data: null,
+                defaultContent: '<input type="checkbox" class="cyber-check">',
+                orderable: false,
+                searchable: false,
+                width: '30px'
+            },
+            { 
+                data: 'id', 
+                render: (data, type) => {
+                    if (type === 'sort' || type === 'type') return parseInt(data);
+                    return `<span class="font-mono">#${data}</span>`;
+                }
+            },
+            { data: 'nombre', render: (data) => `<span class="font-bold text-green">${data}</span>` },
+            { data: 'sigla', render: (data) => `<span class="font-mono">${data || '---'}</span>` },
+            { 
+                data: 'gerencia_nombre', 
+                render: (data) => `<span class="badge" style="background: rgba(0, 209, 255, 0.1); color: #00d1ff; border: 1px solid rgba(0, 209, 255, 0.3); font-size: 0.7rem; padding: 2px 8px;">${data || 'SIN ASIGNAR'}</span>` 
+            },
+            {
+                data: null,
+                orderable: false,
+                searchable: false,
+                render: (data, type, row) => `
+                    <div class="row-actions">
+                        <button class="btn btn-outline btn-sm btn-outline-cyan" title="Editar" onclick="editDivision(${row.id})">
+                            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M12.146.146a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-10 10a.5.5 0 01-.168.11l-5 2a.5.5 0 01-.65-.65l2-5a.5.5 0 01.11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5z"/></svg>
+                        </button>
+                        <button class="btn btn-outline btn-sm btn-outline-red" title="Eliminar" onclick="deleteDivision(${row.id}, '${row.nombre}')">
+                            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118z"/></svg>
+                        </button>
+                    </div>
+                `
+            }
+        ],
+        language: CYBER_TABLE_LANG,
+        pageLength: 6,
+        lengthMenu: [6, 10, 25, 100],
+        autoWidth: false,
+        responsive: true,
+        dom: '<"top"fl>rt<"bottom"ip><"clear">'
+    });
+}
+
+window.saveDivision = function() {
+    const nombre = document.getElementById('dNombre').value.trim();
+    const sigla = document.getElementById('dSigla').value.trim();
+    const id_gerencia = document.getElementById('dGerencia').value;
+
+    if (!nombre || !sigla || !id_gerencia) {
+        return showAlert('DEBE COMPLETAR TODOS LOS CAMPOS.');
+    }
+
+    fetch('/api/divisiones', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, sigla, id_gerencia })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+            closeModal('modalCrearDivision');
+            document.getElementById('formCrearDivision').reset();
+            actualizarTablaDivisiones();
+            showAlert('DIVISIÓN CREADA EXITOSAMENTE.', 'SUCCESS');
+        } else {
+            showAlert(data.mensaje || 'Error al crear división');
+        }
+    });
+};
+
+window.editDivision = function(id) {
+    fetch(`/api/divisiones/${id}`)
+    .then(res => res.json())
+    .then(response => {
+        if (response.ok) {
+            const d = response.data;
+            document.getElementById('editDivisionId').value = d.id;
+            document.getElementById('editDNombre').value = d.nombre;
+            document.getElementById('editDSigla').value = d.sigla;
+            document.getElementById('editDGerencia').value = d.id_gerencia;
+            showModal('modalEditarDivision');
+        } else {
+            showAlert(response.mensaje);
+        }
+    });
+};
+
+window.updateDivision = function() {
+    const id = document.getElementById('editDivisionId').value;
+    const nombre = document.getElementById('editDNombre').value.trim();
+    const sigla = document.getElementById('editDSigla').value.trim();
+    const id_gerencia = document.getElementById('editDGerencia').value;
+
+    if (!nombre || !sigla || !id_gerencia) {
+        return showAlert('DEBE COMPLETAR TODOS LOS CAMPOS.');
+    }
+
+    fetch(`/api/divisiones/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, sigla, id_gerencia })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+            closeModal('modalEditarDivision');
+            actualizarTablaDivisiones();
+            showAlert('DIVISIÓN ACTUALIZADA EXITOSAMENTE.', 'SUCCESS');
+        } else {
+            showAlert(data.mensaje);
+        }
+    });
+};
+
+let divisionToDelete = null;
+window.deleteDivision = function(id, nombre) {
+    divisionToDelete = id;
+    document.getElementById('deleteDivisionTarget').textContent = nombre;
+    showModal('modalEliminarDivision');
+};
+
+window.confirmDeleteDivision = function() {
+    if (!divisionToDelete) return;
+    
+    fetch(`/api/divisiones/${divisionToDelete}`, { method: 'DELETE' })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+            closeModal('modalEliminarDivision');
+            actualizarTablaDivisiones();
+            showAlert('DIVISIÓN ELIMINADA EXITOSAMENTE.', 'SUCCESS');
+        } else {
+            showAlert(data.mensaje);
+        }
+        divisionToDelete = null;
+    });
+};
+
+// ══════════════════════════════════════════ EXPORTACIÓN PDF ══════════════════════════════════════════════════
+
+window.exportData = function () {
+    const { jsPDF } = window.jspdf;
+    if (!jsPDF) { return showAlert("Librería de PDF no disponible."); }
+
+    const doc = new jsPDF('p', 'mm', 'a4');
+    const logoUrl = "/static/Principal/img/logo-VTV.png";
+    const activeSection = document.querySelector('section.section.active') || document.querySelector('section.section:not([style*="display: none"])');
+    const table = activeSection ? activeSection.querySelector('table') : document.getElementById('mainTable');
+    
+    let moduleTitle = activeSection ? (activeSection.querySelector('.bc-root') || activeSection.querySelector('.bc-current') || {innerText: "REPORTE"}).innerText.trim().replace(/^\/\/\s*/, '') : "REPORTE";
+
+    if (!table) { return showAlert("No se encontró tabla para exportar."); }
+
+    const addFooter = (doc, data) => {
+        const pageCount = doc.internal.getNumberOfPages();
+        doc.setFontSize(8);
+        doc.setTextColor(150, 150, 150);
+        doc.text("Venezolana de Televisión - Generado por Sistema VTV", 15, 288);
+        doc.text("Página " + data.pageNumber + " de " + pageCount, 195, 288, { align: "right" });
+    };
+
+    const generatePDF = (logoImg, rowImagesMap) => {
+        const headers = [];
+        const rows = [];
+        const tableEl = table;
+        const headRows = tableEl.querySelectorAll('thead tr');
+        const bodyRows = tableEl.querySelectorAll('tbody tr');
+
+        const isDataTable = $.fn.dataTable.isDataTable(tableEl);
+        const isUserModule = moduleTitle.includes("USUARIOS");
+
+        if (isDataTable) {
+            const dt = $(tableEl).DataTable();
+            const allData = dt.rows({ search: 'applied', order: 'current' }).data().toArray();
+            
+            allData.forEach(item => {
+                const rowData = [];
+                // Mapeo según la estructura de datos de cada tabla definida en admin.js
+                if (tableEl.id === 'mainTable') {
+                    rowData.push(item.foto_perfil || "");
+                    rowData.push(item.username);
+                    rowData.push(item.firstName);
+                    rowData.push(item.lastName);
+                    rowData.push(item.email);
+                    rowData.push(item.status);
+                } else if (tableEl.id === 'gerenciasTable') {
+                    rowData.push(item.id);
+                    rowData.push(item.nombre);
+                    rowData.push(item.sigla);
+                } else if (tableEl.id === 'divisionesTable') {
+                    rowData.push(item.id);
+                    rowData.push(item.nombre);
+                    rowData.push(item.sigla);
+                    rowData.push(item.gerencia_nombre);
+                } else if (tableEl.id === 'perfilesTable') {
+                    rowData.push(item.id);
+                    rowData.push(item.nombre);
+                } else {
+                    // Fallback para tablas genéricas que podrían no estar mapeadas
+                    Object.keys(item).forEach(key => {
+                        if (key !== 'DT_RowId' && typeof item[key] !== 'object') {
+                            rowData.push(item[key]);
+                        }
+                    });
+                }
+                if (rowData.length > 0) rows.push(rowData);
+            });
+        } else {
+            bodyRows.forEach(tr => {
+                const rowData = [];
+                const cells = tr.querySelectorAll('td');
+                cells.forEach((td, i) => {
+                    if (i !== 0 && i !== cells.length - 1) {
+                        if (isUserModule && i === 1) {
+                            const img = td.querySelector('img');
+                            rowData.push(img ? img.src : "");
+                        } else {
+                            rowData.push(td.innerText.trim());
+                        }
+                    }
+                });
+                rows.push(rowData);
+            });
+        }
+
+        // Extraer cabecera (se mantiene del DOM ya que es fija)
+        headRows.forEach(tr => {
+            const rowData = [];
+            tr.querySelectorAll('th').forEach((th, i) => {
+                if (i !== 0 && i !== tr.cells.length - 1) {
+                    rowData.push(th.innerText.trim().replace(/\s*⇅\s*/, ''));
+                }
+            });
+            headers.push(rowData);
+        });
+
+        // Calcular dimensiones del logo y generar ID único una sola vez
+        const reportId = "VTV-" + new Date().toISOString().slice(0, 10).replace(/-/g, '') + "-" + Math.random().toString(36).substr(2, 6).toUpperCase();
+        let logoW = 22, logoH = 22;
+        if (logoImg) {
+            const ratio = logoImg.width / logoImg.height;
+            ratio > 1 ? logoH = logoW / ratio : logoW = logoH * ratio;
+        }
+
+        // Crear una copia de los datos limpiando las URLs de imagen para que no salgan como texto en la primera columna si es Usuarios
+        const cleanRows = rows.map(r => r.map((cell, i) => (isUserModule && i === 0) ? "" : cell));
+
+        // Renombrar cabecera de imagen para que no se corte en el PDF
+        if (isUserModule && headers.length > 0 && headers[0][0] === 'IMAGEN') {
+            headers[0][0] = 'FOTO';
+        }
+
+        doc.autoTable({
+            head: headers,
+            body: cleanRows,
+            startY: 55,
+            margin: { top: 50, bottom: 20, left: 15, right: 15 },
+            styles: { fontSize: 8, cellPadding: 2.5, valign: 'middle', font: 'helvetica' },
+            headStyles: { fillColor: [0, 20, 50], textColor: 255, fontStyle: 'bold', halign: 'left' },
+            alternateRowStyles: { fillColor: [245, 248, 255] },
+            columnStyles: isUserModule ? { 0: { cellWidth: 18, halign: 'center' } } : {},
+            didDrawCell: (data) => {
+                // Renderizar imagen del usuario en la columna 0 si estamos en el módulo de usuarios
+                if (isUserModule && data.section === 'body' && data.column.index === 0) {
+                    const imgSrc = rows[data.row.index][0];
+                    const imgObj = rowImagesMap[imgSrc];
+                    if (imgObj) {
+                        const size = 8;
+                        const x = data.cell.x + (data.cell.width - size) / 2;
+                        const y = data.cell.y + (data.cell.height - size) / 2;
+                        const cx = x + size / 2;
+                        const cy = y + size / 2;
+                        const r = size / 2;
+                        
+                        // Fondo circular
+                        if (imgSrc.includes('default_avatar')) {
+                            doc.setFillColor(230, 255, 230);
+                        } else {
+                            doc.setFillColor(240, 240, 240);
+                        }
+                        doc.circle(cx, cy, r, 'F');
+                        
+                        // Clip circular para que la imagen se vea redondeada
+                        doc.saveGraphicsState();
+                        doc.circle(cx, cy, r, null);
+                        doc.clip();
+                        doc.discardPath();
+                        doc.addImage(imgObj, 'JPEG', x, y, size, size);
+                        doc.restoreGraphicsState();
+                        
+                        // Borde circular sutil
+                        doc.setDrawColor(200, 200, 200);
+                        doc.setLineWidth(0.2);
+                        doc.circle(cx, cy, r, 'D');
+                    }
+                }
+            },
+            didDrawPage: (data) => {
+                // Header Institucional - Diseño Lineal
+                // Logo a la izquierda
+                if (logoImg) doc.addImage(logoImg, 'PNG', 15, 10, logoW, logoH);
+
+                // Título y subtítulo al lado del logo
+                doc.setTextColor(0, 31, 63);
+                doc.setFontSize(13);
+                doc.setFont("helvetica", "bold");
+                doc.text("GERENCIA DE TECNOLOGÍA", 40, 18, { align: "left" });
+
+                doc.setTextColor(100, 100, 100);
+                doc.setFontSize(7.5);
+                doc.setFont("helvetica", "normal");
+                doc.text("Sistema de Gestión WiFi VTV • Reporte de " + moduleTitle, 40, 23, { align: "left" });
+
+                // Línea separadora
+                doc.setDrawColor(0, 31, 63);
+                doc.setLineWidth(0.5);
+                doc.line(15, 32, 195, 32);
+
+
+                // Barra de Fecha Azul
+                doc.setFillColor(0, 20, 50);
+                doc.roundedRect(15, 38, 65, 6, 0.5, 0.5, 'F');
+                
+                doc.setFillColor(255, 255, 255); 
+                doc.rect(17, 39, 3.5, 3.5, 'F');
+                doc.setFillColor(200, 0, 0); 
+                doc.rect(17, 39, 3.5, 1, 'F');
+                doc.setDrawColor(0, 0, 0);
+                doc.setLineWidth(0.1);
+                doc.rect(17, 39, 3.5, 3.5, 'D');
+
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(7.5);
+                doc.setFont("helvetica", "bold");
+                const dateStr = new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase();
+                doc.text(dateStr, 21.5, 42.2);
+
+                // Barra de Cantidad de Registros
+                const totalRegistros = cleanRows.length;
+                const regText = "REGISTROS: " + totalRegistros;
+                doc.setFillColor(0, 20, 50);
+                doc.roundedRect(83, 38, 35, 6, 0.5, 0.5, 'F');
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(7.5);
+                doc.setFont("helvetica", "bold");
+                doc.text(regText, 100.5, 42.2, { align: "center" });
+
+                addFooter(doc, data);
+            }
+        });
+
+        // Generar Blob y mostrar en modal
+        const blob = doc.output('bloburl');
+        const iframe = document.getElementById('pdfFrame');
+        if (iframe) {
+            iframe.src = blob;
+            window.showModal('modalPDF');
+            
+            document.getElementById('btnDownloadPDF').onclick = () => {
+                doc.save(`Reporte_${moduleTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.pdf`);
+            };
+            document.getElementById('btnPrintPDF').onclick = () => {
+                iframe.contentWindow.print();
+            };
+        } else {
+            window.open(blob, '_blank');
+        }
+    };
+
+
+
+    let logoLoaded = false;
+    let logoImg = null;
+    
+    // Capturar todas las imágenes únicas de la tabla
+    const isUserModule = moduleTitle.includes("USUARIOS");
+    const tableImgs = isUserModule ? Array.from(table.querySelectorAll('tbody tr td:nth-child(2) img')).map(img => img.src) : [];
+    const uniqueTableImgs = [...new Set(tableImgs)].filter(x => x);
+    const rowImagesMap = {};
+    let loadedTableImgsCount = 0;
+
+    const finalize = () => {
+        if (logoLoaded && (loadedTableImgsCount >= uniqueTableImgs.length)) {
+            generatePDF(logoImg, rowImagesMap);
+        }
+    };
+
+    const imgLogo = new Image();
+    imgLogo.crossOrigin = "Anonymous";
+    imgLogo.src = logoUrl;
+    imgLogo.onload = () => { logoImg = imgLogo; logoLoaded = true; finalize(); };
+    imgLogo.onerror = () => { logoLoaded = true; finalize(); };
+
+
+
+    if (uniqueTableImgs.length > 0) {
+        uniqueTableImgs.forEach(url => {
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.src = url;
+            img.onload = () => { rowImagesMap[url] = img; loadedTableImgsCount++; finalize(); };
+            img.onerror = () => { loadedTableImgsCount++; finalize(); };
+        });
+    } else {
+        finalize();
+    }
+};
+
+

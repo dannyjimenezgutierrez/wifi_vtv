@@ -1,0 +1,37 @@
+<!-- ══════════════════════════════════════════ MODAL EDITAR GERENCIA ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalEditarGerencia" onclick="closeOnOverlay(event, 'modalEditarGerencia')">
+    <div class="modal modal-md">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalEditarGerencia')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="btn btn-outline btn-sm btn-outline-cyan">EDITAR GERENCIA.exe</span>
+        </div>
+        <div class="modal-body">
+            <form id="formEditarGerencia" novalidate>
+                <input type="hidden" id="editGerenciaId">
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label class="form-label">[ NOMBRE DE LA GERENCIA ]</label>
+                        <input type="text" id="editGNombre" class="form-input" placeholder="Ej. Gerencia de Tecnología" minlength="3" maxlength="100" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label class="form-label">[ SIGLA ]</label>
+                        <input type="text" id="editGSigla" class="form-input" placeholder="Ej. TEC" minlength="1" maxlength="10" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline btn-sm btn-outline-red" onclick="closeModal('modalEditarGerencia')">[ CANCELAR ]</button>
+            <button class="btn btn-outline btn-sm btn-outline-cyan" onclick="updateGerencia()">[ ACTUALIZAR GERENCIA ]</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════════════════════════════════════ -->

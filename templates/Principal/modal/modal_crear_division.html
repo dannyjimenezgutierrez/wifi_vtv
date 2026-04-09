@@ -1,0 +1,42 @@
+<!-- ══════════════════════════════════════════ MODAL CREAR DIVISIÓN ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalCrearDivision" onclick="closeOnOverlay(event, 'modalCrearDivision')">
+    <div class="modal modal-lg">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalCrearDivision')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="btn btn-outline btn-sm btn-outline-blue">CREAR DIVISIÓN.exe</span>
+        </div>
+        <div class="modal-body">
+            <form id="formCrearDivision" novalidate>
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label class="form-label">[ NOMBRE DE LA DIVISIÓN ]</label>
+                        <input type="text" id="dNombre" class="form-input" placeholder="Ej. División de Desarrollo" minlength="3" maxlength="100" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">[ SIGLA ]</label>
+                        <input type="text" id="dSigla" class="form-input" placeholder="Ej. DES" minlength="1" maxlength="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">[ GERENCIA PERTENECIENTE ]</label>
+                        <select id="dGerencia" class="form-input form-select" required>
+                            <option value="">SELECCIONE GERENCIA...</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline btn-sm btn-outline-red" onclick="closeModal('modalCrearDivision')">[ CANCELAR ]</button>
+            <button class="btn btn-outline btn-sm" onclick="saveDivision()">[ GUARDAR DIVISIÓN ]</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════════════════════════════════════ -->

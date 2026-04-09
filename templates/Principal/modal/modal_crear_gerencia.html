@@ -1,0 +1,36 @@
+<!-- ══════════════════════════════════════════ MODAL CREAR GERENCIA ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalCrearGerencia" onclick="closeOnOverlay(event, 'modalCrearGerencia')">
+    <div class="modal modal-md">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalCrearGerencia')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="btn btn-outline btn-sm btn-outline-blue">CREAR GERENCIA.exe</span>
+        </div>
+        <div class="modal-body">
+            <form id="formCrearGerencia" novalidate>
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label class="form-label">[ NOMBRE DE LA GERENCIA ]</label>
+                        <input type="text" id="gNombre" class="form-input" placeholder="Ej. Gerencia de Tecnología" minlength="3" maxlength="100" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label class="form-label">[ SIGLA ]</label>
+                        <input type="text" id="gSigla" class="form-input" placeholder="Ej. TEC" minlength="1" maxlength="10" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline btn-sm btn-outline-red" onclick="closeModal('modalCrearGerencia')">[ CANCELAR ]</button>
+            <button class="btn btn-outline btn-sm" onclick="saveGerencia()">[ GUARDAR GERENCIA ]</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════════════════════════════════════ -->

@@ -15,6 +15,7 @@
 
 
 <body class="admin-body">
+    <div class="glitch-overlay" id="glitchOverlay"></div>
 
 
 
@@ -474,6 +475,53 @@
                     <span class="terminal-input-display"></span>
                     <span class="terminal-cursor"></span>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════ MODAL: VISTA PREVIA PDF -->
+    <div class="modal-overlay" id="modalPDF" onclick="closeOnOverlay(event, 'modalPDF')">
+        <div class="modal modal-xl pdf-preview-window">
+            <div class="modal-header">
+                <div class="modal-terminal-btns">
+                    <span class="mtb mtb-red" onclick="closeModal('modalPDF')"></span>
+                </div>
+                <span class="modal-title">REPORTE INSTITUCIONAL - VTV</span>
+                <div class="pdf-actions-header">
+                    <button class="btn-pdf-floating btn-print" id="btnPrintPDF">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M5 1a2 2 0 00-2 2v1h10V3a2 2 0 00-2-2H5zM2 6a1 1 0 00-1 1v4a1 1 0 001 1h1v3h10v-3h1a1 1 0 001-1V7a1 1 0 00-1-1H2zm9 7H5v-2h6v2zm3-4H2V7h12v2z"/></svg>
+                        IMPRIMIR
+                    </button>
+                    <button class="btn-pdf-floating btn-download" id="btnDownloadPDF">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M.5 9.9a.5.5 0 01.5.5v2.5a1 1 0 001 1h12a1 1 0 001-1v-2.5a.5.5 0 011 0v2.5a2 2 0 01-2 2H2a2 2 0 01-2-2v-2.5a.5.5 0 01.5-.5z"/><path d="M7.646 11.854a.5.5 0 00.708 0l3-3a.5.5 0 00-.708-.708L8.5 10.293V1.5a.5.5 0 00-1 0v8.793L5.354 8.146a.5.5 0 10-.708.708l3 3z"/></svg>
+                        DESCARGAR PDF
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body pdf-body">
+                <iframe id="pdfFrame" src="" frameborder="0" width="100%" height="75vh"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════ MODAL ALERTA INSTITUCIONAL -->
+    <div class="modal-overlay" id="modalAlert" onclick="if(event.target===this)window.closeAlert()">
+        <div class="modal-alert">
+            <div class="modal-alert-header">
+                <div class="modal-alert-title">[ NOTIFICACIÓN DEL SISTEMA ]</div>
+                <span class="mtb mtb-red" onclick="window.closeAlert()"></span>
+            </div>
+            <div class="modal-alert-body">
+                <div class="modal-alert-icon">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00ff41" stroke-width="2">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                        <line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                </div>
+                <p class="modal-alert-message" id="alertMessage"></p>
+            </div>
+            <div class="modal-alert-footer">
+                <button class="modal-alert-btn" onclick="window.closeAlert()">[ ENTENDIDO ]</button>
             </div>
         </div>
     </div>

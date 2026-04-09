@@ -1,0 +1,43 @@
+<!-- ══════════════════════════════════════════ MODAL EDITAR DIVISIÓN ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalEditarDivision" onclick="closeOnOverlay(event, 'modalEditarDivision')">
+    <div class="modal modal-lg">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalEditarDivision')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="btn btn-outline btn-sm btn-outline-cyan">EDITAR DIVISIÓN.exe</span>
+        </div>
+        <div class="modal-body">
+            <form id="formEditarDivision" novalidate>
+                <input type="hidden" id="editDivisionId">
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label class="form-label">[ NOMBRE DE LA DIVISIÓN ]</label>
+                        <input type="text" id="editDNombre" class="form-input" placeholder="Ej. División de Desarrollo" minlength="3" maxlength="100" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">[ SIGLA ]</label>
+                        <input type="text" id="editDSigla" class="form-input" placeholder="Ej. DES" minlength="1" maxlength="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">[ GERENCIA PERTENECIENTE ]</label>
+                        <select id="editDGerencia" class="form-input form-select" required>
+                            <option value="">SELECCIONE GERENCIA...</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline btn-sm btn-outline-red" onclick="closeModal('modalEditarDivision')">[ CANCELAR ]</button>
+            <button class="btn btn-outline btn-sm btn-outline-cyan" onclick="updateDivision()">[ ACTUALIZAR DIVISIÓN ]</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════════════════════════════════════ -->

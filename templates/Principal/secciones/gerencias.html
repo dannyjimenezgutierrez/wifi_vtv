@@ -30,9 +30,9 @@
                 </svg>
             </div>
             <div class="stat-body">
-                <span class="stat-label">TOTAL_GERENCIAS</span>
-                <span class="stat-value" data-target="1284">0</span>
-                <span class="stat-delta up">▲ +12.4%</span>
+                <span class="stat-label">GERENCIAS ACTIVAS</span>
+                <span class="stat-value" id="statGerenciasActivas" data-target="0">0</span>
+                <span class="stat-delta up">▲ Óptimo</span>
             </div>
             <div class="stat-chart">
                 <div class="mini-bar" style="--h:40%"></div>
@@ -53,9 +53,9 @@
                 </svg>
             </div>
             <div class="stat-body">
-                <span class="stat-label">EQUIPOS_ACTIVOS</span>
-                <span class="stat-value" data-target="47">0</span>
-                <span class="stat-delta up">▲ +3</span>
+                <span class="stat-label">GERENCIAS INACTIVAS</span>
+                <span class="stat-value" id="statGerenciasInactivas" data-target="0">0</span>
+                <span class="stat-delta up">▲ +0</span>
             </div>
             <div class="stat-chart">
                 <div class="mini-bar" style="--h:50%"></div>
@@ -75,9 +75,9 @@
                 </svg>
             </div>
             <div class="stat-body">
-                <span class="stat-label">AMENAZAS_BLOQUEADAS</span>
-                <span class="stat-value" data-target="3921">0</span>
-                <span class="stat-delta down">▼ -5.1%</span>
+                <span class="stat-label">GERENCIAS SEGURAS</span>
+                <span class="stat-value" id="statGerenciasSeguras" data-target="0">0</span>
+                <span class="stat-delta up">▲ Protegido</span>
             </div>
             <div class="stat-chart">
                 <div class="mini-bar" style="--h:80%"></div>
@@ -98,8 +98,8 @@
                 </svg>
             </div>
             <div class="stat-body">
-                <span class="stat-label">UPTIME</span>
-                <span class="stat-value" data-target="99">0</span><span class="stat-unit">%</span>
+                <span class="stat-label">TOTAL GERENCIAS</span>
+                <span class="stat-value" id="statGerenciasTotal" data-target="0">0</span>
                 <span class="stat-delta up">▲ Óptimo</span>
             </div>
             <div class="stat-chart">
@@ -129,7 +129,6 @@
                         <line x1="3" y1="12" x2="3.01" y2="12"></line>
                         <line x1="3" y1="18" x2="3.01" y2="18"></line>
                     </svg> INTERFAZ DE GERENCIAS</span>
-                <span class="bc-current" id="bcCurrent">0 REGISTROS</span>
             </div>
 
             <div class="table-actions">
@@ -140,16 +139,16 @@
                     </svg>
                     <input type="text" id="tableSearch" placeholder="FILTRAR..." autocomplete="off">
                 </div>
-                <button class="btn btn-outline btn-sm" onclick="exportData()">
+                <button class="btn btn-outline btn-sm btn-outline-red" onclick="exportData()">
                     <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
                         <path
                             d="M.5 9.9a.5.5 0 01.5.5v2.5a1 1 0 001 1h12a1 1 0 001-1v-2.5a.5.5 0 011 0v2.5a2 2 0 01-2 2H2a2 2 0 01-2-2v-2.5a.5.5 0 01.5-.5z" />
                         <path
                             d="M7.646 11.854a.5.5 0 00.708 0l3-3a.5.5 0 00-.708-.708L8.5 10.293V1.5a.5.5 0 00-1 0v8.793L5.354 8.146a.5.5 0 10-.708.708l3 3z" />
                     </svg>
-                    EXPORTAR
+                    PDF
                 </button>
-                <button class="btn btn-outline btn-sm" onclick="showModal('modalCreate')">
+                <button class="btn btn-outline btn-sm" onclick="showModal('modalCrearGerencia')">
                     <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
                         <path
                             d="M8 4a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3v3a.5.5 0 01-1 0v-3h-3a.5.5 0 010-1h3v-3A.5.5 0 018 4z" />
@@ -163,14 +162,10 @@
             <table class="cyber-table" id="gerenciasTable">
                 <thead>
                     <tr>
-                        <th><input type="checkbox" id="checkAll" class="cyber-check"></th>
+                        <th><input type="checkbox" id="checkAllGerencias" class="cyber-check"></th>
                         <th class="sortable" data-col="0">ID <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-col="1">GERENCIA <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-col="2">NIVEL <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-col="3">SUPERVISOR <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-col="4">ESTADO <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-col="5">ÚLTIMO_ACCESO <span class="sort-icon">⇅</span>
-                        </th>
+                        <th class="sortable" data-col="1">NOMBRE <span class="sort-icon">⇅</span></th>
+                        <th class="sortable" data-col="2">SIGLA <span class="sort-icon">⇅</span></th>
                         <th>ACCIONES</th>
                     </tr>
                 </thead>

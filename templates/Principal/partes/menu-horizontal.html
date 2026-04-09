@@ -7,7 +7,7 @@
         </button>
         <div class="breadcrumb">
             <span class="bc-root">INTERFAZ</span>
-            <span class="bc-current" id="bcCurrent">PAGINA PRINCIPAL</span>
+            <span class="bc-current" id="mainBreadcrumb">PAGINA PRINCIPAL</span>
         </div>
     </div>
 
@@ -22,6 +22,18 @@
     </div>
 
     <div class="topbar-right">
+
+
+
+
+        <!-- EMAIL -->
+        <a href="https://vtvcorreo.vtv.gob.ve/" target="_blank" class="topbar-btn" id="btnEmailTop" aria-label="Correo" title="Enviar Correo">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+            </svg>
+        </a>
         <!-- TERMINAL -->
         <button class="topbar-btn" id="btnTerminalTop" aria-label="Terminal" title="Abrir Terminal">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -47,11 +59,13 @@
 
         <div class="topbar-user" id="userDropdownToggle">
             <div class="user-avatar">
-                <img src="/static/Principal/img/hacker-avatar.png" alt="hacker" class="avatar-img">
+                <img src="{{ session.get('foto_perfil') or '/static/Principal/img/default_avatar.png' }}" alt="avatar"
+                    class="avatar-img {{ 'avatar-green-matrix' if not session.get('foto_perfil') else '' }}">
             </div>
             <div class="user-info">
-                <span class="user-name">ADMIN</span>
-                <span class="user-role">ROOT_ACCESS</span>
+                <span class="user-name">{{ (session.get('nombre', '') + ' ' + session.get('apellido', '')).strip() or
+                    'INVITADO' }}</span>
+                <span class="user-role">{{ session.get('perfil_nombre', 'DESC') }}</span>
             </div>
             <svg class="user-chevron" width="10" height="10" viewBox="0 0 16 16" fill="currentColor">
                 <path
@@ -61,11 +75,14 @@
             <div class="user-dropdown" id="userDropdown">
                 <div class="dropdown-header">
                     <div class="dropdown-avatar">
-                        <img src="/static/Principal/img/hacker-avatar.png" alt="hacker" class="avatar-img">
+                        <img src="{{ session.get('foto_perfil') or '/static/Principal/img/default_avatar.png' }}"
+                            alt="avatar"
+                            class="avatar-img {{ 'avatar-green-matrix' if not session.get('foto_perfil') else '' }}">
                     </div>
                     <div>
-                        <div class="dropdown-name">ADMINISTRADOR</div>
-                        <div class="dropdown-email">admin@vtv.gob.ve</div>
+                        <div class="dropdown-name">{{ (session.get('nombre', '') + ' ' + session.get('apellido',
+                            '')).strip() or 'USUARIO' }}</div>
+                        <div class="dropdown-email">{{ session.get('correo', 'n/a') }}</div>
                     </div>
                 </div>
                 <div class="dropdown-divider"></div>
@@ -73,20 +90,20 @@
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
                         <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM14 14s1 0 1-1-1-4-7-4-7 3-7 4 1 1 1 1h12z" />
                     </svg>
-                    <span>USUARIO: admin</span>
+                    <span>USUARIO: {{ session.get('usuario', 'n/a') }}</span>
                 </div>
                 <div class="dropdown-item">
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
                         <path d="M8 1L2 3v5c0 3.5 2.5 6.7 6 7.9C11.5 14.7 14 11.5 14 8V3L8 1z" />
                     </svg>
-                    <span>ROL: ROOT_ACCESS</span>
+                    <span>ROL: {{ session.get('perfil_nombre', 'n/a') }}</span>
                 </div>
                 <div class="dropdown-item">
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
                         <path d="M8 3.5a.5.5 0 00-1 0V9a.5.5 0 00.252.434l3.5 2a.5.5 0 00.496-.868L8 8.71V3.5z" />
                         <path d="M8 16A8 8 0 108 0a8 8 0 000 16zm7-8A7 7 0 111 8a7 7 0 0114 0z" />
                     </svg>
-                    <span>IP: 192.168.1.100</span>
+                    <span>IP: {{ ip or '127.0.0.1' }}</span>
                 </div>
                 <div class="dropdown-divider"></div>
                 <a href="{{ url_for('logout') }}" class="dropdown-item dropdown-logout">

@@ -53,33 +53,17 @@ body::after {
 }
 
 @keyframes scanFlicker {
-    0% {
-        opacity: 1;
-    }
+    0% { opacity: 1; }
+    48% { opacity: 1; }
+    49% { opacity: 0.92; }
+    50% { opacity: 1; }
+    98% { opacity: 1; }
+    99% { opacity: 0.95; }
+    100% { opacity: 1; }
+}
 
-    48% {
-        opacity: 1;
-    }
-
-    49% {
-        opacity: 0.92;
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-    98% {
-        opacity: 1;
-    }
-
-    99% {
-        opacity: 0.95;
-    }
-
-    100% {
-        opacity: 1;
-    }
+.avatar-green-matrix {
+    filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%) drop-shadow(0 0 2px var(--neon-green)) !important;
 }
 
 
@@ -1235,15 +1219,21 @@ body.admin-body {
 }
 
 .bc-root {
-    color: var(--neon-red);
+    color: var(--neon-blue);
     font-size: 0.7rem;
     letter-spacing: 2px;
-    border: 1px solid rgba(255, 49, 49, 0.35);
+    border: 1px solid rgba(0, 209, 255, 0.35);
     padding: 3px 10px;
     border-radius: 2px;
-    background: rgba(255, 49, 49, 0.05);
-    text-shadow: 0 0 8px rgba(255, 49, 49, 0.5);
-    animation: bcBlinkRed 2.5s ease-in-out infinite;
+    background: rgba(0, 209, 255, 0.05);
+    text-shadow: 0 0 8px rgba(0, 209, 255, 0.5);
+    animation: bcBlinkBlue 2.5s ease-in-out infinite;
+}
+
+@keyframes bcBlinkBlue {
+    0%, 70%, 100% { opacity: 1; }
+    75% { opacity: 0.3; }
+    80% { opacity: 1; }
 }
 
 @keyframes bcBlinkRed {
@@ -1352,6 +1342,28 @@ body.admin-body {
     background: rgba(255, 49, 49, 0.4);
     box-shadow: 0 0 35px rgba(255, 49, 49, 0.8);
     transform: scale(1.1);
+}
+
+#btnEmailTop {
+    color: #fff;
+    border: 2px solid var(--neon-blue);
+    background: rgba(0, 209, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 209, 255, 0.4), inset 0 0 10px rgba(0, 209, 255, 0.2);
+    animation: pulseBlueExtreme 1.5s infinite;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(0, 209, 255, 0.8);
+}
+
+#btnEmailTop:hover {
+    background: rgba(0, 209, 255, 0.4);
+    box-shadow: 0 0 35px rgba(0, 209, 255, 0.8);
+    transform: scale(1.1);
+}
+
+@keyframes pulseBlueExtreme {
+    0% { transform: scale(0.98); box-shadow: 0 0 15px rgba(0, 209, 255, 0.3); background: rgba(0, 209, 255, 0.15); }
+    50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(0, 209, 255, 0.6); background: rgba(0, 209, 255, 0.3); }
+    100% { transform: scale(0.98); box-shadow: 0 0 15px rgba(0, 209, 255, 0.3); background: rgba(0, 209, 255, 0.15); }
 }
 
 @keyframes pulseGreenExtreme {
@@ -1526,8 +1538,8 @@ body.admin-body {
 }
 
 .user-avatar {
-    width: 36px;
-    height: 36px;
+    width: 48px;
+    height: 48px;
     background: rgba(0, 8, 2, 0.9);
     border: 1px solid rgba(0, 255, 65, 0.5);
     border-radius: 6px;
@@ -1539,10 +1551,9 @@ body.admin-body {
 }
 
 .avatar-img {
-    width: 24px;
-    height: 24px;
+    width: 38px;
+    height: 38px;
     object-fit: contain;
-    filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%) drop-shadow(0 0 2px var(--neon-green));
 }
 
 .user-info {
@@ -1603,8 +1614,8 @@ body.admin-body {
 }
 
 .dropdown-avatar {
-    width: 46px;
-    height: 46px;
+    width: 68px;
+    height: 68px;
     background: rgba(0, 8, 2, 0.9);
     border: 1px solid rgba(0, 255, 65, 0.5);
     border-radius: 8px;
@@ -1946,8 +1957,8 @@ body.admin-body {
 }
 
 .cyber-table th {
-    text-align: left;
-    padding: 16px 24px;
+    text-align: center !important;
+    padding: 16px !important;
     background: rgba(255, 255, 255, 0.02);
     color: #666;
     font-weight: bold;
@@ -1961,6 +1972,7 @@ body.admin-body {
     padding: 16px 24px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     color: #bbb;
+    text-align: center;
 }
 
 .cyber-table tr:hover {
@@ -2916,7 +2928,9 @@ table.dataTable thead th {
     color: var(--neon-green);
     text-transform: uppercase;
     font-size: 0.8rem;
-    padding: 15px 10px !important;
+    padding: 15px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
 }
 
 table.dataTable tbody td {

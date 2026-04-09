@@ -1,0 +1,37 @@
+<!-- ══════════════════════════════════════════ MODAL EDITAR PERFIL ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalEditarPerfil" onclick="closeOnOverlay(event, 'modalEditarPerfil')">
+    <div class="modal modal-md">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalEditarPerfil')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="btn btn-outline btn-sm btn-outline-blue">EDITAR PERFIL.exe</span>
+        </div>
+        <div class="modal-body">
+            <form id="formEditarPerfil" novalidate>
+                <input type="hidden" id="editPerfilId">
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label class="form-label">[ NOMBRE DEL PERFIL ]</label>
+                        <input type="text" id="editPNombre" class="form-input" placeholder="Ej. Administrador" minlength="3" maxlength="50" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label class="form-label">[ SIGLA / IDENTIFICADOR ]</label>
+                        <input type="text" id="editPSigla" class="form-input" placeholder="Ej. ADM" minlength="1" maxlength="10" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline btn-sm btn-outline-red" onclick="closeModal('modalEditarPerfil')">[ CANCELAR ]</button>
+            <button class="btn btn-outline btn-sm" onclick="updatePerfil()">[ MODIFICAR PERFIL ]</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════ MODAL EDITAR PERFIL ══════════════════════════════════════════════════ -->

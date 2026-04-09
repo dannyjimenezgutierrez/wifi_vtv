@@ -1,0 +1,13 @@
+nohup: no se tendrá en cuenta la entrada
+[2026-04-09 11:28:17 -0400] [18984] [INFO] Starting gunicorn 25.3.0
+[2026-04-09 11:28:17 -0400] [18984] [ERROR] Connection in use: ('0.0.0.0', 1818)
+[2026-04-09 11:28:17 -0400] [18984] [ERROR] connection to ('0.0.0.0', 1818) failed: [Errno 98] Address already in use
+[2026-04-09 11:28:18 -0400] [18984] [ERROR] Connection in use: ('0.0.0.0', 1818)
+[2026-04-09 11:28:18 -0400] [18984] [ERROR] connection to ('0.0.0.0', 1818) failed: [Errno 98] Address already in use
+[2026-04-09 11:28:19 -0400] [18984] [ERROR] Connection in use: ('0.0.0.0', 1818)
+[2026-04-09 11:28:19 -0400] [18984] [ERROR] connection to ('0.0.0.0', 1818) failed: [Errno 98] Address already in use
+[2026-04-09 11:28:20 -0400] [18984] [ERROR] Connection in use: ('0.0.0.0', 1818)
+[2026-04-09 11:28:20 -0400] [18984] [ERROR] connection to ('0.0.0.0', 1818) failed: [Errno 98] Address already in use
+[2026-04-09 11:28:21 -0400] [18984] [ERROR] Connection in use: ('0.0.0.0', 1818)
+[2026-04-09 11:28:21 -0400] [18984] [ERROR] connection to ('0.0.0.0', 1818) failed: [Errno 98] Address already in use
+[2026-04-09 11:28:22 -0400] [18984] [ERROR] Can't connect to ('0.0.0.0', 1818)

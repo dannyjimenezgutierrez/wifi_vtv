@@ -96,7 +96,7 @@
                                 <h3>[root@PASSWORD: $]</h3>
                             </label>
                             <div class="f-box">
-                                <input class="f-input" type="password" id="password" placeholder="••••••••••••"
+                                <input class="f-input" type="password" id="password" placeholder="Ingrese su Clave"
                                     autocomplete="current-password">
                                 <button type="button" class="f-icon" id="togglePass" aria-label="Ver contraseña">
                                     <svg id="eyeOpen" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -115,13 +115,39 @@
                             <span class="f-error" id="passError"></span>
                         </div>
 
-                        <div class="f-options">
-                            <label class="f-check">
-                                <input type="checkbox" id="remember">
-                                <div class="f-checkmark"></div>
-                                <span class="f-check-label">RECORDAR SESIÓN</span>
+
+                        <div class="f-group captcha-group" id="g-captcha">
+                            <label class="f-label">
+                                <h3>[root@VERIFICACIÓN: $]</h3>
                             </label>
-                            <a href="#" class="f-forgot">[ RECUPERAR ACCESO ]</a>
+                            <div class="captcha-container">
+                                <div class="captcha-display">
+                                    <canvas id="captchaCanvas" width="200" height="50"></canvas>
+                                    <div class="captcha-scanline"></div>
+                                    <div class="captcha-noise"></div>
+                                </div>
+                                <button type="button" class="captcha-refresh" id="refreshCaptcha"
+                                    aria-label="Regenerar captcha">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.5">
+                                        <path d="M23 4v6h-6" />
+                                        <path d="M1 20v-6h6" />
+                                        <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="f-box captcha-input-box">
+                                <input class="f-input" type="text" id="captchaInput"
+                                    placeholder="Ingrese el código de verificación" autocomplete="off" maxlength="6">
+                                <span class="f-icon">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.5">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                        <path d="M7 11V7a5 5 0 0110 0v4" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <span class="f-error" id="captchaError"></span>
                         </div>
 
                         <button type="submit" class="btn-submit" id="submitBtn">

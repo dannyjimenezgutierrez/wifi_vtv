@@ -1486,12 +1486,33 @@ body.admin-body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: transparent;
-    backdrop-filter: blur(5px);
-    display: none;
+    background: rgba(0, 5, 2, 0.4);
+    backdrop-filter: blur(8px);
+    display: none; /* Se mantiene para compatibilidad con showModal manual */
     align-items: center;
     justify-content: center;
     z-index: 2000;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.modal-overlay.active .modal,
+.modal-overlay.show .modal,
+.modal-overlay.show .modal-alert {
+    transform: scale(1) translateY(0);
+}
+
+/* Específicos para Alerta */
+.modal-alert {
+    transform: scale(0.7) translateY(30px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.3);
+}
+
+.modal-overlay.show {
+    display: flex !important;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .modal {
@@ -1501,21 +1522,12 @@ body.admin-body {
     max-width: 600px;
     border-radius: 8px;
     overflow: hidden;
+    transform: scale(0.8) translateY(20px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     box-shadow: 0 0 50px rgba(0, 255, 65, 0.2);
-    animation: modalSlide 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
-@keyframes modalSlide {
-    from {
-        opacity: 0;
-        transform: translateY(-50px) scale(0.9);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
+/* ══════════════════════════════════════════ ESTRUCTURA DE MODALES ══════════════════════════════════════════ */
 
 .modal-header {
     background: #111;
@@ -2324,4 +2336,212 @@ table.dataTable.no-footer {
     width: 100px;
     height: 100px;
     margin: 0 auto 16px;
+}
+/* ══════════════════════════════════════════ PDF PREVIEW MODAL ══════════════════════════════════════════════════ */
+.modal-xl {
+    max-width: 950px;
+    width: 95%;
+}
+
+.pdf-preview-window {
+    background: #f8f9fa !important;
+    border: 1px solid #dee2e6 !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+}
+
+.pdf-preview-window .modal-header {
+    background: #fff !important;
+    border-bottom: 1px solid #eee !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px !important;
+}
+
+.pdf-actions-header {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-pdf-action {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-print {
+    background: #1e1e3f;
+    color: white;
+}
+
+.btn-print:hover {
+    background: #2a2a5a;
+    transform: translateY(-1px);
+}
+
+.btn-download {
+    background: #00c853;
+    color: white;
+}
+
+.btn-download:hover {
+    background: #00a042;
+    transform: translateY(-1px);
+}
+
+.pdf-body {
+    padding: 0 !important;
+    background: #525659;
+    min-height: 600px;
+}
+
+#pdfFrame {
+    border: none;
+    display: block;
+}
+
+/* ══════════════════════════════════════════ AJUSTES FINALES PDF ══════════════════════════════════════════════════ */
+.btn-pdf-floating {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 10px 20px !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    border: none !important;
+    color: white !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3) !important;
+}
+
+.btn-pdf-floating.btn-print {
+    background: #001f3f !important; /* El azul oscuro solicitado */
+}
+
+.btn-pdf-floating.btn-print:hover {
+    background: #003366 !important;
+    transform: translateY(-2px);
+}
+
+.btn-pdf-floating.btn-download {
+    background: #28a745 !important;
+}
+
+.btn-pdf-floating.btn-download:hover {
+    background: #218838 !important;
+    transform: translateY(-2px);
+}
+
+#pdfFrame {
+    background: #f0f0f0;
+}
+
+/* ══════════════════════════════════════════ ALERTAS INSTITUCIONALES ══════════════════════════════════════════════ */
+.modal-alert {
+    background: #0a0a0a !important;
+    border: 2px solid #00ff41 !important;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 8px;
+    overflow: hidden;
+    animation: modalSlide 0.3s ease-out;
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+}
+
+.modal-alert-header {
+    background: #1a1a1a;
+    padding: 12px 20px;
+    border-bottom: 1px solid #00ff41;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-alert-title {
+    color: #00ff41;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.modal-alert-body {
+    padding: 30px;
+    text-align: center;
+}
+
+.modal-alert-icon {
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 65, 0.5));
+}
+
+.modal-alert-message {
+    color: #00ff41;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    text-transform: uppercase;
+}
+
+.modal-alert-footer {
+    padding: 20px;
+    text-align: center;
+    background: #0f0f0f;
+}
+
+.modal-alert-btn {
+    background: transparent;
+    border: 1px solid #00ff41;
+    color: #00ff41;
+    padding: 10px 25px;
+    cursor: pointer;
+    font-weight: 900;
+    transition: all 0.2s;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+}
+
+.modal-alert-btn:hover {
+    background: rgba(0, 255, 65, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+    transform: scale(1.05);
+}
+
+/* ══════════════════════════════════════════ EFECTO GLITCH DE SEGURIDAD ══════════════════════════════════════════ */
+.glitch-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 255, 65, 0.05);
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    display: none;
+}
+
+.glitch-overlay.fire {
+    display: block;
+    animation: glitch-anim 0.4s ease-out forwards;
+}
+
+@keyframes glitch-anim {
+    0% { opacity: 0; transform: translate(0); }
+    10% { opacity: 1; background: rgba(0, 255, 65, 0.1); }
+    20% { opacity: 0; }
+    30% { opacity: 0.8; background: rgba(255, 0, 0, 0.1); transform: translate(-3px, 2px); }
+    40% { opacity: 0; transform: translate(0); }
+    50% { opacity: 0.6; background: rgba(0, 255, 65, 0.15); transform: translate(2px, -2px); }
+    100% { opacity: 0; transform: translate(0); }
 }
