@@ -24,14 +24,15 @@
     <div class="stat-grid">
         <div class="stat-card">
             <div class="stat-icon stat-icon-green">
-                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM14 14s1 0 1-1-1-4-7-4-7 3-7 4 1 1 1 1h12z" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
                 </svg>
             </div>
             <div class="stat-body">
-                <span class="stat-label">TOTAL_UBICACIONES</span>
-                <span class="stat-value" data-target="24">0</span>
-                <span class="stat-delta up">▲ +1.5%</span>
+                <span class="stat-label">TOTAL UBICACIONES</span>
+                <span class="stat-value" id="statTotalUbicaciones" data-target="0">0</span>
+                <span class="stat-delta up">▲ Activo</span>
             </div>
             <div class="stat-chart">
                 <div class="mini-bar" style="--h:40%"></div>
@@ -45,16 +46,17 @@
         </div>
 
         <div class="stat-card">
-            <div class="stat-icon stat-icon-red">
-                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-                    <path
-                        d="M1 2a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H2a1 1 0 01-1-1V2zM1 7a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H2a1 1 0 01-1-1V7z" />
+            <div class="stat-icon stat-icon-cyan">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
                 </svg>
             </div>
             <div class="stat-body">
-                <span class="stat-label">EQUIPOS_ACTIVOS</span>
-                <span class="stat-value" data-target="47">0</span>
-                <span class="stat-delta up">▲ +3</span>
+                <span class="stat-label">TOTAL DE PISOS</span>
+                <span class="stat-value" id="statTotalPisos" data-target="0">0</span>
+                <span class="stat-delta up">▲ Pisos 1-4</span>
             </div>
             <div class="stat-chart">
                 <div class="mini-bar" style="--h:50%"></div>
@@ -64,51 +66,6 @@
                 <div class="mini-bar" style="--h:60%"></div>
                 <div class="mini-bar" style="--h:85%"></div>
                 <div class="mini-bar active" style="--h:95%"></div>
-            </div>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-icon stat-icon-cyan">
-                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M8 1L2 3v5c0 3.5 2.5 6.7 6 7.9C11.5 14.7 14 11.5 14 8V3L8 1z" />
-                </svg>
-            </div>
-            <div class="stat-body">
-                <span class="stat-label">AMENAZAS_BLOQUEADAS</span>
-                <span class="stat-value" data-target="3921">0</span>
-                <span class="stat-delta down">▼ -5.1%</span>
-            </div>
-            <div class="stat-chart">
-                <div class="mini-bar" style="--h:80%"></div>
-                <div class="mini-bar" style="--h:95%"></div>
-                <div class="mini-bar" style="--h:70%"></div>
-                <div class="mini-bar" style="--h:60%"></div>
-                <div class="mini-bar" style="--h:55%"></div>
-                <div class="mini-bar" style="--h:50%"></div>
-                <div class="mini-bar active" style="--h:45%"></div>
-            </div>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-icon stat-icon-yellow">
-                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-                    <path
-                        d="M6 .278a.768.768 0 01.08.858 7.208 7.208 0 00-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 01.81.316.733.733 0 01-.031.893A8.349 8.349 0 018.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 016 .278z" />
-                </svg>
-            </div>
-            <div class="stat-body">
-                <span class="stat-label">UPTIME</span>
-                <span class="stat-value" data-target="99">0</span><span class="stat-unit">%</span>
-                <span class="stat-delta up">▲ Óptimo</span>
-            </div>
-            <div class="stat-chart">
-                <div class="mini-bar" style="--h:99%"></div>
-                <div class="mini-bar" style="--h:99%"></div>
-                <div class="mini-bar" style="--h:98%"></div>
-                <div class="mini-bar" style="--h:99%"></div>
-                <div class="mini-bar" style="--h:100%"></div>
-                <div class="mini-bar" style="--h:99%"></div>
-                <div class="mini-bar active" style="--h:99%"></div>
             </div>
         </div>
     </div>
@@ -133,16 +90,16 @@
                     </svg>
                     <input type="text" id="tableSearch" placeholder="FILTRAR..." autocomplete="off">
                 </div>
-                <button class="btn btn-outline btn-sm btn-outline-red" onclick="exportData()">
+                <button class="btn btn-outline btn-sm btn-outline-red btn-export-pdf" onclick="exportData(this)">
                     <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
                         <path
                             d="M.5 9.9a.5.5 0 01.5.5v2.5a1 1 0 001 1h12a1 1 0 001-1v-2.5a.5.5 0 011 0v2.5a2 2 0 01-2 2H2a2 2 0 01-2-2v-2.5a.5.5 0 01.5-.5z" />
                         <path
                             d="M7.646 11.854a.5.5 0 00.708 0l3-3a.5.5 0 00-.708-.708L8.5 10.293V1.5a.5.5 0 00-1 0v8.793L5.354 8.146a.5.5 0 10-.708.708l3 3z" />
                     </svg>
-                    EXPORTAR
+                    PDF
                 </button>
-                <button class="btn btn-outline btn-sm" onclick="showModal('modalCreate')">
+                <button class="btn btn-outline btn-sm" onclick="showModal('modalCrearUbicacion')">
                     <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
                         <path
                             d="M8 4a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3v3a.5.5 0 01-1 0v-3h-3a.5.5 0 010-1h3v-3A.5.5 0 018 4z" />
@@ -156,19 +113,15 @@
             <table class="cyber-table" id="ubicacionTable">
                 <thead>
                     <tr>
-                        <th><input type="checkbox" id="checkAll" class="cyber-check"></th>
-                        <th class="sortable" data-col="0">ID <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-col="1">UBICACIÓN <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-col="2">NIVEL <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-col="3">SUPERVISOR <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-col="4">ESTADO <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-col="5">ÚLTIMO_ACCESO <span class="sort-icon">⇅</span>
+                        <th style="width: 30px;"><input type="checkbox" id="checkAllUbicaciones" class="cyber-check">
                         </th>
+                        <th class="sortable">ID <span class="sort-icon">⇅</span></th>
+                        <th class="sortable">NOMBRE_UBICACIÓN <span class="sort-icon">⇅</span></th>
                         <th>ACCIONES</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody">
-
+                <tbody id="ubicacionTableBody">
+                    <!-- Data loaded via Ajax -->
                 </tbody>
             </table>
         </div>

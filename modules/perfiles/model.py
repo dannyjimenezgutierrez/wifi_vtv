@@ -10,10 +10,17 @@ def obtener_perfil(id):
 
 # ── CREAR ─────────────────────────────────────────────────────
 def crear_perfil(datos):
+    nombre = datos['nombre'].strip()
+    
+    # Verificar si el nombre ya existe
+    existe = db_select_one("SELECT id FROM sw_vtv_perfiles WHERE UPPER(nombre) = UPPER(?)", (nombre,))
+    if existe:
+        return {"ok": False, "mensaje": f"EL PERFIL '{nombre.upper()}' YA EXISTE EN EL SISTEMA."}
+
     res = db_insert("""
         INSERT INTO sw_vtv_perfiles (nombre, sigla)
         VALUES (?, ?)
-    """, (datos['nombre'], datos['sigla']))
+    """, (nombre, datos['sigla']))
     return {"ok": True, "id": res} if res else {"ok": False, "mensaje": "Error al insertar en la base de datos."}
 
 # ── ACTUALIZAR ────────────────────────────────────────────────
@@ -26,11 +33,17 @@ def actualizar_perfil(id, datos):
     if int(id) == 1 or p['nombre'].upper() == 'PERFILES SEGURO':
         return 0 
     
+    nombre = datos['nombre'].strip()
+    # Verificar si el nombre ya está siendo usado por otro ID
+    existe = db_select_one("SELECT id FROM sw_vtv_perfiles WHERE UPPER(nombre) = UPPER(?) AND id != ?", (nombre, id))
+    if existe:
+        raise Exception(f"EL NOMBRE '{nombre.upper()}' YA ESTÁ SIENDO UTILIZADO POR OTRO PERFIL.")
+
     return db_update("""
         UPDATE sw_vtv_perfiles 
         SET nombre = ?, sigla = ?
         WHERE id = ?
-    """, (datos['nombre'], datos['sigla'], id))
+    """, (nombre, datos['sigla'], id))
 
 # ── ELIMINAR ──────────────────────────────────────────────────
 def eliminar_perfil(id):

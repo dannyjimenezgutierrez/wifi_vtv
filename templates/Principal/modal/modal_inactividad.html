@@ -1,0 +1,29 @@
+<!-- ══════════════════════════════════════════ MODAL INACTIVIDAD ══════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalInactividad" style="z-index: 9999;">
+    <div class="modal modal-sm">
+        <div class="modal-header">
+            <div class="modal-title">[ ALERTA DE SEGURIDAD ]</div>
+        </div>
+        <div class="modal-body" style="text-align: center; padding: 30px 20px;">
+            <div style="margin-bottom: 20px;">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--neon-yellow)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 5px var(--neon-yellow));">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+            </div>
+            <h3 style="color: var(--neon-yellow); margin-bottom: 10px; font-family: 'Orbitron', sans-serif; font-size: 1rem;">SESIÓN POR EXPIRAR</h3>
+            <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 20px; line-height: 1.5;">
+                Se ha detectado un periodo prolongado de inactividad. La sesión se cerrará automáticamente en:
+            </p>
+            <div id="inactividadCountdown" style="font-size: 3rem; font-weight: bold; color: #fff; font-family: 'Orbitron', sans-serif; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255,255,255,0.5);">
+                60
+            </div>
+        </div>
+        <div class="modal-footer" style="justify-content: center; border-top: 1px solid rgba(255, 255, 0, 0.1);">
+            <button class="btn btn-outline btn-sm" onclick="window.resetInactividadManual()" style="min-width: 180px; border-color: var(--neon-yellow); color: var(--neon-yellow);">
+                [ SEGUIR CONECTADO ]
+            </button>
+        </div>
+    </div>
+</div>
+<!-- ══════════════════════════════════════════ MODAL INACTIVIDAD ══════════════════════════════════════════════════ -->

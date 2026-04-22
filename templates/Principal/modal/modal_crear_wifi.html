@@ -1,0 +1,88 @@
+<!-- ══════════════════════════════════════════ MODAL CREAR EQUIPO WIFI ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalCrearWifi" onclick="closeOnOverlay(event, 'modalCrearWifi')">
+    <div class="modal modal-lg">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalCrearWifi')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="btn btn-outline btn-sm btn-outline-blue">REGISTRAR_EQUIPO_WIFI.exe</span>
+        </div>
+        <div class="modal-body">
+            <form id="formCrearWifi" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">[ DIRECCIÓN IP ]</label>
+                        <input type="text" id="wIp" class="form-input" placeholder="0.0.0.0" required pattern="^(\d{1,3}\.){3}\d{1,3}$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">[ SERIAL DEL EQUIPO ]</label>
+                        <input type="text" id="wSerial" class="form-input" placeholder="SN-XXXXXX" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">[ SSID (NOMBRE RED) ]</label>
+                        <input type="text" id="wSsid" class="form-input" placeholder="WIFI_VTV_..." required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">[ CLAVE DE PASO ]</label>
+                        <input type="text" id="wClavePaso" class="form-input" placeholder="********" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">[ MARCA ]</label>
+                        <select id="wMarca" class="form-input" required>
+                            <option value="">-- SELECCIONE --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">[ CLAVE ADMIN ]</label>
+                        <input type="text" id="wClaveAdmin" class="form-input" placeholder="Admin123" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">[ GERENCIA ]</label>
+                        <select id="wGerencia" class="form-input" required onchange="filtrarDivisiones('wGerencia', 'wDivision')">
+                            <option value="">-- SELECCIONE --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">[ DIVISIÓN ]</label>
+                        <select id="wDivision" class="form-input" required>
+                            <option value="">-- SELECCIONE GERENCIA --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">[ UBICACIÓN ]</label>
+                        <select id="wUbicacion" class="form-input" required>
+                            <option value="">-- SELECCIONE --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">[ ESTADO ]</label>
+                        <select id="wEstado" class="form-input" required>
+                            <option value="">-- SELECCIONE --</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline btn-sm btn-outline-red" onclick="closeModal('modalCrearWifi')">[ CANCELAR ]</button>
+            <button class="btn btn-outline btn-sm" id="btnGuardarWifi" onclick="guardarWifi()">[ REGISTRAR EQUIPO ]</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════════════════════════════════════ -->

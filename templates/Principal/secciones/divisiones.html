@@ -26,12 +26,15 @@
         <div class="stat-card">
             <div class="stat-icon stat-icon-green">
                 <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM14 14s1 0 1-1-1-4-7-4-7 3-7 4 1 1 1 1h12z" />
+                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                    <path fill-rule="evenodd"
+                        d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
+                    <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
                 </svg>
             </div>
             <div class="stat-body">
-                <span class="stat-label">TOTAL_DIVISIONES</span>
-                <span class="stat-value" data-target="152">0</span>
+                <span class="stat-label">TOTAL DE DIVISIONES</span>
+                <span class="stat-value" id="statsTotalDivisiones" data-target="0">0</span>
                 <span class="stat-delta up">▲ +5.4%</span>
             </div>
             <div class="stat-chart">
@@ -48,13 +51,15 @@
         <div class="stat-card">
             <div class="stat-icon stat-icon-red">
                 <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-                    <path
-                        d="M1 2a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H2a1 1 0 01-1-1V2zM1 7a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H2a1 1 0 01-1-1V7z" />
+                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                    <path fill-rule="evenodd"
+                        d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
+                    <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
                 </svg>
             </div>
             <div class="stat-body">
-                <span class="stat-label">EQUIPOS_ACTIVOS</span>
-                <span class="stat-value" data-target="47">0</span>
+                <span class="stat-label">TOTAL DE GERENCIAS</span>
+                <span class="stat-value" id="statsTotalGerenciasDiv" data-target="0">0</span>
                 <span class="stat-delta up">▲ +3</span>
             </div>
             <div class="stat-chart">
@@ -70,13 +75,16 @@
 
         <div class="stat-card">
             <div class="stat-icon stat-icon-cyan">
-                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M8 1L2 3v5c0 3.5 2.5 6.7 6 7.9C11.5 14.7 14 11.5 14 8V3L8 1z" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                    <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                    <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                    <line x1="12" y1="20" x2="12.01" y2="20"></line>
                 </svg>
             </div>
             <div class="stat-body">
-                <span class="stat-label">AMENAZAS_BLOQUEADAS</span>
-                <span class="stat-value" data-target="3921">0</span>
+                <span class="stat-label">EQUIPOS REGISTRADOS</span>
+                <span class="stat-value" id="statsEquiposRegistrados" data-target="0">0</span><span class="stat-unit"> Unid.</span>
                 <span class="stat-delta down">▼ -5.1%</span>
             </div>
             <div class="stat-chart">
@@ -91,15 +99,20 @@
         </div>
 
         <div class="stat-card">
-            <div class="stat-icon stat-icon-yellow">
-                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-                    <path
-                        d="M6 .278a.768.768 0 01.08.858 7.208 7.208 0 00-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 01.81.316.733.733 0 01-.031.893A8.349 8.349 0 018.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 016 .278z" />
+            <div class="stat-icon stat-icon-red">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 1l22 22"></path>
+                    <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+                    <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+                    <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
+                    <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+                    <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                    <line x1="12" y1="20" x2="12.01" y2="20"></line>
                 </svg>
             </div>
             <div class="stat-body">
-                <span class="stat-label">UPTIME</span>
-                <span class="stat-value" data-target="99">0</span><span class="stat-unit">%</span>
+                <span class="stat-label">EQUIPOS INACTIVOS</span>
+                <span class="stat-value" id="statsEquiposInactivosDiv" data-target="0">0</span><span class="stat-unit"> Unid.</span>
                 <span class="stat-delta up">▲ Óptimo</span>
             </div>
             <div class="stat-chart">
@@ -137,7 +150,7 @@
                     </svg>
                     <input type="text" id="tableSearch" placeholder="FILTRAR..." autocomplete="off">
                 </div>
-                <button class="btn btn-outline btn-sm btn-outline-red" onclick="exportData()">
+                <button class="btn btn-outline btn-sm btn-outline-red btn-export-pdf" onclick="exportData(this)">
 
                     <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
                         <path

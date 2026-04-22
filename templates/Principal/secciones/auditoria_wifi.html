@@ -1,9 +1,106 @@
 <!-- ══════════════════════════════════════════ AUDITORIA WIFI ══════════════════════════════════════════════════ -->
 
 <section class="section" id="sec-auditoria-wifi">
-    <div class="section-header">
+    <div class="stat-grid">
+        <div class="stat-card">
+            <div class="stat-icon stat-icon-green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                    <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                    <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                    <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                </svg>
+            </div>
+            <div class="stat-body">
+                <span class="stat-label">CAMBIOS RED</span>
+                <span class="stat-value" id="statsAuditoriaWifiCambios" data-target="0">0</span>
+                <span class="stat-delta up">▲ Reciente</span>
+            </div>
+            <div class="stat-chart">
+                <div class="mini-bar" style="--h:40%"></div>
+                <div class="mini-bar" style="--h:60%"></div>
+                <div class="mini-bar" style="--h:45%"></div>
+                <div class="mini-bar" style="--h:75%"></div>
+                <div class="mini-bar" style="--h:55%"></div>
+                <div class="mini-bar" style="--h:90%"></div>
+                <div class="mini-bar active" style="--h:100%"></div>
+            </div>
+        </div>
 
-        <div class="table-card">
+        <div class="stat-card">
+            <div class="stat-icon stat-icon-cyan">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+            </div>
+            <div class="stat-body">
+                <span class="stat-label">PUNTOS ACCESO monitor</span>
+                <span class="stat-value" id="statsAuditoriaWifiAPs" data-target="0">0</span>
+                <span class="stat-delta up">▲ Cobertura</span>
+            </div>
+            <div class="stat-chart">
+                <div class="mini-bar" style="--h:50%"></div>
+                <div class="mini-bar" style="--h:70%"></div>
+                <div class="mini-bar" style="--h:65%"></div>
+                <div class="mini-bar" style="--h:80%"></div>
+                <div class="mini-bar" style="--h:60%"></div>
+                <div class="mini-bar" style="--h:85%"></div>
+                <div class="mini-bar active" style="--h:95%"></div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon stat-icon-red">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+            <div class="stat-body">
+                <span class="stat-label">ALERTAS SEGURIDAD</span>
+                <span class="stat-value" id="statsAuditoriaWifiAlertas" data-target="0">0</span>
+                <span class="stat-delta down">▼ Amenaza</span>
+            </div>
+            <div class="stat-chart">
+                <div class="mini-bar" style="--h:80%"></div>
+                <div class="mini-bar" style="--h:95%"></div>
+                <div class="mini-bar" style="--h:70%"></div>
+                <div class="mini-bar" style="--h:60%"></div>
+                <div class="mini-bar" style="--h:55%"></div>
+                <div class="mini-bar" style="--h:50%"></div>
+                <div class="mini-bar active" style="--h:45%"></div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon stat-icon-yellow">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+            </div>
+            <div class="stat-body">
+                <span class="stat-label">LOGS INFRAESTRUCTURA</span>
+                <span class="stat-value" id="statsAuditoriaWifiTotal" data-target="0">0</span>
+                <span class="stat-delta up">▲ Tráfico</span>
+            </div>
+            <div class="stat-chart">
+                <div class="mini-bar" style="--h:30%"></div>
+                <div class="mini-bar" style="--h:40%"></div>
+                <div class="mini-bar" style="--h:35%"></div>
+                <div class="mini-bar" style="--h:50%"></div>
+                <div class="mini-bar" style="--h:45%"></div>
+                <div class="mini-bar" style="--h:60%"></div>
+                <div class="mini-bar active" style="--h:70%"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-card">
 
 
 
@@ -18,7 +115,7 @@
                         </svg>
                         AUDITORÍA DE INFRAESTRUCTURA INALÁMBRICA</span>
                 </div><br>
-                <button class="btn btn-outline btn-sm btn-outline-red" onclick="exportData()">
+                <button class="btn btn-outline btn-sm btn-outline-red btn-export-pdf" onclick="exportData(this)">
                     <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
                         <path
                             d="M.5 9.9a.5.5 0 01.5.5v2.5a1 1 0 001 1h12a1 1 0 001-1v-2.5a.5.5 0 011 0v2.5a2 2 0 01-2 2H2a2 2 0 01-2-2v-2.5a.5.5 0 01.5-.5z" />
@@ -34,13 +131,14 @@
                             <th>
                                 <input type="checkbox" class="cyber-check" id="checkAllAuditoriaWifi">
                             </th>
-                            <th>ID_LOG</th>
-                            <th>PUNTO_ACCESO</th>
+                            <th>ID</th>
+                            <th>SSID</th>
                             <th>ACCIÓN</th>
-                            <th>DETALLES</th>
-                            <th>RESPONSABLE</th>
-                            <th>FECHA_HORA</th>
                             <th>ESTADO</th>
+                            <th>RESPONSABLE</th>
+                            <th>FECHA</th>
+                            <th>HORA</th>
+                            <th>IP</th>
                         </tr>
                     </thead>
                     <tbody>

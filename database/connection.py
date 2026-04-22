@@ -1,8 +1,11 @@
 import pyodbc
 from contextlib import contextmanager
 
+# Habilitar connection pooling nativo de pyodbc (reutiliza conexiones existentes)
+pyodbc.pooling = True
+
 DB_CONFIG = {
-    'server':   'localhost',
+    'server':   '127.0.0.1',
     'database': 'wifi_vtv',
     'username': 'danny',
     'password': 'Danny16029567*',    # ← cambia esto por tu clave de SQL Server
@@ -18,6 +21,7 @@ def get_connection_string():
         f"PWD={DB_CONFIG['password']};"
         "Encrypt=no;"
         "TrustServerCertificate=yes;"
+        "Connection Timeout=5;"
     )
 
 def get_connection():
@@ -26,6 +30,7 @@ def get_connection():
         return conn
     except pyodbc.Error as e:
         raise ConnectionError(f"Error al conectar con SQL Server: {e}")
+
 
 @contextmanager
 def db_connection():

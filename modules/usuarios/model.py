@@ -1,4 +1,5 @@
 from database.crud import db_select, db_select_one, db_insert, db_update, db_delete
+from database.security import encrypt_password, decrypt_password
 
 # ── LISTAR TODOS ──────────────────────────────────────────────
 def listar_usuarios():
@@ -26,9 +27,12 @@ def listar_usuarios():
 
 # ── BUSCAR UNO ────────────────────────────────────────────────
 def obtener_usuario(id):
-    return db_select_one(
+    user = db_select_one(
         "SELECT * FROM sw_vtv_usuarios WHERE id = ?", (id,)
     )
+    if user and 'clave' in user:
+        user['clave'] = decrypt_password(user['clave'])
+    return user
 
 # ── CREAR ─────────────────────────────────────────────────────
 def crear_usuario(datos):
@@ -48,6 +52,9 @@ def crear_usuario(datos):
         if existe_correo:
             return {"ok": False, "mensaje": "Este CORREO ELECTRÓNICO ya se encuentra registrado."}
 
+    # Cifrar contraseña antes de guardar
+    clave_cifrada = encrypt_password(datos['clave'])
+
     res = db_insert("""
         INSERT INTO sw_vtv_usuarios
             (primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
@@ -60,7 +67,7 @@ def crear_usuario(datos):
         datos['primer_apellido'],
         datos.get('segundo_apellido', ''),
         datos['usuario'],
-        datos['clave'],
+        clave_cifrada,
         datos.get('telefono', ''),
         datos['cedula'],
         datos.get('correo', ''),
@@ -111,7 +118,7 @@ def actualizar_usuario(id, datos):
 
     if 'clave' in datos and datos['clave']:
         query += ", clave = ?"
-        params.append(datos['clave'])
+        params.append(encrypt_password(datos['clave']))
 
     if 'foto_perfil' in datos:
         query += ", foto_perfil = ?"
@@ -187,3 +194,20 @@ def obtener_estadisticas_usuarios():
             SUM(CASE WHEN id_estado = 3 THEN 1 ELSE 0 END) AS bloqueados
         FROM sw_vtv_usuarios
     """)
+
+def obtener_estadisticas_divisiones():
+    return db_select_one("""
+        SELECT 
+            (SELECT COUNT(*) FROM sw_vtv_divisiones) as total_divisiones,
+            (SELECT COUNT(*) FROM sw_vtv_gerencias) as total_gerencias,
+            (SELECT COUNT(*) FROM sw_vtv_wifi) as equipos_totales,
+            (SELECT COUNT(*) FROM sw_vtv_wifi WHERE id_estados = 2) as equipos_inactivos
+    """)
+
+def cambiar_password(id_usuario, nueva_clave):
+    clave_cifrada = encrypt_password(nueva_clave)
+    filas = db_update(
+        "UPDATE sw_vtv_usuarios SET clave = ? WHERE id = ?",
+        (clave_cifrada, id_usuario)
+    )
+    return {"ok": True, "mensaje": "Contraseña actualizada exitosamente."} if filas else {"ok": False, "mensaje": "No se pudo actualizar la contraseña."}

@@ -1,0 +1,24 @@
+<!-- ══════════════════════════════════════════ MODAL LOADING ══════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalLoading">
+    <div class="modal modal-sm">
+        <div class="modal-header">
+            <div class="modal-title">[ PROCESANDO REPORTE ]</div>
+        </div>
+        <div class="modal-body" style="text-align: center; padding: 40px 20px;">
+            <div class="logo-hex" style="width: 60px; height: 60px; margin-bottom: 20px;">
+                <svg viewBox="0 0 100 100" class="logo-svg">
+                    <path d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z" fill="none" stroke="var(--neon-green)" stroke-width="2" />
+                    <circle cx="50" cy="50" r="20" fill="none" stroke="var(--neon-green)" stroke-width="1" stroke-dasharray="5,5">
+                        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="3s" repeatCount="indefinite" />
+                    </circle>
+                </svg>
+            </div>
+            <p id="loadingTask" style="color: #fff; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 10px;">PREPARANDO DATOS...</p>
+            <div class="cyber-progress-container">
+                <div class="cyber-progress-bar" id="loadProgressBar"></div>
+            </div>
+            <p class="progress-text" id="loadProgressText">0%</p>
+        </div>
+    </div>
+</div>
+<!-- ══════════════════════════════════════════ MODAL LOADING ══════════════════════════════════════════════════ -->

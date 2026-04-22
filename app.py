@@ -28,9 +28,24 @@ import select
 import signal
 from flask_socketio import SocketIO, emit
 from database.crud import db_select_one
+from database.security import decrypt_password
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=None)
 app.secret_key = 'vtv_wifi_2026'
+
+import os, mimetypes
+from flask import abort, Response
+
+@app.route('/static/<path:filename>')
+def custom_static(filename):
+    filepath = os.path.join(app.root_path, 'static', filename)
+    if not os.path.exists(filepath):
+        abort(404)
+    with open(filepath, 'rb') as f:
+        data = f.read()
+    mimetype, _ = mimetypes.guess_type(filepath)
+    return Response(data, mimetype=mimetype or 'application/octet-stream')
+
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 
 # ── GESTIÓN DE PROCESOS DE TERMINAL ──────────────────────────
@@ -49,7 +64,7 @@ def read_and_forward_pty(fd, room):
                 try:
                     payload = os.read(fd, 1024).decode(errors='ignore')
                     if payload:
-                        socketio.emit('terminal_output', {'data': payload}, room=room)
+                        socketio.emit('terminal_output', {'data': payload}, room=room, namespace='/terminal')
                     else:
                         break
                 except Exception:
@@ -57,8 +72,8 @@ def read_and_forward_pty(fd, room):
         else:
             break
 
-@socketio.on('connect')
-def on_connect():
+@socketio.on('connect', namespace='/terminal')
+def on_connect_terminal():
     if 'usuario' not in session:
         return False  # Rechazar conexión si no hay sesión
     
@@ -67,23 +82,38 @@ def on_connect():
 
     if child_pid == 0:
         # Proceso hijo: ejecutar Bash
-        os.environ['TERM'] = 'xterm-256color'
-        os.chdir('/opt/wifi_vtv')
-        os.execvp('bash', ['bash'])
+        try:
+            os.environ['TERM'] = 'xterm-256color'
+            os.environ['PATH'] = os.environ.get('PATH', '') + ':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+            
+            # Asegurar que el directorio de trabajo existe
+            cwd = '/opt/wifi_vtv'
+            if os.path.exists(cwd):
+                os.chdir(cwd)
+            
+            # Intentar encontrar bash en rutas comunes
+            bash_path = '/usr/bin/bash'
+            if not os.path.exists(bash_path):
+                bash_path = '/bin/bash'
+            
+            os.execv(bash_path, [bash_path])
+        except Exception as e:
+            # Salida de emergencia si falla el execv
+            os._exit(1)
     else:
         # Proceso padre: registrar y empezar a monitorear
         terminal_fds[sid] = fd
         terminal_pids[sid] = child_pid
         socketio.start_background_task(target=read_and_forward_pty, fd=fd, room=sid)
 
-@socketio.on('terminal_input')
+@socketio.on('terminal_input', namespace='/terminal')
 def on_terminal_input(data):
     sid = request.sid
     if sid in terminal_fds:
         os.write(terminal_fds[sid], data.get('input', '').encode())
 
-@socketio.on('disconnect')
-def on_disconnect():
+@socketio.on('disconnect', namespace='/terminal')
+def on_disconnect_terminal():
     sid = request.sid
     if sid in terminal_fds:
         try:
@@ -98,9 +128,17 @@ def on_disconnect():
 from modules.usuarios.routes import usuarios_bp
 from modules.perfiles.routes import perfiles_bp
 from modules.gerencias.routes import gerencias_bp
+from modules.marcas.routes import marcas_bp
+from modules.ubicaciones.routes import ubicaciones_bp
+from modules.wifi.routes import wifi_bp
+from modules.auditoria.routes import auditoria_bp
 app.register_blueprint(usuarios_bp)
 app.register_blueprint(perfiles_bp)
 app.register_blueprint(gerencias_bp)
+app.register_blueprint(marcas_bp)
+app.register_blueprint(ubicaciones_bp)
+app.register_blueprint(wifi_bp)
+app.register_blueprint(auditoria_bp)
 # ── LOGIN ──────────────────────────────────────────────────────
 @app.route('/')
 def login():
@@ -109,7 +147,41 @@ def login():
     return render_template('Login/index.html')
 
 # ── VALIDAR LOGIN DESDE JAVASCRIPT ────────────────────────────
-@app.route('/entrar', methods=['POST'])
+# ── TERMINAL NATIVO ──────────────────────────────────────────
+@app.route('/api/terminal/native')
+def open_native_terminal():
+    ip = request.args.get('ip')
+    username = request.args.get('user', 'root')
+    
+    if os.name != 'posix':
+        return jsonify({"status": "error", "message": "TERMINAL NATIVO SOLO DISPONIBLE EN LINUX."}), 400
+    try:
+        # Si hay IP, preparamos el comando SSH
+        ssh_cmd = f"ssh {username}@{ip}" if ip else None
+        
+        # Intentar con terminator como prioridad, luego otros comunes
+        for term in ['terminator', 'gnome-terminal', 'xterm', 'konsole']:
+            try:
+                if ssh_cmd:
+                    # Diferentes terminales requieren diferentes flags para ejecutar comandos
+                    if term == 'terminator':
+                        subprocess.Popen([term, '-x', ssh_cmd])
+                    elif term == 'gnome-terminal':
+                        subprocess.Popen([term, '--', 'bash', '-c', f"{ssh_cmd}; exec bash"])
+                    else:
+                        subprocess.Popen([term, '-e', ssh_cmd])
+                else:
+                    subprocess.Popen([term])
+                
+                msg = f"TERMINAL {term.upper()} INICIADA" + (f" CON SSH A {ip}" if ip else "")
+                return jsonify({"status": "success", "message": msg})
+            except (FileNotFoundError, Exception):
+                continue
+        return jsonify({"status": "error", "message": "NO SE ENCONTRÓ UN EMULADOR DE TERMINAL COMPATIBLE."}), 500
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/entrar', methods=['GET', 'POST'])
 def entrar():
     datos = request.get_json()
     usuario = datos.get('usuario', '').strip()
@@ -126,7 +198,10 @@ def entrar():
     if not user:
         return jsonify({'ok': False, 'mensaje': 'EL USUARIO NO SE ENCUENTRA REGISTRADO EN EL SISTEMA.'})
 
-    if user['clave'] != password:
+    # Descifrar la clave almacenada para comparar
+    clave_almacenada = decrypt_password(user['clave'])
+
+    if clave_almacenada != password:
         return jsonify({'ok': False, 'mensaje': 'LA CONTRASEÑA ES INCORRECTA.'})
 
     if user.get('id_estado') != 1:

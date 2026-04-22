@@ -1,0 +1,72 @@
+<!-- ══════════════════════════════════════════ SECCIÓN SEGURIDAD ══════════════════════════════════════════════════ -->
+
+<section class="section" id="sec-seguridad">
+    <div style="max-width: 550px; margin: 30px auto;">
+        <div class="modal modal-lg" style="position: relative; display: block; transform: none; opacity: 1; width: 100%;">
+            <div class="modal-header">
+                <div class="modal-terminal-btns">
+                    <span class="mtb mtb-red"></span>
+                    <span class="mtb mtb-yellow"></span>
+                    <span class="mtb mtb-green"></span>
+                </div>
+                <span class="btn btn-outline btn-sm btn-outline-blue">SEGURIDAD_CUENTA.exe</span>
+            </div>
+            <div class="modal-body">
+                <form id="formCambiarClave" novalidate>
+
+                    <div class="form-row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
+                        <div class="form-group" style="text-align: center;">
+                            <div style="position: relative; width: 100px; height: 100px; margin: 0 auto; border-radius: 50%; overflow: hidden; border: 2px solid #00ff41; box-shadow: 0 0 10px rgba(0,255,65,0.4);">
+                                <img src="{{ session.get('foto_perfil', '/static/Principal/img/default_avatar.png') }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null;this.src='/static/Principal/img/default_avatar.png';">
+                            </div>
+                            <p style="margin-top: 10px; color: #00ff41; font-family: 'Orbitron', monospace; font-size: 0.85rem; letter-spacing: 1px;">{{ session['usuario'] }}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="grid-template-columns: 1fr;">
+                        <div class="form-group">
+                            <label class="form-label">[ NOMBRE DE USUARIO ]</label>
+                            <input type="text" class="form-input" value="{{ session['usuario'] }}" readonly style="opacity: 0.6; cursor: not-allowed;">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">[ NUEVA CONTRASEÑA ]</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="segNuevaClave" class="form-input" placeholder="********" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('segNuevaClave', 'segPassIcon1')" id="segPassIcon1">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">[ CONFIRMAR CONTRASEÑA ]</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="segConfirmarClave" class="form-input" placeholder="********" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('segConfirmarClave', 'segPassIcon2')" id="segPassIcon2">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer" style="flex-direction: column; gap: 12px;">
+                <button class="btn btn-outline btn-sm" onclick="window.cambiarMiClave()" id="btnGuardarSeguridad" style="width: 100%; padding: 10px 0; font-size: 0.85rem; text-align: center; display: block;">[ ACTUALIZAR CONTRASEÑA ]</button>
+                <div style="font-size: 0.7rem; color: #444; letter-spacing: 0.5px; text-align: center;">
+                    Acceso: {{ fecha }} • {{ hora }} • IP: <span style="color: var(--neon-blue);">{{ ip }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════ SECCIÓN SEGURIDAD ══════════════════════════════════════════════════ -->

@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, session
 import os
 import base64
 import uuid
@@ -6,7 +6,8 @@ from modules.usuarios.model import (
     listar_usuarios, obtener_usuario,
     crear_usuario, actualizar_usuario, eliminar_usuario,
     listar_divisiones, obtener_division, crear_division, actualizar_division, eliminar_division,
-    listar_estados, obtener_estadisticas_usuarios
+    listar_estados, obtener_estadisticas_usuarios, obtener_estadisticas_divisiones,
+    cambiar_password
 )
 
 usuarios_bp = Blueprint('usuarios', __name__)
@@ -154,6 +155,30 @@ def delete_division(id):
     except Exception as e:
         return jsonify({'ok': False, 'mensaje': str(e)}), 500
 
+@usuarios_bp.route('/api/divisiones/stats', methods=['GET'])
+def api_divisiones_stats():
+    try:
+        stats = obtener_estadisticas_divisiones()
+        return jsonify({'ok': True, 'data': stats})
+    except Exception as e:
+        return jsonify({'ok': False, 'mensaje': str(e)}), 500
+
 @usuarios_bp.route('/api/estados', methods=['GET'])
 def api_estados():
     return jsonify({'ok': True, 'data': listar_estados()})
+
+@usuarios_bp.route('/api/usuarios/cambiar-clave', methods=['POST'])
+def api_cambiar_clave():
+    if 'id_usuario' not in session:
+        return jsonify({'ok': False, 'mensaje': 'SESIÓN NO INICIADA.'}), 401
+    
+    try:
+        datos = request.get_json()
+        nueva_clave = datos.get('nueva_clave')
+        if not nueva_clave:
+            return jsonify({'ok': False, 'mensaje': 'DEBE INGRESAR LA NUEVA CLAVE.'}), 400
+            
+        res = cambiar_password(session['id_usuario'], nueva_clave)
+        return jsonify(res)
+    except Exception as e:
+        return jsonify({'ok': False, 'mensaje': str(e)}), 500

@@ -147,7 +147,7 @@
                     </svg>
                     <input type="text" id="tableSearch" placeholder="FILTRAR..." autocomplete="off">
                 </div>
-                <button class="btn btn-outline btn-sm btn-outline-red" onclick="exportData()">
+                <button class="btn btn-outline btn-sm btn-outline-red btn-export-pdf" onclick="exportData(this)">
 
                     <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
                         <path
@@ -157,6 +157,7 @@
                     </svg>
                     PDF
                 </button>
+                {% if session.get('perfil_nombre') == 'Root' %}
                 <button class="btn btn-outline btn-sm" onclick="showModal('modalCrearPerfil')">
                     <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
                         <path
@@ -164,6 +165,7 @@
                     </svg>
                     NUEVO
                 </button>
+                {% endif %}
             </div>
         </div>
 

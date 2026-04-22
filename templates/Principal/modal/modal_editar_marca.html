@@ -1,0 +1,37 @@
+<!-- ══════════════════════════════════════════ MODAL EDITAR MARCA ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalEditarMarca" onclick="closeOnOverlay(event, 'modalEditarMarca')">
+    <div class="modal modal-md">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalEditarMarca')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="btn btn-outline btn-sm btn-outline-blue">EDITAR_MARCA.exe</span>
+        </div>
+        <div class="modal-body">
+            <form id="formEditarMarca" novalidate>
+                <input type="hidden" id="meId">
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label class="form-label">[ NOMBRE DE LA MARCA ]</label>
+                        <input type="text" id="meNombre" class="form-input" minlength="2" maxlength="100" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label class="form-label">[ SIGLA O ABREVIACIÓN ]</label>
+                        <input type="text" id="meSigla" class="form-input" minlength="1" maxlength="10" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline btn-sm btn-outline-red" onclick="closeModal('modalEditarMarca')">[ CANCELAR ]</button>
+            <button class="btn btn-outline btn-sm btn-outline-blue" onclick="actualizarMarca()">[ ACTUALIZAR DATOS ]</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════════════════════════════════════ -->

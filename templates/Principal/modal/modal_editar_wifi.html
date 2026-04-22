@@ -1,0 +1,89 @@
+<!-- ══════════════════════════════════════════ MODAL EDITAR EQUIPO WIFI ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalEditarWifi" onclick="closeOnOverlay(event, 'modalEditarWifi')">
+    <div class="modal modal-lg">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalEditarWifi')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="btn btn-outline btn-sm btn-outline-blue">EDITAR_EQUIPO_WIFI.exe</span>
+        </div>
+        <div class="modal-body">
+            <form id="formEditarWifi" novalidate>
+                <input type="hidden" id="weId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">[ DIRECCIÓN IP ]</label>
+                        <input type="text" id="weIp" class="form-input" placeholder="0.0.0.0" required pattern="^(\d{1,3}\.){3}\d{1,3}$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">[ SERIAL DEL EQUIPO ]</label>
+                        <input type="text" id="weSerial" class="form-input" placeholder="SN-XXXXXX" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">[ SSID (NOMBRE RED) ]</label>
+                        <input type="text" id="weSsid" class="form-input" placeholder="WIFI_VTV_..." required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">[ CLAVE DE PASO ]</label>
+                        <input type="text" id="weClavePaso" class="form-input" placeholder="********" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">[ MARCA ]</label>
+                        <select id="weMarca" class="form-input" required>
+                            <option value="">-- SELECCIONE --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">[ CLAVE ADMIN ]</label>
+                        <input type="text" id="weClaveAdmin" class="form-input" placeholder="Admin123" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">[ GERENCIA ]</label>
+                        <select id="weGerencia" class="form-input" required onchange="filtrarDivisiones('weGerencia', 'weDivision')">
+                            <option value="">-- SELECCIONE --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">[ DIVISIÓN ]</label>
+                        <select id="weDivision" class="form-input" required>
+                            <option value="">-- SELECCIONE GERENCIA --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">[ UBICACIÓN ]</label>
+                        <select id="weUbicacion" class="form-input" required>
+                            <option value="">-- SELECCIONE --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">[ ESTADO ]</label>
+                        <select id="weEstado" class="form-input" required>
+                            <option value="">-- SELECCIONE --</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline btn-sm btn-outline-red" onclick="closeModal('modalEditarWifi')">[ CANCELAR ]</button>
+            <button class="btn btn-outline btn-sm btn-outline-blue" id="btnActualizarWifi" onclick="actualizarWifi()">[ ACTUALIZAR EQUIPO ]</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════════════════════════════════════ -->

@@ -1,0 +1,30 @@
+<!-- ══════════════════════════════════════════ MODAL CREAR UBICACIÓN ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalCrearUbicacion" onclick="closeOnOverlay(event, 'modalCrearUbicacion')">
+    <div class="modal modal-md">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalCrearUbicacion')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="btn btn-outline btn-sm btn-outline-blue">REGISTRAR_UBICACIÓN.exe</span>
+        </div>
+        <div class="modal-body">
+            <form id="formCrearUbicacion" novalidate>
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label class="form-label">[ NOMBRE DE LA UBICACIÓN / ÁREA ]</label>
+                        <input type="text" id="uNombre" class="form-input" placeholder="Ej. Sede Principal, Planta Transmisora, etc." minlength="2" maxlength="100" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline btn-sm btn-outline-red" onclick="closeModal('modalCrearUbicacion')">[ CANCELAR ]</button>
+            <button class="btn btn-outline btn-sm" onclick="guardarUbicacion()">[ GUARDAR UBICACIÓN ]</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════════════════════════════════════ -->

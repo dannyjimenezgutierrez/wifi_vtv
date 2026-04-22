@@ -45,6 +45,7 @@
             {% include 'Principal/secciones/servidores.html' %}
             {% include 'Principal/secciones/auditoria_usuarios.html' %}
             {% include 'Principal/secciones/auditoria_wifi.html' %}
+            {% include 'Principal/secciones/seguridad.html' %}
         </main>
 
         {% include 'Principal/partes/footer.html' %}
@@ -64,8 +65,20 @@
     {% include 'Principal/modal/modal_crear_division.html' %}
     {% include 'Principal/modal/modal_editar_division.html' %}
     {% include 'Principal/modal/modal_eliminar_division.html' %}
+    {% include 'Principal/modal/modal_crear_marca.html' %}
+    {% include 'Principal/modal/modal_editar_marca.html' %}
+    {% include 'Principal/modal/modal_eliminar_marca.html' %}
+    {% include 'Principal/modal/modal_crear_ubicacion.html' %}
+    {% include 'Principal/modal/modal_editar_ubicacion.html' %}
+    {% include 'Principal/modal/modal_eliminar_ubicacion.html' %}
+    {% include 'Principal/modal/modal_crear_wifi.html' %}
+    {% include 'Principal/modal/modal_editar_wifi.html' %}
+    {% include 'Principal/modal/modal_eliminar_wifi.html' %}
+    {% include 'Principal/modal/modal_qr.html' %}
     {% include 'Principal/modal/modal_terminal.html' %}
     {% include 'Principal/modal/modal_alerta.html' %}
+    {% include 'Principal/modal/modal_inactividad.html' %}
+    {% include 'Principal/modal/modal_loading.html' %}
 
     <div class="toast-container" id="toastContainer"></div>
 

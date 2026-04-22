@@ -1,0 +1,31 @@
+<!-- ══════════════════════════════════════════ MODAL EDITAR UBICACIÓN ══════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="modalEditarUbicacion" onclick="closeOnOverlay(event, 'modalEditarUbicacion')">
+    <div class="modal modal-md">
+        <div class="modal-header">
+            <div class="modal-terminal-btns">
+                <span class="mtb mtb-red" onclick="closeModal('modalEditarUbicacion')"></span>
+                <span class="mtb mtb-yellow"></span>
+                <span class="mtb mtb-green"></span>
+            </div>
+            <span class="btn btn-outline btn-sm btn-outline-blue">EDITAR_UBICACIÓN.exe</span>
+        </div>
+        <div class="modal-body">
+            <form id="formEditarUbicacion" novalidate>
+                <input type="hidden" id="ueId">
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label class="form-label">[ NOMBRE DE LA UBICACIÓN / ÁREA ]</label>
+                        <input type="text" id="ueNombre" class="form-input" minlength="2" maxlength="100" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline btn-sm btn-outline-red" onclick="closeModal('modalEditarUbicacion')">[ CANCELAR ]</button>
+            <button class="btn btn-outline btn-sm btn-outline-blue" onclick="actualizarUbicacion()">[ ACTUALIZAR DATOS ]</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════════════════════════════════════ -->

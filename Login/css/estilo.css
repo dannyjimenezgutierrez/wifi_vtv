@@ -250,8 +250,9 @@
         }
 
         .holo-panel {
-            width: 460px;
+            width: 820px;
             position: relative;
+            animation: float-panel 6s ease-in-out infinite;
         }
 
         @keyframes float-panel {
@@ -458,22 +459,28 @@
         }
 
         .content {
-            padding: 36px 36px 32px;
+            padding: 35px 50px 20px;
             position: relative;
             z-index: 2;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
         }
 
         .logo-zone {
+            flex: 0 0 280px;
             text-align: center;
-            margin-bottom: 28px;
+            margin-bottom: 0;
             position: relative;
+            border-right: 1px solid var(--border);
+            padding-right: 40px;
         }
 
         .logo-hex {
             position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 16px;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
         }
 
         .hex-ring {
@@ -521,7 +528,7 @@
 
         .logo-img-wrap {
             position: absolute;
-            inset: 20px;
+            inset: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -531,8 +538,8 @@
         }
 
         .logo-img-wrap img {
-            width: 56px;
-            height: 56px;
+            width: 44px;
+            height: 44px;
             object-fit: contain;
             filter: drop-shadow(0 0 8px rgba(0, 255, 65, 0.5));
         }
@@ -627,12 +634,14 @@
         }
 
         .form {
-            margin-top: 4px;
+            flex: 1;
+            padding-left: 45px;
+            margin-top: 0;
         }
 
         .f-group {
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 8px;
         }
 
         .f-label {
@@ -708,7 +717,7 @@
             background: transparent;
             border: none;
             outline: none;
-            padding: 14px 44px 14px 34px;
+            padding: 11px 44px 11px 34px;
             color: var(--g);
             font-family: 'Share Tech Mono', monospace;
             font-size: 13px;
@@ -962,10 +971,11 @@
         }
 
         .divider {
+            width: 100%;
             display: flex;
             align-items: center;
             gap: 12px;
-            margin: 24px 0;
+            margin: 20px 0 10px;
         }
 
         .div-line {
@@ -982,8 +992,10 @@
         }
 
         .panel-footer {
+            width: 100%;
             text-align: center;
-            padding-top: 4px;
+            padding-top: 0;
+            padding-bottom: 10px;
         }
 
         .footer-text {
@@ -997,12 +1009,17 @@
             display: none;
             text-align: center;
             padding: 40px 20px;
-            position: relative;
-            z-index: 2;
+            position: absolute;
+            inset: 0;
+            background: var(--panel);
+            z-index: 100;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .success-screen.show {
-            display: block;
+            display: flex;
         }
 
         .success-hex {
@@ -1314,7 +1331,7 @@
 
         /* ── CAPTCHA System ── */
         .captcha-group {
-            margin-bottom: 24px;
+            margin-bottom: 14px;
         }
 
         .captcha-container {
@@ -1465,4 +1482,29 @@
         .captcha-group.has-error .captcha-refresh {
             border-color: rgba(255, 49, 49, 0.4);
             color: rgba(255, 49, 49, 0.6);
+        }
+
+        /* ── Responsividad ── */
+        @media (max-width: 1000px) {
+            .holo-panel {
+                width: 95%;
+                max-width: 600px;
+            }
+            .content {
+                flex-direction: column;
+                padding: 30px 20px;
+            }
+            .logo-zone {
+                flex: none;
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding-right: 0;
+                padding-bottom: 25px;
+                margin-bottom: 25px;
+            }
+            .form {
+                padding-left: 0;
+                width: 100%;
+            }
         }

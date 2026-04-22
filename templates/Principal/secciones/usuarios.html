@@ -144,7 +144,7 @@
                     </svg>
                     <input type="text" id="tableSearch" placeholder="FILTRAR..." autocomplete="off">
                 </div>
-                <button class="btn btn-outline btn-sm btn-outline-red" onclick="exportData()">
+                <button class="btn btn-outline btn-sm btn-outline-red btn-export-pdf" onclick="exportData(this)">
                     <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
                         <path
                             d="M.5 9.9a.5.5 0 01.5.5v2.5a1 1 0 001 1h12a1 1 0 001-1v-2.5a.5.5 0 011 0v2.5a2 2 0 01-2 2H2a2 2 0 01-2-2v-2.5a.5.5 0 01.5-.5z" />
@@ -153,6 +153,7 @@
                     </svg>
                     PDF
                 </button>
+                {% if session.get('perfil_nombre') == 'Root' %}
                 <button class="btn btn-outline btn-sm" onclick="showModal('modalCrearUsuarios')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
@@ -164,6 +165,7 @@
                     </svg>
                     NUEVO
                 </button>
+                {% endif %}
             </div>
         </div>
 
@@ -177,7 +179,8 @@
                         <th class="sortable" data-col="2">NOMBRE <span class="sort-icon">⇅</span></th>
                         <th class="sortable" data-col="3">APELLIDO <span class="sort-icon">⇅</span></th>
                         <th class="sortable" data-col="3">CORREO <span class="sort-icon">⇅</span></th>
-                        <th class="sortable" data-col="4">ESTADO <span class="sort-icon">⇅</span></th>
+                        <th class="sortable" data-col="4">PERFIL <span class="sort-icon">⇅</span></th>
+                        <th class="sortable" data-col="5">ESTADO <span class="sort-icon">⇅</span></th>
                         <th>ACCIONES</th>
                     </tr>
                 </thead>
