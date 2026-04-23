@@ -1,0 +1,84 @@
+#                 SQL SEVER
+#________________________________________________#
+
+
+#    CONEXION POR TERMINAL
+#_______________________________#
+
+# sqlcmd -S localhost -U sa -P "Danny16029567*" -C
+
+
+# CONEXION POR  AZURE DATA STUDIO
+#_________________________________#
+
+# Connection type        = Microsoft SQL Serve
+# Server                 = localhost,1433
+# Authentication type    = SQL Login
+# User name              = sa
+# Password               = Danny16029567*
+# True sever certificate = True
+
+
+#           CREAR BASE DE DATOS
+#______________________________________________________#
+
+# CREATE DATABASE servidores_vtv
+# ON PRIMARY (
+#  NAME = 'servidores_vtv',
+#  FILENAME = '/var/opt/mssql/data/servidores_vtv.mdf',
+#  SIZE = 100MB, MAXSIZE = 2GB, FILEGROWTH = 50MB
+# )
+#  LOG ON (
+#  NAME = 'servidores_vtv_log',
+#  FILENAME = '/var/opt/mssql/data/servidores_vtv.ldf',
+#  SIZE = 20MB, FILEGROWTH = 10MB
+#   );
+#   GO
+#   USE servidores_vtv;
+#   GO
+
+#        BACKUP DE LA BASE DE DATOS
+#________________________________________________#
+
+# USE wifi_vtv;
+# GO
+# DECLARE @fecha VARCHAR(20) = FORMAT(GETDATE(),'yyyyMMdd_HHmm');
+# DECLARE @ruta NVARCHAR(256) = '/var/opt/mssql/backup/wifi_vtv' + @fecha + '.bak';
+# BACKUP DATABASE wifi_vtv
+# TO DISK = @ruta
+# WITH FORMAT, INIT, STATS = 10;
+# PRINT '✅ Backup creado: ' + @ruta;
+
+#  ELIMINAR LA BASE DE DATOS ACTUAL
+#________________________________________________#
+
+
+# USE master;
+# GO
+# ALTER DATABASE wifi_vtv SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+# DROP DATABASE  wifi_vtv;
+# GO
+# PRINT '✅ Base de datos  VTV ELIMINADA';
+
+
+# DAMOS PERMISOS A LAS CARPETAS
+#________________________________________________#
+
+# sudo chown mssql:mssql /var/opt/mssql/backup/wifi_vtv.bak
+# sudo chmod 660 /var/opt/mssql/backup/wifi_vtv.bak
+
+
+#  RESTORE BASE DE DATOS
+#________________________________________________#
+
+#RESTORE DATABASE wifi_vtv
+#FROM DISK = '/var/opt/mssql/backup/wifi_vtv.bak'
+#WITH
+#MOVE 'wifi_vtv' TO '/var/opt/mssql/backup/wifi_vtv.mdf',
+#MOVE 'wifi_vtv_log' TO '/var/opt/mssql/backup/wifi_vtv_log.ldf',
+#REPLACE,
+#STATS = 10;
+
+
+
+
